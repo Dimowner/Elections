@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright 2019 Dmitriy Ponomarenko
+  ~
+  ~  Licensed to the Apache Software Foundation (ASF) under one or more contributor
+  ~  license agreements. See the NOTICE file distributed with this work for
+  ~  additional information regarding copyright ownership. The ASF licenses this
+  ~  file to you under the Apache License, Version 2.0 (the "License"); you may not
+  ~  use this file except in compliance with the License. You may obtain a copy of
+  ~  the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~  License for the specific language governing permissions and limitations under
+  ~  the License.
+  -->
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/spacing_normal"
+		android:clickable="true"
+		android:focusable="true"
+		android:orientation="horizontal"
+		android:background="?android:attr/selectableItemBackground">
+
+	<ImageView
+			android:id="@+id/list_item_image"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			app:srcCompat="@drawable/ic_tune"
+			android:src="@drawable/ic_tune"
+			android:layout_gravity="center_vertical"
+			android:scaleType="centerCrop"
+			android:contentDescription="@string/item_image"/>
+
+	<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_weight="1">
+
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:id="@+id/list_item_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textStyle="bold"
+				android:textSize="@dimen/text_large"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:paddingStart="@dimen/spacing_normal"
+				android:paddingRight="@dimen/spacing_normal"
+				android:paddingEnd="@dimen/spacing_normal"
+				android:maxLines="1"
+				tools:text="asfasfasfasf asfa sfasf asfa sfa fas fasf afs asf ads "
+				/>
+
+		<TextView
+				style="@style/Text.Subheader"
+				android:id="@+id/list_item_description"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/text_medium"
+				tools:text="@string/app_name"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:paddingStart="@dimen/spacing_normal"
+				android:paddingRight="@dimen/spacing_normal"
+				android:paddingEnd="@dimen/spacing_normal"
+				android:maxLines="1"/>
+	</LinearLayout>
+
+	<TextView
+			style="@style/Text.NormalLabel"
+			android:id="@+id/list_item_value"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/spacing_small"
+			android:layout_gravity="center_vertical"
+			tools:text="56%"
+			/>
+
+</LinearLayout>

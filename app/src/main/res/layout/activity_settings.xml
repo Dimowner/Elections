@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright 2019 Dmitriy Ponomarenko
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+	<FrameLayout
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+				style="@style/Text.SectionLabel"
+				android:layout_width="match_parent"
+				android:layout_height="56dp"
+				android:gravity="center"
+				android:text="@string/tittle_settings"
+				android:textColor="@color/text_primary_light"
+				/>
+
+		<ImageButton
+				android:id="@+id/btnNavUp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start|left"
+				android:background="?android:selectableItemBackground"
+				android:contentDescription="@null"
+				android:padding="@dimen/spacing_normal"
+				app:srcCompat="@drawable/ic_arrow_back"
+				android:src="@drawable/ic_arrow_back"
+				/>
+	</FrameLayout>
+
+	<TextView
+			android:id="@+id/btnLicences"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_dna"
+			android:drawableLeft="@drawable/ic_dna"
+			android:drawablePadding="@dimen/spacing_double"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/open_source_licences"
+			/>
+	<TextView
+			android:id="@+id/btnRate"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_thumbs"
+			android:drawableLeft="@drawable/ic_thumbs"
+			android:drawablePadding="@dimen/spacing_double"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/rate_app"
+			/>
+
+	<TextView
+			android:id="@+id/btnRequest"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?android:selectableItemBackground"
+			android:clickable="true"
+			android:drawableStart="@drawable/ic_chat_bubble"
+			android:drawableLeft="@drawable/ic_chat_bubble"
+			android:drawablePadding="@dimen/spacing_double"
+			android:focusable="true"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_small"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:paddingBottom="@dimen/spacing_small"
+			android:text="@string/request"
+			/>
+
+	<TextView
+			android:id="@+id/txtAbout"
+			style="@style/Text.NormalLabel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_small"
+			android:background="?android:selectableItemBackground"
+			android:drawablePadding="@dimen/spacing_double"
+			android:gravity="bottom|center"
+			android:padding="@dimen/spacing_normal"
+			android:text="@string/app_name"
+			android:textSize="@dimen/text_xmedium"
+			/>
+
+</LinearLayout>
