@@ -17,31 +17,47 @@
  * the License.
  */
 
-package com.dimowner.elections.data.repository
+package com.dimowner.elections.data
 
 import com.dimowner.elections.data.local.LocalRepository
-import com.dimowner.elections.data.local.room.CandidateEntity
-import com.dimowner.elections.data.remote.RemoteRepository
+import com.dimowner.elections.data.remote.FirebaseDatasource
+import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.data.model.Vote
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class RepositoryImpl(
 		private val localRepository: LocalRepository,
-		private val remoteRepository: RemoteRepository
+		private val firebase: FirebaseDatasource
 ) : Repository {
 
-	override fun subscribeCandidates(): Flowable<List<CandidateEntity>> {
-		remoteRepository.subscribeCandidates()
+	val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+	override fun subscribeCandidates(): Flowable<List<Candidate>> {
+		compositeDisposable.add(firebase.candidates
 				.subscribeOn(Schedulers.io())
+				.observeOn(Schedulers.io())
 				.subscribe({ response ->
 					localRepository.cacheCandidates(response)
-				}, Timber::e)
+				}, Timber::e))
 		return localRepository.subscribeCandidates()
 				.subscribeOn(Schedulers.io())
 	}
 
-	override fun cacheCandidates(entity: List<CandidateEntity>) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun subscribeVotes(): Flowable<List<Vote>> {
+		compositeDisposable.add(firebase.votes
+				.subscribeOn(Schedulers.io())
+				.observeOn(Schedulers.io())
+				.subscribe({ response ->
+					localRepository.cacheVotes(response)
+				}, Timber::e))
+		return localRepository.subscribeVotes()
+				.subscribeOn(Schedulers.io())
+	}
+
+	override fun clear() {
+		compositeDisposable.clear()
 	}
 }

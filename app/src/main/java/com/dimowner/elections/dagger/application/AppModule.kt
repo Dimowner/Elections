@@ -24,17 +24,19 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import android.content.Context
 import com.dimowner.elections.AppConstants.Companion.LOCAL_DATABASE_NAME
+import com.dimowner.elections.data.remote.FirebaseDatasource
 import com.dimowner.elections.data.Prefs
-import com.dimowner.elections.data.local.LocalRepository
+import com.dimowner.elections.data.local.LocalRepositoryImpl
 import com.dimowner.elections.data.local.room.AppDatabase
-import com.dimowner.elections.data.remote.RemoteRepository
-import com.dimowner.elections.data.repository.Repository
-import com.dimowner.elections.data.repository.RepositoryImpl
+import com.dimowner.elections.data.Repository
+import com.dimowner.elections.data.RepositoryImpl
 import com.dimowner.elections.places.PlacesProvider
-import com.dimowner.elections.app.main.CandidatesListContract
-import com.dimowner.elections.app.main.CandidatesListPresenter
+import com.dimowner.elections.app.candidates.CandidatesListContract
+import com.dimowner.elections.app.candidates.CandidatesListPresenter
 import com.dimowner.elections.app.settings.SettingsContract
 import com.dimowner.elections.app.settings.SettingsPresenter
+import com.dimowner.elections.app.votes.VotesListContract
+import com.dimowner.elections.app.votes.VotesListPresenter
 import com.dimowner.elections.app.welcome.WelcomePresenter
 import com.dimowner.elections.data.PrefsImpl
 import dagger.Module
@@ -74,22 +76,27 @@ class AppModule(
 	}
 
 	@Provides
-	@Singleton
-	internal fun provideLocalRepository(appDatabase: AppDatabase): LocalRepository {
-		return LocalRepository(appDatabase)
+	internal fun provideVotesListPresenter(repository: Repository, prefs: Prefs): VotesListContract.UserActionsListener {
+		return VotesListPresenter(repository, prefs)
 	}
 
 	@Provides
 	@Singleton
-	internal fun provideRemoteRepository(prefs: Prefs): RemoteRepository {
-		return RemoteRepository(prefs)
+	internal fun provideLocalRepository(appDatabase: AppDatabase): LocalRepositoryImpl {
+		return LocalRepositoryImpl(appDatabase)
 	}
 
 	@Provides
 	@Singleton
-	internal fun provideRepository(localRepository: LocalRepository,
-								   remoteRepository: RemoteRepository): Repository {
-		return RepositoryImpl(localRepository, remoteRepository)
+	internal fun provideFirebaseHandler(): FirebaseDatasource {
+		return FirebaseDatasource()
+	}
+
+	@Provides
+	@Singleton
+	internal fun provideRepository(localRepository: LocalRepositoryImpl,
+											 firebaseHandler: FirebaseDatasource): Repository {
+		return RepositoryImpl(localRepository, firebaseHandler)
 	}
 
 	@Provides

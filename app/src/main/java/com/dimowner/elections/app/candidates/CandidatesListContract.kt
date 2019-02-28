@@ -17,23 +17,21 @@
  *  the License.
  */
 
-package com.dimowner.elections.data.local.room
+package com.dimowner.elections.app.candidates
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import com.dimowner.elections.app.Contract
+import com.dimowner.elections.data.model.Candidate
 
-@Entity(tableName = "candidate")
-data class CandidateEntity(
-		@SerializedName("name")
-		val name: String,
-		@SerializedName("description")
-		val description: String,
-		@SerializedName("icon")
-		val icon: String
-) {
 
-	@PrimaryKey(autoGenerate = true)
-	@SerializedName("id")
-	var id: Int = 0
+interface CandidatesListContract {
+
+	interface View : Contract.View {
+
+		fun showCandidatesList(list: List<Candidate>)
+	}
+
+	interface UserActionsListener : Contract.UserActionsListener<View> {
+
+		fun loadCandidates()
+	}
 }

@@ -21,8 +21,10 @@ package com.dimowner.elections.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.data.model.Vote
 
-@Database(entities = arrayOf(CandidateEntity::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Candidate::class, Vote::class), version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
 	abstract fun electionsDao(): ElectionsDao

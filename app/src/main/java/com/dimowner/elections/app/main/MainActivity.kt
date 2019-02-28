@@ -26,7 +26,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
+import com.dimowner.elections.app.candidates.CandidatesListFragment
 import com.dimowner.elections.app.settings.SettingsActivity
+import com.dimowner.elections.app.votes.VotesListFragment
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.app.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			val fragments = ArrayList<Fragment>()
 //			fragments.add(SettingsFragment.newInstance())
 			fragments.add(CandidatesListFragment.newInstance())
-			fragments.add(CandidatesListFragment.newInstance())
+			fragments.add(VotesListFragment.newInstance())
 			val adapter = CustomStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
 //			pager.currentItem = 1

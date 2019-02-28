@@ -17,25 +17,33 @@
  *  the License.
  */
 
-package com.dimowner.elections.data.remote
+package com.dimowner.elections.data.local
 
-import com.dimowner.elections.data.Prefs
-import com.dimowner.elections.data.local.room.CandidateEntity
-import com.dimowner.elections.data.repository.Repository
+import com.dimowner.elections.data.local.room.AppDatabase
+import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.data.model.Vote
 import io.reactivex.Flowable
 
-class RemoteRepository(
-		private val prefs: Prefs
-) : Repository {
+class LocalRepositoryImpl(private val appDatabase: AppDatabase) : LocalRepository {
 
-	override fun subscribeCandidates(): Flowable<List<CandidateEntity>> {
-		val list: ArrayList<CandidateEntity> = ArrayList()
-		list.add(CandidateEntity("name", "description", "01d"))
-		list.add(CandidateEntity("name2", "description2", "04d"))
-		return Flowable.just(list)
+	override fun subscribeCandidates(): Flowable<List<Candidate>> {
+		return appDatabase.electionsDao().subscribeCandidates()
 	}
 
-	override fun cacheCandidates(entity: List<CandidateEntity>) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun cacheCandidates(entity: List<Candidate>) {
+		if (entity.isNotEmpty()) {
+			appDatabase.electionsDao().deleteCandidates()
+			appDatabase.electionsDao().insertAll(*entity.toTypedArray())
+		}
+	}
+
+	override fun subscribeVotes(): Flowable<List<Vote>> {
+		return appDatabase.electionsDao().subscribeVotes()
+	}
+
+	override fun cacheVotes(entity: List<Vote>) {
+		if (entity.isNotEmpty()) {
+			appDatabase.electionsDao().insertAll(*entity.toTypedArray())
+		}
 	}
 }

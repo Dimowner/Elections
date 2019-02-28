@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.main
+package com.dimowner.elections.app.candidates
 
 import android.view.LayoutInflater
 import android.view.View
@@ -26,11 +26,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
-import com.dimowner.elections.data.local.room.CandidateEntity
+import com.dimowner.elections.data.model.Candidate
 
 class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-	private var data: List<CandidateEntity> = ArrayList()
+	private var data: List<Candidate> = ArrayList()
 
 	private var itemClickListener: ItemClickListener? = null
 
@@ -42,8 +42,8 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	override fun onBindViewHolder(h: RecyclerView.ViewHolder, position: Int) {
 		val pos = h.adapterPosition
 		val holder = h as ItemViewHolder
-		holder.name.text = data[pos].name
-		holder.description.text = data[pos].description
+		holder.name.text = data[pos].firstName + " " + data[pos].surName
+		holder.description.text = if (data[pos].party.isNotBlank()) data[pos].party else "Samovidvijenets"
 		holder.image.setImageResource(R.mipmap.ic_elections)
 
 		holder.view.setOnClickListener { v -> itemClickListener?.onItemClick(v, pos) }
@@ -53,7 +53,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		return data.size
 	}
 
-	fun setData(data: List<CandidateEntity>) {
+	fun setData(data: List<Candidate>) {
 		this.data = data
 		notifyDataSetChanged()
 	}

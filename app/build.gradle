@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 ext.versions = [
 		// Android
@@ -32,13 +33,16 @@ ext.versions = [
 		//Binary Preferences
 		binaryPrefs		 : "1.0.1",
 
-		logInterceptor  : "3.8.1"
+		logInterceptor  : "3.8.1",
+
+		//Firebase
+		firebaseCore     : "16.0.7",
+		firebaseDatabase : "16.1.0"
 ]
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 0
-
+def versionPatch = 1
 android {
 	compileSdkVersion versions.targetSdkVersion
 	buildToolsVersion versions.buildtools
@@ -115,7 +119,7 @@ android {
 
 	lintOptions {
 		checkReleaseBuilds false
-		// Or, if you prefer, you can continue to check for errors in release builds,
+		// Or, if you prefer, you can continue to check for errors in clear builds,
 		// but continue the build even when errors are found:
 		abortOnError false
 	}
@@ -145,12 +149,9 @@ dependencies {
 	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 	implementation 'androidx.appcompat:appcompat:1.0.2'
 	implementation 'com.google.android.material:material:1.0.0'
-	implementation 'androidx.annotation:annotation:1.0.1'
-	implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
-	implementation 'androidx.palette:palette:1.0.0'
-	implementation 'com.google.android.material:material:1.0.0-beta1'
+	implementation 'androidx.annotation:annotation:1.0.2'
+//	implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
 
-	implementation "com.google.android.gms:play-services-maps:$versions.gmsVersion"
 	implementation "com.google.android.gms:play-services-places:$versions.gmsVersion"
 	implementation "com.google.android.gms:play-services-location:$versions.gmsVersion"
 
@@ -180,11 +181,12 @@ dependencies {
 	implementation 'androidx.room:room-rxjava2:2.0.0'
 	kapt 'androidx.room:room-compiler:2.0.0'
 
+	//Firebase
+	implementation "com.google.firebase:firebase-core:$versions.firebaseCore"
+	implementation "com.google.firebase:firebase-database:$versions.firebaseDatabase"
+
 	//Timber
 	implementation "com.jakewharton.timber:timber:$versions.timber"
-
-	//Binary Preferences
-	implementation "com.github.yandextaxitech:binaryprefs:$versions.binaryPrefs"
 
 	testImplementation 'org.mockito:mockito-core:2.23.0'
 	testImplementation 'junit:junit:4.12'

@@ -17,21 +17,21 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.main
+package com.dimowner.elections.app.votes
 
 import com.dimowner.elections.app.Contract
-import com.dimowner.elections.data.local.room.CandidateEntity
+import com.dimowner.elections.data.model.Vote
 
 
-interface CandidatesListContract {
+interface VotesListContract {
 
 	interface View : Contract.View {
 
-		fun showCandidatesList(list: List<CandidateEntity>)
+		fun showCandidatesList(list: List<Vote>)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 
-		fun loadCandidates()
+		fun loadVotes()
 	}
 }

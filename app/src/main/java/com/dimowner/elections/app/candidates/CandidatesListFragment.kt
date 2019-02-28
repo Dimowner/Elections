@@ -17,7 +17,7 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.main
+package com.dimowner.elections.app.candidates
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -28,7 +28,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
-import com.dimowner.elections.data.local.room.CandidateEntity
+import com.dimowner.elections.data.model.Candidate
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
@@ -67,7 +67,7 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		presenter.unbindView()
 	}
 
-	override fun showCandidatesList(list: List<CandidateEntity>) {
+	override fun showCandidatesList(list: List<Candidate>) {
 		adapter.setData(list)
 	}
 

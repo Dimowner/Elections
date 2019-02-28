@@ -17,10 +17,10 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.main
+package com.dimowner.elections.app.candidates
 
 import com.dimowner.elections.data.Prefs
-import com.dimowner.elections.data.repository.Repository
+import com.dimowner.elections.data.Repository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber

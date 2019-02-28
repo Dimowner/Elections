@@ -5,3 +5,5 @@
 /releaseConfig
 /debugConfig
 /fabric.properties
+/src/debugConfig/google-services.json
+/src/releaseConfig/google-services.json

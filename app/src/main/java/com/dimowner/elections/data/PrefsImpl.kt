@@ -20,11 +20,7 @@
 package com.dimowner.elections.data
 
 import android.content.Context
-import com.dimowner.elections.AppConstants
-import com.ironz.binaryprefs.BinaryPreferencesBuilder
-import com.ironz.binaryprefs.Preferences
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
+import android.content.SharedPreferences
 import kotlin.properties.Delegates
 
 class PrefsImpl constructor(context: Context) : Prefs {
@@ -35,21 +31,10 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		const val PREF_KEY_IS_FIRST_RUN = "is_first_run"
 	}
 
-//	private var preferences: SharedPreferences by Delegates.notNull()
-	private var preferences: Preferences by Delegates.notNull()
-//	private var flowable: Flowable<String> by Delegates.notNull()
+	private var preferences: SharedPreferences by Delegates.notNull()
 
 	init {
-//		this.preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-		this.preferences = BinaryPreferencesBuilder(context)
-				.name(PREF_NAME)
-				.build()
-
-//		flowable = Flowable.create({
-//			preferences.registerOnSharedPreferenceChangeListener { sharedPrefs, key ->
-//				it.onNext(key)
-//			}
-//		}, BackpressureStrategy.LATEST)
+		this.preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 	}
 
 	override fun isFirstRun(): Boolean {

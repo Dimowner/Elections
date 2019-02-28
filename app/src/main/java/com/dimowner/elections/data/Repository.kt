@@ -17,14 +17,17 @@
  * the License.
  */
 
-package com.dimowner.elections.data.repository
+package com.dimowner.elections.data
 
-import com.dimowner.elections.data.local.room.CandidateEntity
+import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.data.model.Vote
 import io.reactivex.Flowable
 
 interface Repository {
 
-	fun subscribeCandidates(): Flowable<List<CandidateEntity>>
+	fun subscribeCandidates(): Flowable<List<Candidate>>
 
-	fun cacheCandidates(entity: List<CandidateEntity>)
+	fun subscribeVotes(): Flowable<List<Vote>>
+
+	fun clear()
 }

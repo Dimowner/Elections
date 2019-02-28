@@ -23,21 +23,35 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.data.model.Vote
 import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
 interface ElectionsDao {
 
-	@Query("SELECT * FROM candidate")
-	fun subscribeCandidates(): Flowable<List<CandidateEntity>>
+	@Query("SELECT * FROM candidates")
+	fun subscribeCandidates(): Flowable<List<Candidate>>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insertCandidate(item: CandidateEntity)
+	fun insertCandidate(item: Candidate)
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insertAll(vararg items: CandidateEntity)
+	fun insertAll(vararg items: Candidate)
 
-	@Query("DELETE FROM candidate")
-	fun delete()
+	@Query("DELETE FROM candidates")
+	fun deleteCandidates()
+
+	@Query("SELECT * FROM votes")
+	fun subscribeVotes(): Flowable<List<Vote>>
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	fun insertVotes(item: Vote)
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	fun insertAll(vararg items: Vote)
+
+	@Query("DELETE FROM votes")
+	fun deleteVotes()
 }
