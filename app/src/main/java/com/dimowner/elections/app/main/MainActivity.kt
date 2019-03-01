@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		}
 
 		btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
+		toolbar.setOnClickListener { startActivity(Intent(applicationContext, WelcomeActivity::class.java)) }
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

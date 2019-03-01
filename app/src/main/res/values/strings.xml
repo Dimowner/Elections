@@ -15,11 +15,13 @@
   -->
 
 <resources>
-	<string name="app_name">Elections</string>
+	<string name="app_name">Вибори 2019</string>
 
-	<string name="tittle_settings">Settings</string>
-	<string name="welcome">Welcome</string>
+	<string name="tittle_settings">Налаштування</string>
+	<string name="welcome">Вітаємо!</string>
 	<string name="open_source_licences">Open source licences</string>
+
+	<string name="make_your_choice">Зроби свій вибір уже сьогодні</string>
 
 	<string name="btn_ok">OK</string>
 	<string name="btn_next">Next</string>
@@ -27,6 +29,7 @@
 	<string name="btn_start">Start</string>
 	<string name="btn_locate">Locate</string>
 	<string name="btn_settings">Settings</string>
+	<string name="btn_vote">Голосувати</string>
 
 	<string name="item_image">Item image</string>
 

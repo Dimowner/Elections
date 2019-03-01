@@ -25,43 +25,53 @@
 
 	<ImageView
 			android:id="@+id/welcomeIcon"
-			android:layout_width="140dp"
-			android:layout_height="140dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:contentDescription="@null"
 			android:src="@drawable/logo"
-			app:layout_constraintBottom_toTopOf="@+id/welcomeLabel"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_chainStyle="packed"/>
+			/>
 
-	<TextView
-			android:id="@+id/welcomeLabel"
-			style="@style/Text.SectionLabel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/welcome"
-			android:layout_margin="@dimen/spacing_big"
-			android:textSize="@dimen/text_huge"
+	<androidx.viewpager.widget.ViewPager
+			android:id="@+id/pager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/welcomeIcon"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toTopOf="@+id/btnApply"
 			/>
 
 	<Button
 			android:id="@+id/btnApply"
-			style="@style/Button"
-			android:layout_width="match_parent"
+			style="@style/Widget.RaisedButton"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:contentDescription="@null"
-			android:text="@string/btn_start"
+			android:text="@string/btn_vote"
 			android:padding="@dimen/spacing_normal"
+			android:layout_marginBottom="@dimen/spacing_normal"
 			android:background="?android:attr/selectableItemBackground"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/pageIndicator"
 			/>
 
+	<com.pixelcan.inkpageindicator.InkPageIndicator
+			android:id="@+id/pageIndicator"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/spacing_big"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:importantForAccessibility="no"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:ipi_currentPageIndicatorColor="@color/colorAccent"
+			app:ipi_pageIndicatorColor="@color/md_indigo_900"
+			/>
 </androidx.constraintlayout.widget.ConstraintLayout>

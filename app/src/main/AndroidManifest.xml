@@ -43,7 +43,7 @@
 
 		<activity-alias
 				android:name="com.dimowner.elections.Launcher"
-				android:targetActivity="com.dimowner.elections.app.main.MainActivity">
+				android:targetActivity="com.dimowner.elections.app.welcome.WelcomeActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
@@ -57,7 +57,8 @@
 
 		<activity
 				android:name="com.dimowner.elections.app.welcome.WelcomeActivity"
-				android:screenOrientation="portrait"/>
+				android:screenOrientation="portrait"
+				android:theme="@style/AppTheme.BrandedLaunch"/>
 
 		<activity
 				android:name="com.dimowner.elections.app.settings.SettingsActivity"
