@@ -19,6 +19,8 @@
 
 package com.dimowner.elections.app.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +38,12 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
+
+	companion object {
+		fun getStartActivity(context: Context): Intent {
+			return Intent(context, MainActivity::class.java)
+		}
+	}
 
 //	companion object {
 //		const val ITEM_SETTINGS = 0

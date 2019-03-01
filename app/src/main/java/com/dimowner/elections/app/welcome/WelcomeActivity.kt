@@ -75,23 +75,23 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
 		// immersive mode so images can draw behind the status bar
-		val decor = window.decorView
-		val flags = decor.systemUiVisibility or
-				View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-		decor.systemUiVisibility = flags
+//		val decor = window.decorView
+//		val flags = decor.systemUiVisibility or
+//				View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+//				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//		decor.systemUiVisibility = flags
 
-		btnApply.setOnClickListener {
+		btnStart.setOnClickListener {
 			presenter.firstRunExecuted()
 //			startActivity(Intent(applicationContext, MainActivity::class.java))
 //			finish()
 			startActivity(PollActivity.getStartActivity(applicationContext))
 		}
 
-		btnApply.doOnLayout {
-			btnApply.translationY = btnApply.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_huge)
-			btnApply.visibility = View.VISIBLE
-			AnimationUtil.verticalSpringAnimation(btnApply, 0)
+		btnStart.doOnLayout {
+			btnStart.translationY = btnStart.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_huge)
+			btnStart.visibility = View.VISIBLE
+			AnimationUtil.verticalSpringAnimation(btnStart, 0)
 		}
 
 		adapter = OnboardingAdapter(supportFragmentManager)

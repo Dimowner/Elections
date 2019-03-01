@@ -10,6 +10,7 @@ import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dimowner.elections.GWApplication
 import com.dimowner.elections.R
+import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
@@ -49,6 +50,7 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 			btnVote.translationY = btnVote.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_normal)
 			btnVote.visibility = View.VISIBLE
 		}
+		btnVote.setOnClickListener { startActivity(MainActivity.getStartActivity(applicationContext)) }
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 		presenter.bindView(this)
