@@ -120,7 +120,7 @@
 			android:layout_marginTop="@dimen/spacing_small"
 			android:background="?android:selectableItemBackground"
 			android:drawablePadding="@dimen/spacing_double"
-			android:gravity="bottom|center"
+			android:gravity="center_horizontal"
 			android:padding="@dimen/spacing_normal"
 			android:text="@string/app_name"
 			android:textSize="@dimen/text_xmedium"

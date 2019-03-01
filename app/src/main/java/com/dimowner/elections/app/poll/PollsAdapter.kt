@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.data.model.Candidate
@@ -34,7 +35,7 @@ private const val VIEW_TYPE_FOOTER = 2
 
 class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-	private var data: List<Candidate> = ArrayList()
+	private var data: MutableList<Candidate> = ArrayList()
 
 	private var itemClickListener: ItemClickListener? = null
 
@@ -95,9 +96,17 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		return data.size + 1
 	}
 
-	fun setData(data: List<Candidate>) {
-		this.data = data
-		notifyDataSetChanged()
+	fun setData(list: List<Candidate>) {
+		if (data.isEmpty()) {
+			this.data.addAll(list)
+			notifyDataSetChanged()
+		} else {
+			val diff = CandDiffUtilCallback(data, list)
+			val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diff)
+			this.data.clear()
+			this.data.addAll(list)
+			diffResult.dispatchUpdatesTo(this)
+		}
 	}
 
 	fun setItemClickListener(itemClickListener: ItemClickListener) {

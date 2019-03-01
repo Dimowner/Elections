@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
 private const val AUTO_ADVANCE_DELAY = 6_000L
-private const val INITIAL_ADVANCE_DELAY = 4_000L
+private const val INITIAL_ADVANCE_DELAY = 3_000L
 
 class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnPageChangeListener  {
 

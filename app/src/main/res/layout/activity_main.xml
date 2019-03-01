@@ -37,14 +37,11 @@
 				android:layout_gravity="center"
 				android:gravity="center_vertical"
 				android:textColor="@color/md_white_1000"
-				android:background="?android:selectableItemBackground"
-				android:clickable="true"
-				android:focusable="true"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingEnd="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
-				android:text="Kyiv, Ukraine"
+				android:text="@string/vote_results"
 				/>
 
 		<ImageButton
