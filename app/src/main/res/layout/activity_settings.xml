@@ -49,6 +49,7 @@
 				app:srcCompat="@drawable/ic_arrow_back"
 				android:src="@drawable/ic_arrow_back"
 				/>
+
 	</FrameLayout>
 
 	<TextView
@@ -65,10 +66,10 @@
 			android:focusable="true"
 			android:paddingStart="@dimen/spacing_normal"
 			android:paddingLeft="@dimen/spacing_normal"
-			android:paddingTop="@dimen/spacing_small"
+			android:paddingTop="@dimen/spacing_normal"
 			android:paddingEnd="@dimen/spacing_normal"
 			android:paddingRight="@dimen/spacing_normal"
-			android:paddingBottom="@dimen/spacing_small"
+			android:paddingBottom="@dimen/spacing_normal"
 			android:text="@string/open_source_licences"
 			/>
 	<TextView
@@ -84,10 +85,10 @@
 			android:focusable="true"
 			android:paddingStart="@dimen/spacing_normal"
 			android:paddingLeft="@dimen/spacing_normal"
-			android:paddingTop="@dimen/spacing_small"
+			android:paddingTop="@dimen/spacing_normal"
 			android:paddingEnd="@dimen/spacing_normal"
 			android:paddingRight="@dimen/spacing_normal"
-			android:paddingBottom="@dimen/spacing_small"
+			android:paddingBottom="@dimen/spacing_normal"
 			android:text="@string/rate_app"
 			/>
 
@@ -104,10 +105,10 @@
 			android:focusable="true"
 			android:paddingStart="@dimen/spacing_normal"
 			android:paddingLeft="@dimen/spacing_normal"
-			android:paddingTop="@dimen/spacing_small"
+			android:paddingTop="@dimen/spacing_normal"
 			android:paddingEnd="@dimen/spacing_normal"
 			android:paddingRight="@dimen/spacing_normal"
-			android:paddingBottom="@dimen/spacing_small"
+			android:paddingBottom="@dimen/spacing_normal"
 			android:text="@string/request"
 			/>
 

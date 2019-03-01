@@ -19,28 +19,36 @@
 
 package com.dimowner.elections.app.welcome
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.elections.GWApplication
 import com.dimowner.elections.R
-import com.dimowner.elections.app.main.MainActivity
+import com.dimowner.elections.app.poll.PollActivity
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_welcome.*
 import javax.inject.Inject
 
 private const val AUTO_ADVANCE_DELAY = 6_000L
-private const val INITIAL_ADVANCE_DELAY = 3_000L
+private const val INITIAL_ADVANCE_DELAY = 4_000L
 
 class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnPageChangeListener  {
 
-	val tridentOffset = AndroidUtils.dpToPx(-120)
+	companion object {
+		fun getStartActivity(context: Context): Intent {
+			return Intent(context, WelcomeActivity::class.java)
+		}
+	}
+
+	val tridentOffset = AndroidUtils.dpToPx(-136)
 	lateinit var adapter: OnboardingAdapter
 
 	private lateinit var pagerPager: ViewPagerPager
@@ -75,9 +83,17 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 
 		btnApply.setOnClickListener {
 			presenter.firstRunExecuted()
-			startActivity(Intent(applicationContext, MainActivity::class.java))
-			finish()
+//			startActivity(Intent(applicationContext, MainActivity::class.java))
+//			finish()
+			startActivity(PollActivity.getStartActivity(applicationContext))
 		}
+
+		btnApply.doOnLayout {
+			btnApply.translationY = btnApply.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_huge)
+			btnApply.visibility = View.VISIBLE
+			AnimationUtil.verticalSpringAnimation(btnApply, 0)
+		}
+
 		adapter = OnboardingAdapter(supportFragmentManager)
 		pager.adapter = adapter
 		pagerPager = ViewPagerPager(pager)
@@ -99,7 +115,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 							isAnimated = true
 						}
 				}
-			}, 150)
+			}, 200)
 		}
 	}
 
@@ -114,8 +130,8 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 	}
 
 	override fun onStop() {
-		super.onStop()
 		handler.removeCallbacks(advancePager)
+		super.onStop()
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}
@@ -137,7 +153,7 @@ class OnboardingAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter
 	private val fragments =
 			arrayOf(
 					WelcomeFragment(),
-					WelcomeFragment()
+					Welcome2Fragment()
 			)
 
 	override fun getItem(position: Int) = fragments[position]
@@ -145,6 +161,6 @@ class OnboardingAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter
 	override fun getCount() = fragments.size
 
 	fun showText() {
-		fragments[0].showText()
+		(fragments[0] as WelcomeFragment).showText()
 	}
 }

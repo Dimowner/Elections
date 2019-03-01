@@ -20,6 +20,7 @@
 package com.dimowner.elections.app.settings
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -38,6 +39,12 @@ import javax.inject.Inject
 
 class SettingsActivity : AppCompatActivity(), SettingsContract.View {
 
+	companion object {
+		fun getStartActivity(context: Context): Intent {
+			return Intent(context, SettingsActivity::class.java)
+		}
+	}
+
 	@Inject
 	lateinit var presenter: SettingsContract.UserActionsListener
 
@@ -51,7 +58,7 @@ class SettingsActivity : AppCompatActivity(), SettingsContract.View {
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
-		btnLicences.setOnClickListener { startActivity(Intent(applicationContext, LicenceActivity::class.java))}
+		btnLicences.setOnClickListener { startActivity(LicenceActivity.getStartActivity(applicationContext)) }
 		btnRequest.setOnClickListener { requestFeature() }
 		btnRate.setOnClickListener { rateApp() }
 

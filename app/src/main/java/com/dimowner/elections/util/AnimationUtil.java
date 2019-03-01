@@ -72,8 +72,8 @@ public class AnimationUtil {
 
 	public static void verticalSpringAnimation(View view, int positionY) {
 		SpringAnimation animY = new SpringAnimation(view, SpringAnimation.TRANSLATION_Y, positionY);
-		animY.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
-				.setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
+		animY.getSpring().setStiffness(SpringForce.STIFFNESS_MEDIUM)
+				.setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY);
 		animY.start();
 	}
 

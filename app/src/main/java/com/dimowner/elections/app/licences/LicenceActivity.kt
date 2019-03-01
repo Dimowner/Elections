@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.licences
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
@@ -26,6 +27,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.elections.R
 
 class LicenceActivity: AppCompatActivity() {
+
+	companion object {
+		fun getStartActivity(context: Context): Intent {
+			return Intent(context, LicenceActivity::class.java)
+		}
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -41,9 +48,7 @@ class LicenceActivity: AppCompatActivity() {
 		list.adapter = adapter
 
 		list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-			val intent = Intent(applicationContext, LicenceDetail::class.java)
-			intent.putExtra(LicenceDetail.EXTRAS_KEY_LICENCE_ITEM_POS, position)
-			startActivity(intent)
+			startActivity(LicenceDetail.getStartActivity(applicationContext, position))
 		}
 	}
 }

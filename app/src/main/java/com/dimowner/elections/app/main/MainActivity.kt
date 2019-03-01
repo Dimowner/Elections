@@ -19,7 +19,6 @@
 
 package com.dimowner.elections.app.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -73,7 +72,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
 		if (prefs.isFirstRun()) {
-			startActivity(Intent(applicationContext, WelcomeActivity::class.java))
+			startActivity(WelcomeActivity.getStartActivity(applicationContext))
 			finish()
 		} else {
 			val fragments = ArrayList<Fragment>()
@@ -89,8 +88,8 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 //			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 		}
 
-		btnSettings.setOnClickListener { startActivity(Intent(applicationContext, SettingsActivity::class.java)) }
-		toolbar.setOnClickListener { startActivity(Intent(applicationContext, WelcomeActivity::class.java)) }
+		btnSettings.setOnClickListener { startActivity(SettingsActivity.getStartActivity(applicationContext)) }
+		toolbar.setOnClickListener { startActivity(WelcomeActivity.getStartActivity(applicationContext)) }
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

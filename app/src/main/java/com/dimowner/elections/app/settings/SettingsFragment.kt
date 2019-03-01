@@ -61,7 +61,9 @@ class SettingsFragment : Fragment(), SettingsContract.View {
 		super.onViewCreated(view, savedInstanceState)
 		GWApplication.get(view.context).applicationComponent().inject(this)
 
-		btnLicences.setOnClickListener { startActivity(Intent(context, LicenceActivity::class.java))}
+		btnLicences.setOnClickListener {
+			if (context != null) { startActivity(LicenceActivity.getStartActivity(context!!)) }
+		}
 		btnRequest.setOnClickListener { requestFeature() }
 		btnRate.setOnClickListener { rateApp() }
 		txtAbout.text = getAboutContent()

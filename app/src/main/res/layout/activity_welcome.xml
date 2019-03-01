@@ -30,6 +30,7 @@
 			android:layout_gravity="center"
 			android:contentDescription="@null"
 			android:src="@drawable/logo"
+			android:layout_marginTop="@dimen/spacing_double"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -53,8 +54,8 @@
 			android:layout_height="wrap_content"
 			android:contentDescription="@null"
 			android:text="@string/btn_vote"
-			android:padding="@dimen/spacing_normal"
 			android:layout_marginBottom="@dimen/spacing_normal"
+			android:visibility="invisible"
 			android:background="?android:attr/selectableItemBackground"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +73,7 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:ipi_currentPageIndicatorColor="@color/colorAccent"
-			app:ipi_pageIndicatorColor="@color/md_indigo_900"
+			app:ipi_pageIndicatorColor="@color/colorAccentDark"
 			/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

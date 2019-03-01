@@ -19,6 +19,8 @@
 
 package com.dimowner.elections.app.licences
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.elections.R
@@ -27,7 +29,13 @@ import kotlinx.android.synthetic.main.activity_licence_detail.*
 class LicenceDetail: AppCompatActivity() {
 
 	companion object {
-		const val EXTRAS_KEY_LICENCE_ITEM_POS = "licence_item_pos"
+		private const val EXTRAS_KEY_LICENCE_ITEM_POS = "licence_item_pos"
+
+		fun getStartActivity(context: Context, position: Int): Intent {
+			val intent = Intent(context, LicenceDetail::class.java)
+			intent.putExtra(LicenceDetail.EXTRAS_KEY_LICENCE_ITEM_POS, position)
+			return intent
+		}
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {

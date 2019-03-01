@@ -65,6 +65,10 @@
 				android:screenOrientation="portrait"/>
 
 		<activity
+				android:name="com.dimowner.elections.app.poll.PollActivity"
+				android:screenOrientation="portrait"/>
+
+		<activity
 				android:name="com.dimowner.elections.app.licences.LicenceActivity"
 				android:label="@string/open_source_licences"
 				android:screenOrientation="portrait"

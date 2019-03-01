@@ -17,40 +17,82 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.candidates
+package com.dimowner.elections.app.poll
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.data.model.Candidate
 
-class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+private const val VIEW_TYPE_NORMAL = 1
+private const val VIEW_TYPE_FOOTER = 2
+
+class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	private var data: List<Candidate> = ArrayList()
 
 	private var itemClickListener: ItemClickListener? = null
 
+	private var selectedItem = -1
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-		val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
-		return ItemViewHolder(v)
+		return if (viewType == VIEW_TYPE_NORMAL) {
+			val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
+			ItemViewHolder(v)
+		} else {
+			val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_footer, parent, false)
+			FooterViewHolder(v)
+		}
 	}
 
 	override fun onBindViewHolder(h: RecyclerView.ViewHolder, position: Int) {
-		val pos = h.adapterPosition
-		val holder = h as ItemViewHolder
-		holder.name.text = data[pos].firstName + " " + data[pos].surName
-		holder.description.text = if (data[pos].party.isNotBlank()) data[pos].party else "Samovidvijenets"
-		holder.image.setImageResource(R.mipmap.ic_elections)
+		if (h.itemViewType == VIEW_TYPE_NORMAL) {
+			val pos = h.adapterPosition
+			val holder = h as ItemViewHolder
+			holder.name.text = data[pos].firstName + " " + data[pos].surName
+			holder.description.text = if (data[pos].party.isNotBlank()) data[pos].party else "Samovidvijenets"
+			holder.image.setImageResource(R.mipmap.ic_elections)
 
-		holder.view.setOnClickListener { v -> itemClickListener?.onItemClick(v, pos) }
+			if (pos == selectedItem) {
+				holder.itemPanel.setBackgroundResource(R.drawable.ripple_yellow)
+			} else {
+				holder.itemPanel.setBackgroundResource(R.drawable.ripple_blue)
+			}
+
+			holder.itemPanel.setOnClickListener { v ->
+				run {
+					setActiveItem(pos)
+					itemClickListener?.onItemClick(v, pos, selectedItem != -1)
+				}
+			}
+		} else {
+			//Do nothing
+		}
+	}
+
+	private fun setActiveItem(activeItem: Int) {
+		if (this.selectedItem == activeItem) {
+			this.selectedItem = -1
+			notifyItemChanged(activeItem)
+		} else {
+			val prev = this.selectedItem
+			this.selectedItem = activeItem
+			notifyItemChanged(prev)
+			notifyItemChanged(activeItem)
+		}
+	}
+
+	override fun getItemViewType(position: Int): Int {
+		return if (position >= data.size) VIEW_TYPE_FOOTER else VIEW_TYPE_NORMAL
 	}
 
 	override fun getItemCount(): Int {
-		return data.size
+		return data.size + 1
 	}
 
 	fun setData(data: List<Candidate>) {
@@ -67,9 +109,12 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		var description: TextView = view.findViewById(R.id.list_item_description)
 		var image: ImageView = view.findViewById(R.id.list_item_image)
 		var txtVal: TextView = view.findViewById(R.id.list_item_value)
+		var itemPanel: LinearLayout = view.findViewById(R.id.item_panel)
 	}
 
+	internal inner class FooterViewHolder internal constructor(internal val view: View) : RecyclerView.ViewHolder(view)
+
 	interface ItemClickListener {
-		fun onItemClick(view: View, position: Int)
+		fun onItemClick(view: View, position: Int, selected: Boolean)
 	}
 }

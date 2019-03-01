@@ -19,10 +19,12 @@
 	<color name="colorPrimary">#005bbb</color>
 	<color name="colorPrimaryDark">#00478D</color>
 	<color name="colorAccent">#ffd500</color>
+	<color name="colorAccentDark">#0070E0</color>
 
 	<color name="main_blue">#005bbb</color>
 	<color name="main_blue_dark">#00478D</color>
 	<color name="main_yellow">#ffd500</color>
+	<color name="yellow_dark">#DBB600</color>
 
 	<color name="primary_transparent">#8a1a7eef</color>
 	<color name="text_primary_dark">#de000000</color> <!-- 87% -->

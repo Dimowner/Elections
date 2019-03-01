@@ -26,15 +26,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.dimowner.elections.R
-import com.dimowner.elections.util.AnimationUtil
 
 /**
- * First page of onboarding showing a welcome message & branding animation.
+ * Second page of onboarding showing a welcome message & branding animation.
  */
-class WelcomeFragment : Fragment() {
+class Welcome2Fragment : Fragment() {
 
 	lateinit var fragmentView: View
-	private var showText = false
 
 	override fun onCreateView(
 			inflater: LayoutInflater,
@@ -42,24 +40,14 @@ class WelcomeFragment : Fragment() {
 			savedInstanceState: Bundle?
 	): View? {
 		fragmentView = inflater.inflate(R.layout.fragment_welcome, container, false)
-
-		if (showText) {
-			showText()
-			showText = false
+		fragmentView.findViewById<TextView>(R.id.txtTitle).apply {
+			this.setText(R.string.only_here)
+			this.visibility = View.VISIBLE
+		}
+		fragmentView.findViewById<TextView>(R.id.txtDetails).apply {
+			this.setText(R.string.fair_elections)
+			this.visibility = View.VISIBLE
 		}
 		return fragmentView
-	}
-
-	fun showText() {
-		if (::fragmentView.isInitialized) {
-			fragmentView.findViewById<TextView>(R.id.txtTitle).apply {
-				AnimationUtil.viewRevealAnimation(this)
-			}
-			fragmentView.findViewById<TextView>(R.id.txtDetails).apply {
-				AnimationUtil.viewRevealAnimation(this)
-			}
-		} else {
-			showText = true
-		}
 	}
 }

@@ -22,6 +22,7 @@ package com.dimowner.elections.dagger.application
 import com.dimowner.elections.GWApplication
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.app.candidates.CandidatesListFragment
+import com.dimowner.elections.app.poll.PollActivity
 import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.app.settings.SettingsFragment
 import com.dimowner.elections.app.votes.VotesListFragment
@@ -46,5 +47,7 @@ interface AppComponent {
 	fun inject(fragment: CandidatesListFragment)
 
 	fun inject(fragment: VotesListFragment)
+
+	fun inject(activity: PollActivity)
 
 }

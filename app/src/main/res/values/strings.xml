@@ -21,7 +21,9 @@
 	<string name="welcome">Вітаємо!</string>
 	<string name="open_source_licences">Open source licences</string>
 
-	<string name="make_your_choice">Зроби свій вибір уже сьогодні</string>
+	<string name="make_your_choice">Зроби свій вибір прямо зараз!</string>
+	<string name="only_here">Тільки тут!</string>
+	<string name="fair_elections">Самі чесні і справедливі вибори</string>
 
 	<string name="btn_ok">OK</string>
 	<string name="btn_next">Next</string>

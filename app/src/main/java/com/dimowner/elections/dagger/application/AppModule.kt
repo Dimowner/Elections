@@ -33,6 +33,8 @@ import com.dimowner.elections.data.RepositoryImpl
 import com.dimowner.elections.places.PlacesProvider
 import com.dimowner.elections.app.candidates.CandidatesListContract
 import com.dimowner.elections.app.candidates.CandidatesListPresenter
+import com.dimowner.elections.app.poll.PollContract
+import com.dimowner.elections.app.poll.PollPresenter
 import com.dimowner.elections.app.settings.SettingsContract
 import com.dimowner.elections.app.settings.SettingsPresenter
 import com.dimowner.elections.app.votes.VotesListContract
@@ -78,6 +80,11 @@ class AppModule(
 	@Provides
 	internal fun provideVotesListPresenter(repository: Repository, prefs: Prefs): VotesListContract.UserActionsListener {
 		return VotesListPresenter(repository, prefs)
+	}
+
+	@Provides
+	internal fun providePollPresenter(repository: Repository, prefs: Prefs): PollContract.UserActionsListener {
+		return PollPresenter(repository, prefs)
 	}
 
 	@Provides
