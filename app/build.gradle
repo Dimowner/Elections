@@ -44,7 +44,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 5
+def versionPatch = 6
 android {
 	compileSdkVersion versions.targetSdkVersion
 	buildToolsVersion versions.buildtools
@@ -169,11 +169,12 @@ dependencies {
 	implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
 	implementation "io.reactivex.rxjava2:rxandroid:$versions.rxJava"
 
-	//RetroFit
-	implementation "com.squareup.retrofit2:retrofit:$versions.retroFit"
-	implementation "com.squareup.retrofit2:converter-gson:$versions.retroFit"
-	implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retroFit"
-	implementation "com.squareup.okhttp3:logging-interceptor:$versions.logInterceptor"
+	implementation 'com.google.code.gson:gson:2.8.5'
+//	//RetroFit
+//	implementation "com.squareup.retrofit2:retrofit:$versions.retroFit"
+//	implementation "com.squareup.retrofit2:converter-gson:$versions.retroFit"
+//	implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retroFit"
+//	implementation "com.squareup.okhttp3:logging-interceptor:$versions.logInterceptor"
 
 	//Dagger2
 	implementation "com.google.dagger:dagger:$versions.dagger2"

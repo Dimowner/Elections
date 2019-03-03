@@ -29,7 +29,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:contentDescription="@null"
-			android:src="@drawable/logo"
+			android:src="@drawable/trident_new2"
 			android:layout_marginBottom="@dimen/spacing_big"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

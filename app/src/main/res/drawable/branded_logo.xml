@@ -27,7 +27,7 @@
 </item>
 <item>
 	<bitmap
-		android:src="@drawable/logo"
+		android:src="@drawable/trident_new2"
 		android:gravity="center"
 		android:tileMode="disabled"/>
 </item>
