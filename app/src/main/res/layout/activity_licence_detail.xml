@@ -19,6 +19,7 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:orientation="vertical">
 
 	<LinearLayout
@@ -37,7 +38,9 @@
 				android:background="?android:selectableItemBackgroundBorderless"
 				android:contentDescription="@null"
 				android:padding="@dimen/spacing_normal"
-				android:src="@drawable/ic_arrow_back"/>
+				app:srcCompat="@drawable/ic_arrow_back_yellow"
+				android:src="@drawable/ic_arrow_back_yellow"
+				/>
 
 		<TextView
 				android:id="@+id/txtTitle"

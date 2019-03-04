@@ -15,7 +15,8 @@
   -->
 
 <resources>
-	<string name="app_name">Вибори 2019</string>
+	<string name="app_name">Вибори Президента 2019</string>
+	<string name="elections">Вибори 2019</string>
 
 	<string name="tittle_settings">Налаштування</string>
 	<string name="welcome">Вітаємо!</string>

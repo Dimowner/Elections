@@ -27,15 +27,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
 import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 import javax.inject.Inject
 
 class CandidatesListFragment : Fragment(), CandidatesListContract.View {
@@ -49,12 +48,18 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 	@Inject
 	lateinit var presenter: CandidatesListContract.UserActionsListener
 
+	var onMoveToVotesListener: View.OnClickListener? = null
+
 	val adapter: CandidatesListAdapter by lazy { CandidatesListAdapter() }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_list, container, false)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			view.findViewById<FrameLayout>(R.id.pnlToolbar).setPadding(0, AndroidUtils.getStatusBarHeight(context), 0, 0)
+			val navBarHeight = AndroidUtils.getNavigationBarHeight(context).toFloat()
+			if (navBarHeight > 0) {
+				view.findViewById<TextView>(R.id.btnVotes).translationY = -navBarHeight
+			}
 		}
 		return view
 	}
@@ -65,8 +70,10 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 		recyclerView.adapter = adapter
-		view.btnSettings.setOnClickListener {
-			if (activity != null) startActivity(SettingsActivity.getStartActivity(activity!!)) }
+		btnSettings.setOnClickListener {
+			if (activity != null) startActivity(SettingsActivity.getStartActivity(activity!!))
+		}
+		btnVotes.setOnClickListener { onMoveToVotesListener?.onClick(btnVotes) }
 
 		GWApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)

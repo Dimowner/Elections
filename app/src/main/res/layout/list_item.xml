@@ -34,8 +34,8 @@
 			android:id="@+id/list_item_image"
 			android:layout_width="40dp"
 			android:layout_height="40dp"
-			app:srcCompat="@drawable/ic_tune"
-			android:src="@drawable/ic_tune"
+			app:srcCompat="@drawable/ic_tune_yellow"
+			android:src="@drawable/ic_tune_yellow"
 			android:layout_gravity="center_vertical"
 			android:scaleType="centerCrop"
 			android:contentDescription="@string/item_image"/>

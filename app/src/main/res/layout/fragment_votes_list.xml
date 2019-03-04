@@ -72,4 +72,27 @@
 				<!--/>-->
 
 	</FrameLayout>
+
+	<TextView
+			style="@style/Text.SectionLabel"
+			android:id="@+id/btnVotes"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/toolbar_height"
+			android:layout_gravity="bottom|start"
+			android:textSize="@dimen/text_medium"
+			android:gravity="center_vertical"
+			android:fontFamily="@font/google_sans"
+			android:textStyle="bold"
+			android:textColor="@color/main_yellow"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:drawableStart="@drawable/ic_arrow_back_yellow"
+			android:drawablePadding="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_normal"
+			android:layout_marginStart="@dimen/spacing_normal"
+			android:clickable="true"
+			android:focusable="true"
+			android:text="@string/vote_results"
+			android:background="@drawable/ripple_blue_dark"
+			/>
 </FrameLayout>

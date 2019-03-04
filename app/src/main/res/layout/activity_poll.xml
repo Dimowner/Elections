@@ -33,7 +33,7 @@
 			android:layout_height="@dimen/toolbar_height"
 			android:layout_gravity="top|center"
 			android:gravity="center_vertical"
-			android:textColor="@color/md_white_1000"
+			android:textColor="@color/main_yellow"
 			android:paddingStart="@dimen/spacing_normal"
 			android:paddingLeft="@dimen/spacing_normal"
 			android:paddingEnd="@dimen/spacing_normal"

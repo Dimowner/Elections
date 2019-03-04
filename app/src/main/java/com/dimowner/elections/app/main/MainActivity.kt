@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -92,8 +93,12 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		} else {
 			val fragments = ArrayList<Fragment>()
 //			fragments.add(SettingsFragment.newInstance())
-			fragments.add(CandidatesListFragment.newInstance())
-			fragments.add(VotesListFragment.newInstance())
+			val candidatesFragments = CandidatesListFragment.newInstance()
+			val votesFragment = VotesListFragment.newInstance()
+			candidatesFragments.onMoveToVotesListener = View.OnClickListener { pager.setCurrentItem(1, true) }
+			votesFragment.onMoveToResultsListener = View.OnClickListener { pager.setCurrentItem(0, true) }
+			fragments.add(candidatesFragments)
+			fragments.add(votesFragment)
 			val adapter = CustomStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
 //			pager.currentItem = 1

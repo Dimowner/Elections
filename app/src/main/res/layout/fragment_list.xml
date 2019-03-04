@@ -50,7 +50,7 @@
 				android:layout_height="@dimen/toolbar_height"
 				android:layout_gravity="center"
 				android:gravity="center_vertical"
-				android:textColor="@color/md_white_1000"
+				android:textColor="@color/main_yellow"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingEnd="@dimen/spacing_normal"
@@ -66,9 +66,32 @@
 				android:layout_gravity="end|right"
 				android:background="?android:selectableItemBackgroundBorderless"
 				android:padding="@dimen/spacing_normal"
-				app:srcCompat="@drawable/ic_tune"
-				android:src="@drawable/ic_tune"
+				app:srcCompat="@drawable/ic_tune_yellow"
+				android:src="@drawable/ic_tune_yellow"
 				/>
 
 	</FrameLayout>
+
+	<TextView
+			style="@style/Text.SectionLabel"
+			android:id="@+id/btnVotes"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/toolbar_height"
+			android:layout_gravity="bottom|end"
+			android:textSize="@dimen/text_medium"
+			android:gravity="center_vertical"
+			android:textColor="@color/main_blue_dark"
+			android:fontFamily="@font/google_sans"
+			android:textStyle="bold"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:drawableEnd="@drawable/ic_arrow_forward_blue"
+			android:drawablePadding="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:clickable="true"
+			android:focusable="true"
+			android:text="@string/votes"
+			android:background="@drawable/ripple_yellow"
+			/>
 </FrameLayout>

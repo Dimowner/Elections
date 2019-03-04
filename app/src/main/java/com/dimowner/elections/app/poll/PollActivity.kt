@@ -50,7 +50,6 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 			btnVote.translationY = btnVote.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_normal)
 			btnVote.visibility = View.VISIBLE
 		}
-		btnVote.setOnClickListener { startActivity(MainActivity.getStartActivity(applicationContext)) }
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 		presenter.bindView(this)
@@ -64,6 +63,14 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 	fun hideVote() {
 		val offset = btnVote.height + applicationContext.resources.getDimension(R.dimen.spacing_normal)
 		AnimationUtil.verticalSpringAnimation(btnVote, offset.toInt())
+	}
+
+	override fun onStart() {
+		super.onStart()
+		btnVote.setOnClickListener {
+			startActivity(MainActivity.getStartActivity(applicationContext))
+			btnVote.setOnClickListener(null)
+		}
 	}
 
 	override fun onDestroy() {

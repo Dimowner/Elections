@@ -20,6 +20,7 @@
 	<color name="colorPrimaryDark">#00478D</color>
 	<color name="colorAccent">#ffd500</color>
 	<color name="colorAccentDark">#0070E0</color>
+	<!--<color name="colorAccentDark">#0063CE</color>-->
 
 	<color name="main_blue">#005bbb</color>
 	<color name="main_blue_dark">#00478D</color>

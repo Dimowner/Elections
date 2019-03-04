@@ -6,8 +6,8 @@
 				  android:layout_height="wrap_content"
 				  android:paddingStart="@dimen/spacing_normal"
 				  android:paddingEnd="@dimen/spacing_normal"
-				  android:paddingTop="@dimen/spacing_xsmall"
-				  android:paddingBottom="@dimen/spacing_xsmall"
+				  android:paddingTop="@dimen/spacing_small"
+				  android:paddingBottom="@dimen/spacing_small"
 				  >
 
 	<TextView

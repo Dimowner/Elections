@@ -81,12 +81,6 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 //				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 //		decor.systemUiVisibility = flags
 
-		btnStart.setOnClickListener {
-			presenter.firstRunExecuted()
-//			startActivity(Intent(applicationContext, MainActivity::class.java))
-//			finish()
-			startActivity(PollActivity.getStartActivity(applicationContext))
-		}
 
 		btnStart.doOnLayout {
 			btnStart.translationY = btnStart.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_huge)
@@ -127,6 +121,13 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 	override fun onStart() {
 		super.onStart()
 		handler.postDelayed(advancePager, INITIAL_ADVANCE_DELAY)
+		btnStart.setOnClickListener {
+			presenter.firstRunExecuted()
+//			startActivity(Intent(applicationContext, MainActivity::class.java))
+//			finish()
+			startActivity(PollActivity.getStartActivity(applicationContext))
+			btnStart.setOnClickListener(null)
+		}
 	}
 
 	override fun onStop() {
