@@ -26,6 +26,21 @@
 		android:layout_height="match_parent"
 		>
 
+	<TextView
+			style="@style/Text.SectionLabel"
+			android:id="@+id/toolbar"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/toolbar_height"
+			android:layout_gravity="top|center"
+			android:gravity="center_vertical"
+			android:textColor="@color/md_white_1000"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingLeft="@dimen/spacing_normal"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:paddingRight="@dimen/spacing_normal"
+			android:text="@string/select_candidate"
+			/>
+
 	<ProgressBar
 			android:id="@+id/loadingProgress"
 			android:layout_gravity="center"
@@ -46,7 +61,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:contentDescription="@null"
-			android:text="@string/btn_vote"
+			android:text="@string/btn_vote2"
 			android:visibility="invisible"
 			android:layout_marginBottom="@dimen/spacing_normal"
 			android:background="?android:attr/selectableItemBackground"

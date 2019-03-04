@@ -23,6 +23,7 @@
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:background="@drawable/gradient_yellow"
 		>
 
 	<ProgressBar
@@ -50,25 +51,25 @@
 				android:layout_height="@dimen/toolbar_height"
 				android:layout_gravity="center"
 				android:gravity="center_vertical"
-				android:textColor="@color/md_white_1000"
+				android:textColor="@color/main_blue_dark"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingEnd="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
-				android:text="@string/vote_results"
+				android:text="@string/votes"
 				/>
 
-		<ImageButton
-				android:id="@+id/btnSettings"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@null"
-				android:layout_gravity="end|right"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
-				app:srcCompat="@drawable/ic_tune"
-				android:src="@drawable/ic_tune"
-				/>
+		<!--<ImageButton-->
+				<!--android:id="@+id/btnSettings"-->
+				<!--android:layout_width="wrap_content"-->
+				<!--android:layout_height="wrap_content"-->
+				<!--android:contentDescription="@null"-->
+				<!--android:layout_gravity="end|right"-->
+				<!--android:background="?android:selectableItemBackground"-->
+				<!--android:padding="@dimen/spacing_normal"-->
+				<!--app:srcCompat="@drawable/ic_tune"-->
+				<!--android:src="@drawable/ic_tune"-->
+				<!--/>-->
 
 	</FrameLayout>
 </FrameLayout>

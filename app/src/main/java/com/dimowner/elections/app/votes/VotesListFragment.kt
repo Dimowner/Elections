@@ -19,17 +19,19 @@
 
 package com.dimowner.elections.app.votes
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
-import com.dimowner.elections.data.model.Vote
-import kotlinx.android.synthetic.main.fragment_list.*
+import com.dimowner.elections.util.AndroidUtils
+import kotlinx.android.synthetic.main.fragment_votes_list.*
 import javax.inject.Inject
 
 class VotesListFragment: Fragment(), VotesListContract.View {
@@ -46,7 +48,10 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 	val adapter: VotesListAdapter by lazy { VotesListAdapter() }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		val view = inflater.inflate(R.layout.fragment_list, container, false)
+		val view = inflater.inflate(R.layout.fragment_votes_list, container, false)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			view.findViewById<FrameLayout>(R.id.pnlToolbar).setPadding(0, AndroidUtils.getStatusBarHeight(context), 0, 0)
+		}
 		return view
 	}
 
@@ -67,7 +72,7 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 		presenter.unbindView()
 	}
 
-	override fun showCandidatesList(list: List<Vote>) {
+	override fun showCandidatesList(list: List<VoteListItem>) {
 		adapter.setData(list)
 	}
 

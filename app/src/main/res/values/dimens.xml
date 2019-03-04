@@ -34,11 +34,10 @@
 	<dimen name="text_xlarge">24sp</dimen>
 	<dimen name="text_huge">32sp</dimen>
 
-	<dimen name="user_face_size">192dp</dimen>
-
-	<dimen name="nav_header_height">200dp</dimen>
-	<dimen name="navdrawer_width">260dp</dimen>
-	<dimen name="navdrawer_profile_image_size">60dp</dimen>
+	<!--<dimen name="user_face_size">192dp</dimen>-->
+	<!--<dimen name="nav_header_height">200dp</dimen>-->
+	<!--<dimen name="navdrawer_width">260dp</dimen>-->
+	<!--<dimen name="navdrawer_profile_image_size">60dp</dimen>-->
 
 	<dimen name="toolbar_elevation">4dp</dimen>
 

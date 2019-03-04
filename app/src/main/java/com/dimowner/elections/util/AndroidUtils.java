@@ -16,7 +16,12 @@
 
 package com.dimowner.elections.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * Android related utilities methods.
@@ -65,5 +70,26 @@ public class AndroidUtils {
 	 */
 	public static float pxToDp(float px) {
 		return (px / Resources.getSystem().getDisplayMetrics().density);
+	}
+
+	// A method to find height of the status bar
+	public static int getStatusBarHeight(Context context) {
+		int result = 0;
+		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			result = context.getResources().getDimensionPixelSize(resourceId);
+		}
+		return result;
+	}
+
+	public static void setTranslucent(Activity activity, boolean translucent) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Window w = activity.getWindow();
+			if (translucent) {
+				w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			} else {
+				w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			}
+		}
 	}
 }

@@ -21,14 +21,15 @@ package com.dimowner.elections.app.main
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
 import com.dimowner.elections.app.candidates.CandidatesListFragment
-import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.app.votes.VotesListFragment
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.app.welcome.WelcomeActivity
@@ -79,6 +80,12 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 		GWApplication.get(applicationContext).applicationComponent().inject(this)
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			window.setFlags(
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+		}
+
 		if (prefs.isFirstRun()) {
 			startActivity(WelcomeActivity.getStartActivity(applicationContext))
 			finish()
@@ -95,9 +102,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 //			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 		}
-
-		btnSettings.setOnClickListener { startActivity(SettingsActivity.getStartActivity(applicationContext)) }
-		toolbar.setOnClickListener { startActivity(WelcomeActivity.getStartActivity(applicationContext)) }
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

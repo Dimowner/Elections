@@ -25,6 +25,8 @@
 	<string name="only_here">Тільки тут!</string>
 	<string name="fair_elections">Самі чесні і справедливі вибори</string>
 	<string name="vote_results">Результати</string>
+	<string name="select_candidate">Виберіть кандидата</string>
+	<string name="votes">Голоси</string>
 
 	<string name="btn_ok">Добре</string>
 	<string name="btn_next">Далі</string>
@@ -32,6 +34,10 @@
 	<string name="btn_start">Почати</string>
 	<string name="btn_settings">Налаштування</string>
 	<string name="btn_vote">Голосувати</string>
+	<string name="btn_vote2">Проголосувати</string>
+
+	<string name="today">Сьогодні</string>
+	<string name="yesterday">Вчора</string>
 
 	<string name="item_image">Зображення елемента</string>
 

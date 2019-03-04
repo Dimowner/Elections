@@ -19,17 +19,23 @@
 
 package com.dimowner.elections.app.candidates
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.GWApplication
+import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.util.AndroidUtils
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import javax.inject.Inject
 
 class CandidatesListFragment : Fragment(), CandidatesListContract.View {
@@ -47,6 +53,9 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = inflater.inflate(R.layout.fragment_list, container, false)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			view.findViewById<FrameLayout>(R.id.pnlToolbar).setPadding(0, AndroidUtils.getStatusBarHeight(context), 0, 0)
+		}
 		return view
 	}
 
@@ -56,6 +65,8 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 		recyclerView.adapter = adapter
+		view.btnSettings.setOnClickListener {
+			if (activity != null) startActivity(SettingsActivity.getStartActivity(activity!!)) }
 
 		GWApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)

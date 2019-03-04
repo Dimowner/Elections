@@ -31,7 +31,8 @@ import com.dimowner.elections.R
 import com.dimowner.elections.data.model.Candidate
 
 private const val VIEW_TYPE_NORMAL = 1
-private const val VIEW_TYPE_FOOTER = 2
+private const val VIEW_TYPE_HEADER = 2
+private const val VIEW_TYPE_FOOTER = 3
 
 class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -42,18 +43,33 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private var selectedItem = -1
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-		return if (viewType == VIEW_TYPE_NORMAL) {
-			val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
-			ItemViewHolder(v)
-		} else {
-			val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_footer, parent, false)
-			FooterViewHolder(v)
+		when (viewType) {
+			VIEW_TYPE_HEADER -> {
+				val view = View(parent.context)
+//				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//					AndroidUtils.getStatusBarHeight(viewGroup.context) + viewGroup.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+//				} else {
+//					viewGroup.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+//				}
+				val height: Int = parent.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+				val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
+				view.layoutParams = lp
+				return UniversalViewHolder(view)
+			}
+			VIEW_TYPE_FOOTER -> {
+				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_footer, parent, false)
+			 	return FooterViewHolder(v)
+			}
+			else -> {
+				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
+				return ItemViewHolder(v)
+			}
 		}
 	}
 
 	override fun onBindViewHolder(h: RecyclerView.ViewHolder, position: Int) {
 		if (h.itemViewType == VIEW_TYPE_NORMAL) {
-			val pos = h.adapterPosition
+			val pos = h.adapterPosition-1
 			val holder = h as ItemViewHolder
 			holder.name.text = data[pos].firstName + " " + data[pos].surName
 			holder.description.text = if (data[pos].party.isNotBlank()) data[pos].party else "Samovidvijenets"
@@ -61,8 +77,12 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 			if (pos == selectedItem) {
 				holder.itemPanel.setBackgroundResource(R.drawable.ripple_yellow)
+				holder.name.setTextColor(holder.name.context.resources.getColor(R.color.main_blue_dark))
+				holder.description.setTextColor(holder.name.context.resources.getColor(R.color.main_blue_dark))
 			} else {
 				holder.itemPanel.setBackgroundResource(R.drawable.ripple_blue)
+				holder.name.setTextColor(holder.name.context.resources.getColor(R.color.text_primary_light))
+				holder.description.setTextColor(holder.name.context.resources.getColor(R.color.text_secondary_light))
 			}
 
 			holder.itemPanel.setOnClickListener { v ->
@@ -79,21 +99,27 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private fun setActiveItem(activeItem: Int) {
 		if (this.selectedItem == activeItem) {
 			this.selectedItem = -1
-			notifyItemChanged(activeItem)
+			notifyItemChanged(activeItem+1)
 		} else {
 			val prev = this.selectedItem
 			this.selectedItem = activeItem
-			notifyItemChanged(prev)
-			notifyItemChanged(activeItem)
+			notifyItemChanged(prev+1)
+			notifyItemChanged(activeItem+1)
 		}
 	}
 
 	override fun getItemViewType(position: Int): Int {
-		return if (position >= data.size) VIEW_TYPE_FOOTER else VIEW_TYPE_NORMAL
+		return if (position == 0) {
+			VIEW_TYPE_HEADER
+		} else if (position >= data.size+1) {
+			VIEW_TYPE_FOOTER
+		} else {
+			VIEW_TYPE_NORMAL
+		}
 	}
 
 	override fun getItemCount(): Int {
-		return data.size + 1
+		return data.size + 2
 	}
 
 	fun setData(list: List<Candidate>) {
@@ -122,6 +148,8 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	}
 
 	internal inner class FooterViewHolder internal constructor(internal val view: View) : RecyclerView.ViewHolder(view)
+
+	inner class UniversalViewHolder(internal var view: View) : RecyclerView.ViewHolder(view)
 
 	interface ItemClickListener {
 		fun onItemClick(view: View, position: Int, selected: Boolean)

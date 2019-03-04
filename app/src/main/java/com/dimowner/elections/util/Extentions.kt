@@ -19,12 +19,6 @@
 
 package com.dimowner.elections.util
 
-/**
- * Created on 27.01.2018.
- * @author Dimowner
- */
-
-
 fun Double.round(): String {
 	return (Math.round(this * 1000.0) / 1000.0).toString()
 }
