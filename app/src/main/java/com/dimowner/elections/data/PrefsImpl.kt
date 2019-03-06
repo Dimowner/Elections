@@ -29,6 +29,9 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		const val PREF_NAME = "com.dimowner.elections.data.Prefs"
 
 		const val PREF_KEY_IS_FIRST_RUN = "is_first_run"
+		const val PREF_KEY_COUNTRY_CODE = "pref_county_code"
+		const val PREF_KEY_COUNTRY_NAME = "pref_county_name"
+		const val PREF_KEY_CITY = "pref_city"
 	}
 
 	private var preferences: SharedPreferences by Delegates.notNull()
@@ -45,5 +48,47 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		val editor = preferences.edit()
 		editor.putBoolean(PREF_KEY_IS_FIRST_RUN, false)
 		editor.apply()
+	}
+
+	override fun setCountryCode(code: String) {
+		val editor = preferences.edit()
+		editor.putString(PREF_KEY_COUNTRY_CODE, code)
+		editor.apply()
+	}
+
+	override fun getCountryCode(): String {
+		return if (preferences.contains(PREF_KEY_COUNTRY_CODE)) {
+			preferences.getString(PREF_KEY_COUNTRY_CODE, "") ?: ""
+		} else {
+			""
+		}
+	}
+
+	override fun setCountryName(name: String) {
+		val editor = preferences.edit()
+		editor.putString(PREF_KEY_COUNTRY_CODE, name)
+		editor.apply()
+	}
+
+	override fun getCountryName(): String {
+		return if (preferences.contains(PREF_KEY_COUNTRY_NAME)) {
+			preferences.getString(PREF_KEY_COUNTRY_NAME, "") ?: ""
+		} else {
+			""
+		}
+	}
+
+	override fun setCity(city: String) {
+		val editor = preferences.edit()
+		editor.putString(PREF_KEY_COUNTRY_CODE, city)
+		editor.apply()
+	}
+
+	override fun getCity(): String {
+		return if (preferences.contains(PREF_KEY_CITY)) {
+			preferences.getString(PREF_KEY_CITY, "") ?: ""
+		} else {
+			""
+		}
 	}
 }

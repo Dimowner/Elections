@@ -20,21 +20,63 @@
 package com.dimowner.elections.app.welcome
 
 import android.content.Context
+import android.os.Bundle
 import com.dimowner.elections.data.Prefs
+import com.dimowner.elections.places.PlacesProvider
+import com.google.android.gms.common.api.GoogleApiClient
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
-open class WelcomePresenter(open val prefs: Prefs, open val context: Context) : WelcomeContract.UserActionsListener {
+open class WelcomePresenter(
+		private val prefs: Prefs,
+		private val context: Context,
+		private val placesProvider: PlacesProvider) : WelcomeContract.UserActionsListener {
 
 	private var view: WelcomeContract.View? = null
 
+	private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+
 	override fun bindView(view: WelcomeContract.View) {
 		this.view = view
+		placesProvider.connect(
+				object : GoogleApiClient.ConnectionCallbacks {
+					override fun onConnected(bundle: Bundle?) {
+						Timber.v("onConnected")
+					}
+
+					override fun onConnectionSuspended(i: Int) {
+						Timber.v("onConnectionSuspended")
+					}
+				}
+		)
 	}
 
 	override fun unbindView() {
 		this.view = null
+		compositeDisposable.clear()
+		placesProvider.disconnect()
 	}
 
 	override fun firstRunExecuted() {
 		prefs.setFirstRunExecuted()
+	}
+
+	override fun locate(context: Context) {
+		compositeDisposable.add(
+				placesProvider.findCurrentLocation()
+						.observeOn(AndroidSchedulers.mainThread())
+						.subscribe({
+							location -> Timber.v("Location = $location")
+							if (!location.countryCode.isBlank()) {
+								prefs.setCountryCode(location.countryCode)
+								prefs.setCountryName(location.countryName)
+								prefs.setCity(location.city)
+								view?.startPollActivity()
+							} else {
+								view?.showError("Failed to find location")
+							}
+						}, { Timber.e(it) }))
 	}
 }

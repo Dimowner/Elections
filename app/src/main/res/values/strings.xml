@@ -28,8 +28,14 @@
 	<string name="vote_results">Результати</string>
 	<string name="select_candidate">Виберіть кандидата</string>
 	<string name="votes">Голоси</string>
+	<string name="emulator">Емулятор!</string>
+	<string name="vote_from_emulator_not_allowed">Ваш пристрий визначено як емулятор. Голосувати з емулятора заборонено!</string>
+	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування кординат</string>
+	<string name="warning">Увага!</string>
 
 	<string name="btn_ok">Добре</string>
+	<string name="btn_cancel">Відмінити</string>
+	<string name="btn_not_now">Не зараз</string>
 	<string name="btn_next">Далі</string>
 	<string name="btn_apply">Застосувати</string>
 	<string name="btn_start">Почати</string>

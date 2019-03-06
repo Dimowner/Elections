@@ -42,7 +42,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 	companion object {
-		fun getStartActivity(context: Context): Intent {
+		fun getStartIntent(context: Context): Intent {
 			return Intent(context, MainActivity::class.java)
 		}
 	}
@@ -87,10 +87,10 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 		}
 
-		if (prefs.isFirstRun()) {
-			startActivity(WelcomeActivity.getStartActivity(applicationContext))
-			finish()
-		} else {
+//		if (prefs.isFirstRun()) {
+//			startActivity(WelcomeActivity.getStartActivity(applicationContext))
+//			finish()
+//		} else {
 			val fragments = ArrayList<Fragment>()
 //			fragments.add(SettingsFragment.newInstance())
 			val candidatesFragments = CandidatesListFragment.newInstance()
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			pager.addOnPageChangeListener(this)
 
 //			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-		}
+//		}
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

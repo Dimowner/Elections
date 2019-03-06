@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PollActivity: AppCompatActivity(), PollContract.View{
 
 	companion object {
-		fun getStartActivity(context: Context): Intent {
+		fun getStartIntent(context: Context): Intent {
 			return Intent(context, PollActivity::class.java)
 		}
 	}
@@ -68,7 +68,7 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 	override fun onStart() {
 		super.onStart()
 		btnVote.setOnClickListener {
-			startActivity(MainActivity.getStartActivity(applicationContext))
+			startActivity(MainActivity.getStartIntent(applicationContext))
 			btnVote.setOnClickListener(null)
 		}
 	}

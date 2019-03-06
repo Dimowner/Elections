@@ -20,7 +20,9 @@
 package com.dimowner.elections.places
 
 data class Location(
-		val address: String,
+		val countryCode: String,
+		val countryName: String,
+		val city: String,
 		val lat: Double,
 		val lng: Double
 )

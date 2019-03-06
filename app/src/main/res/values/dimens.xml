@@ -39,6 +39,8 @@
 	<!--<dimen name="navdrawer_width">260dp</dimen>-->
 	<!--<dimen name="navdrawer_profile_image_size">60dp</dimen>-->
 
+	<dimen name="dialog_rounded_corner">8dp</dimen>
+
 	<dimen name="toolbar_elevation">4dp</dimen>
 
 	<dimen name="gradient_radius">300dp</dimen>

@@ -105,7 +105,7 @@ class PlacesProvider(private val context: Context) {
 	fun findCurrentLocation(): Maybe<Location> {
 		val rxLocation = RxLocation(context)
 		val locationRequest = LocationRequest.create()
-				.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+				.setPriority(LocationRequest.PRIORITY_LOW_POWER)
 				.setInterval(5000)
 		return rxLocation
 				.settings()
@@ -125,9 +125,9 @@ class PlacesProvider(private val context: Context) {
 				.map { location ->
 					val list = fromLocation(context, location.latitude, location.longitude)
 					if (list.isNotEmpty()) {
-						Location(list[0].locality, location.latitude, location.longitude)
+						Location(list[0].countryCode ?: "", list[0].countryName ?: "", list[0].locality ?: "", location.latitude, location.longitude)
 					} else {
-						Location("", location.latitude, location.longitude)
+						Location("", "", "", location.latitude, location.longitude)
 					}
 
 				}.subscribeOn(Schedulers.io())
@@ -169,10 +169,11 @@ class PlacesProvider(private val context: Context) {
 
 		return Single.fromCallable { fromLocation(context, lat, lng) }
 				.map {
+					Timber.v("Address: $it")
 					if (it.isNotEmpty()) {
-						Location(it[0].locality ?: "", lat, lng)
+						Location(it[0].countryCode ?: "", it[0].countryName ?: "", it[0].locality ?: "", lat, lng)
 					} else {
-						Location("", lat, lng)
+						Location("", "", "", lat, lng)
 					}
 				}
 				.doOnSubscribe { disposable -> this.disposable = disposable }
@@ -201,18 +202,19 @@ class PlacesProvider(private val context: Context) {
 				try {
 					val result: List<Address> = geocoder.getFromLocationName(city, 1)
 					if (result.isNotEmpty()) {
-						Location(result[0].locality ?: "", result[0].latitude, result[0].longitude)
+						Location(result[0].countryCode ?: "", result[0].countryName ?: "",
+								result[0].locality ?: "", result[0].latitude, result[0].longitude)
 					} else {
 						Timber.e("Nothing found")
-						Location("", 0.0, 0.0)
+						Location("", "", "", 0.0, 0.0)
 					}
 				} catch (e: IOException) {
 					Timber.e(e)
-					Location("", 0.0, 0.0)
+					Location("", "", "", 0.0, 0.0)
 				}
 			} else {
 				Timber.e("Geocoder is not present")
-				Location("", 0.0, 0.0)
+				Location("", "", "", 0.0, 0.0)
 			}
 		}.subscribeOn(Schedulers.io())
 	}
