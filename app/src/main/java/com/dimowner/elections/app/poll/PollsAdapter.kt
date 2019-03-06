@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.util.AndroidUtils
 
 private const val VIEW_TYPE_NORMAL = 1
 private const val VIEW_TYPE_HEADER = 2
@@ -72,8 +73,8 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			val pos = h.adapterPosition-1
 			val holder = h as ItemViewHolder
 			holder.name.text = data[pos].firstName + " " + data[pos].surName
-			holder.description.text = if (data[pos].party.isNotBlank()) data[pos].party else "Samovidvijenets"
-			holder.image.setImageResource(R.mipmap.ic_elections)
+			holder.description.text = data[pos].party
+			holder.image.setImageResource(AndroidUtils.candidateCodeToResource(data[pos].iconId))
 
 			if (pos == selectedItem) {
 				holder.itemPanel.setBackgroundResource(R.drawable.ripple_yellow)

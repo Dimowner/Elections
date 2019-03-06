@@ -9,7 +9,7 @@ fun Vote.toVoteListItem(): VoteListItem {
 			this.deviceId,
 			ITEM_TYPE_NORMAL,
 			this.candidateId.toString(),
-			this.country,
+			this.countryCode,
 			this.language,
 			this.time,
 			this.device

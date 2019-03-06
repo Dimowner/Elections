@@ -228,4 +228,24 @@ public class AndroidUtils {
 		dialog.setContentView(view);
 		dialog.show();
 	}
+
+	public static int candidateCodeToResource(String code) {
+		switch (code) {
+			case "porohovenko192":
+				return R.drawable.porohovenko192;
+			case "tishomenko192":
+				return R.drawable.tishomenko192;
+			case "zelenenko192":
+				return R.drawable.zelenenko192;
+			case "lyashkenko192":
+				return R.drawable.lyashkenko192;
+			case "gricenenko192":
+				return R.drawable.gricenenko192;
+			case "kivenko192":
+				return R.drawable.kivenko192;
+
+			default:
+				return R.drawable.trident_new2;
+		}
+	}
 }
