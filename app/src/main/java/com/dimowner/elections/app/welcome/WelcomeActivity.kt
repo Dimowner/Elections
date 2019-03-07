@@ -33,7 +33,7 @@ import androidx.core.view.doOnLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.app.poll.PollActivity
@@ -79,7 +79,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		setTheme(R.style.AppTheme)
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_welcome)
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 
 		// immersive mode so images can draw behind the status bar
 //		val decor = window.decorView

@@ -28,7 +28,7 @@
 	<uses-feature android:name="android.hardware.microphone" android:required="false"/>
 
 	<application
-			android:name="com.dimowner.elections.GWApplication"
+			android:name="com.dimowner.elections.EApplication"
 			android:allowBackup="true"
 			android:icon="@mipmap/ic_elections2"
 			android:label="@string/app_name"
@@ -67,6 +67,9 @@
 		<activity
 				android:name="com.dimowner.elections.app.poll.PollActivity"
 				android:screenOrientation="portrait"/>
+
+		<activity android:name="com.dimowner.elections.app.candidates.ImagePreviewActivity"
+					 android:theme="@style/AppTheme.Transparent"/>
 
 		<activity
 				android:name="com.dimowner.elections.app.licences.LicenceActivity"

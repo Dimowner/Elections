@@ -36,6 +36,8 @@
 	<color name="text_disabled_light">#4dffffff</color> <!-- 30% -->
 	<color name="highlight_light">#33ffffff</color> <!-- 20% white -->
 
+	<color name="image_preview_bg">#252525</color>
+
 	<!-- google's material design colours from
 	http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
 

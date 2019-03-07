@@ -30,7 +30,7 @@ import timber.log.Timber
  * Created on 16.01.2018.
  * @author Dimowner
  */
-class GWApplication : Application() {
+class EApplication : Application() {
 
 	private val appComponent: AppComponent by lazy {
 		DaggerAppComponent
@@ -55,13 +55,13 @@ class GWApplication : Application() {
 		}
 	}
 
-//	operator fun get(context: Context): GWApplication {
-//		return context.applicationContext as GWApplication
+//	operator fun get(context: Context): EApplication {
+//		return context.applicationContext as EApplication
 //	}
 
 	companion object {
-		fun get(context: Context): GWApplication {
-			return context.applicationContext as GWApplication
+		fun get(context: Context): EApplication {
+			return context.applicationContext as EApplication
 		}
 	}
 

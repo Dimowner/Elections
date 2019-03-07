@@ -29,11 +29,10 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.candidates.CandidatesListFragment
 import com.dimowner.elections.app.votes.VotesListFragment
 import com.dimowner.elections.data.Prefs
-import com.dimowner.elections.app.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.ArrayList
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			window.setFlags(

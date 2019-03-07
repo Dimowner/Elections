@@ -32,6 +32,7 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		const val PREF_KEY_COUNTRY_CODE = "pref_county_code"
 		const val PREF_KEY_COUNTRY_NAME = "pref_county_name"
 		const val PREF_KEY_CITY = "pref_city"
+		const val PREF_KEY_IS_SHOW_IMAGE_PREVIEW_INSTRUCTIONS = "is_show_image_preview_instructions"
 	}
 
 	private var preferences: SharedPreferences by Delegates.notNull()
@@ -90,5 +91,16 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		} else {
 			""
 		}
+	}
+
+	override fun isShowImagePreviewInstructions(): Boolean {
+		return !preferences.contains(PREF_KEY_IS_SHOW_IMAGE_PREVIEW_INSTRUCTIONS)
+				|| preferences.getBoolean(PREF_KEY_IS_SHOW_IMAGE_PREVIEW_INSTRUCTIONS, true)
+	}
+
+	override fun setShowImagePreviewInstructions(b: Boolean) {
+		val editor = preferences.edit()
+		editor.putBoolean(PREF_KEY_IS_SHOW_IMAGE_PREVIEW_INSTRUCTIONS, b)
+		editor.apply()
 	}
 }

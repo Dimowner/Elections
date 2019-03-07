@@ -74,6 +74,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			holder.name.text = data[pos].firstName + " " + data[pos].surName
 			holder.description.text = data[pos].party
 			holder.image.setImageResource(AndroidUtils.candidateCodeToResource(data[pos].iconId))
+			holder.itemPanel.setOnClickListener { v -> itemClickListener?.onItemClick(v, pos) }
 		} else {
 			//Do nothing
 		}
@@ -106,6 +107,13 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		}
 	}
 
+	fun getIconCodeForPosition(pos: Int): String {
+		if (data.size > pos) {
+			return data[pos].iconId
+		}
+		return ""
+	}
+
 	fun setItemClickListener(itemClickListener: ItemClickListener) {
 		this.itemClickListener = itemClickListener
 	}
@@ -115,6 +123,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		var description: TextView = view.findViewById(R.id.list_item_description)
 		var image: ImageView = view.findViewById(R.id.list_item_image)
 		var txtVal: TextView = view.findViewById(R.id.list_item_value)
+		var itemPanel: LinearLayout = view.findViewById(R.id.item_panel)
 	}
 
 	internal inner class FooterViewHolder internal constructor(internal val view: View) : RecyclerView.ViewHolder(view)

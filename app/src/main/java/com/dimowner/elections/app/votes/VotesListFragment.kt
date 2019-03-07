@@ -30,7 +30,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.util.AndroidUtils
 import kotlinx.android.synthetic.main.fragment_votes_list.*
 import javax.inject.Inject
@@ -70,7 +70,7 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 		recyclerView.adapter = adapter
 		btnVotes.setOnClickListener { onMoveToResultsListener?.onClick(btnVotes) }
 
-		GWApplication.get(view.context).applicationComponent().inject(this)
+		EApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.loadVotes()
 	}

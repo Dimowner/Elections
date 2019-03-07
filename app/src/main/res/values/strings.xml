@@ -32,6 +32,7 @@
 	<string name="vote_from_emulator_not_allowed">Ваш пристрий визначено як емулятор. Голосувати з емулятора заборонено!</string>
 	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування кординат</string>
 	<string name="warning">Увага!</string>
+	<string name="pull_to_top_or_bottom_to_close">Потягніть зображення щоб закрити</string>
 
 	<string name="btn_ok">Добре</string>
 	<string name="btn_cancel">Відмінити</string>

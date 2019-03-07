@@ -19,9 +19,10 @@
 
 package com.dimowner.elections.dagger.application
 
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.app.candidates.CandidatesListFragment
+import com.dimowner.elections.app.candidates.ImagePreviewActivity
 import com.dimowner.elections.app.poll.PollActivity
 import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.app.settings.SettingsFragment
@@ -34,7 +35,7 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
 
-	fun inject(app: GWApplication)
+	fun inject(app: EApplication)
 
 	fun inject(activity: MainActivity)
 
@@ -49,5 +50,7 @@ interface AppComponent {
 	fun inject(fragment: VotesListFragment)
 
 	fun inject(activity: PollActivity)
+
+	fun inject(activity: ImagePreviewActivity)
 
 }

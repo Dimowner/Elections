@@ -33,4 +33,7 @@ interface Prefs {
 
 	fun setCity(city: String)
 	fun getCity(): String
+
+	fun isShowImagePreviewInstructions(): Boolean
+	fun setShowImagePreviewInstructions(b: Boolean)
 }

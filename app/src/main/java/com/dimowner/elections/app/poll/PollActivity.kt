@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.data.model.Candidate
@@ -51,7 +51,7 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 			btnVote.visibility = View.VISIBLE
 		}
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.loadCandidates()
 	}

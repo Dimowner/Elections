@@ -229,6 +229,16 @@ public class AndroidUtils {
 		dialog.show();
 	}
 
+	public static boolean isAndroid5() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+	}
+
+	public static void transparentNavigationBar(Activity activity) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+			activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		}
+	}
+
 	public static int candidateCodeToResource(String code) {
 		switch (code) {
 			case "porohovenko192":
@@ -243,6 +253,26 @@ public class AndroidUtils {
 				return R.drawable.gricenenko192;
 			case "kivenko192":
 				return R.drawable.kivenko192;
+
+			default:
+				return R.drawable.trident_new2;
+		}
+	}
+
+	public static int candidateCodeToResourceBig(String code) {
+		switch (code) {
+			case "porohovenko192":
+				return R.drawable.porohovenko512;
+			case "tishomenko192":
+				return R.drawable.tishomenko512;
+			case "zelenenko192":
+				return R.drawable.zelenenko512;
+			case "lyashkenko192":
+				return R.drawable.lyashkenko368;
+			case "gricenenko192":
+				return R.drawable.gricenenko512;
+			case "kivenko192":
+				return R.drawable.kivenko512;
 
 			default:
 				return R.drawable.trident_new2;

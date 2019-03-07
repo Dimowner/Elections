@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.candidates
 
+import android.app.ActivityOptions
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,7 +31,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
@@ -70,14 +71,32 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 		recyclerView.adapter = adapter
+		adapter.setItemClickListener(object : CandidatesListAdapter.ItemClickListener{
+			override fun onItemClick(view: View, position: Int) {
+				val code = adapter.getIconCodeForPosition(position)
+				if (code.isNotBlank()) {
+					startImagePreviewActivity(AndroidUtils.candidateCodeToResourceBig(code))
+				}
+			}
+		})
+
 		btnSettings.setOnClickListener {
 			if (activity != null) startActivity(SettingsActivity.getStartActivity(activity!!))
 		}
 		btnVotes.setOnClickListener { onMoveToVotesListener?.onClick(btnVotes) }
 
-		GWApplication.get(view.context).applicationComponent().inject(this)
+		EApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.loadCandidates()
+	}
+
+	private fun startImagePreviewActivity(resId: Int) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			startActivity(ImagePreviewActivity.getStartIntent(context, resId),
+					ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+		} else {
+			startActivity(ImagePreviewActivity.getStartIntent(context, resId))
+		}
 	}
 
 	override fun onDestroyView() {
