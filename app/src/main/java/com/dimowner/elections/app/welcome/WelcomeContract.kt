@@ -19,14 +19,18 @@
 
 package com.dimowner.elections.app.welcome
 
+import android.content.Context
 import com.dimowner.elections.app.Contract
 
 interface WelcomeContract {
 
 	interface View : Contract.View {
+
+		fun startPollActivity()
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 		fun firstRunExecuted()
+		fun locate(context: Context)
 	}
 }

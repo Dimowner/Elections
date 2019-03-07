@@ -34,7 +34,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.dimowner.elections.AppConstants
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.licences.LicenceActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
@@ -59,7 +59,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		GWApplication.get(view.context).applicationComponent().inject(this)
+		EApplication.get(view.context).applicationComponent().inject(this)
 
 		btnLicences.setOnClickListener {
 			if (context != null) { startActivity(LicenceActivity.getStartActivity(context!!)) }

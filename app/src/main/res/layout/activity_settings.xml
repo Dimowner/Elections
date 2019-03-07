@@ -35,7 +35,7 @@
 				android:layout_height="56dp"
 				android:gravity="center"
 				android:text="@string/tittle_settings"
-				android:textColor="@color/text_primary_light"
+				android:textColor="@color/main_yellow"
 				/>
 
 		<ImageButton
@@ -43,11 +43,11 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="start|left"
-				android:background="?android:selectableItemBackground"
+				android:background="?android:selectableItemBackgroundBorderless"
 				android:contentDescription="@null"
 				android:padding="@dimen/spacing_normal"
-				app:srcCompat="@drawable/ic_arrow_back"
-				android:src="@drawable/ic_arrow_back"
+				app:srcCompat="@drawable/ic_arrow_back_yellow"
+				android:src="@drawable/ic_arrow_back_yellow"
 				/>
 
 	</FrameLayout>

@@ -25,44 +25,10 @@
 		android:clipToPadding="false"
 		android:orientation="vertical">
 
-	<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-
-		<TextView
-				style="@style/Text.SectionLabel"
-				android:id="@+id/toolbar"
-				android:layout_width="wrap_content"
-				android:layout_height="@dimen/toolbar_height"
-				android:layout_gravity="center"
-				android:gravity="center_vertical"
-				android:textColor="@color/md_white_1000"
-				android:paddingStart="@dimen/spacing_normal"
-				android:paddingLeft="@dimen/spacing_normal"
-				android:paddingEnd="@dimen/spacing_normal"
-				android:paddingRight="@dimen/spacing_normal"
-				android:text="@string/vote_results"
-				/>
-
-		<ImageButton
-				android:id="@+id/btnSettings"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:contentDescription="@null"
-				android:layout_gravity="end|right"
-				android:background="?android:selectableItemBackground"
-				android:padding="@dimen/spacing_normal"
-				app:srcCompat="@drawable/ic_tune"
-				android:src="@drawable/ic_tune"
-				/>
-
-	</FrameLayout>
-
 	<androidx.viewpager.widget.ViewPager
 			android:id="@+id/pager"
 			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1"
+			android:layout_height="match_parent"
 			/>
 
 	<!--<View-->

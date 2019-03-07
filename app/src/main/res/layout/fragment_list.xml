@@ -19,6 +19,7 @@
   -->
 <FrameLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -35,5 +36,62 @@
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			/>
+
+	<FrameLayout
+			android:id="@+id/pnlToolbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+		<TextView
+				style="@style/Text.SectionLabel"
+				android:id="@+id/toolbar"
+				android:layout_width="wrap_content"
+				android:layout_height="@dimen/toolbar_height"
+				android:layout_gravity="center"
+				android:gravity="center_vertical"
+				android:textColor="@color/main_yellow"
+				android:paddingStart="@dimen/spacing_normal"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:paddingEnd="@dimen/spacing_normal"
+				android:paddingRight="@dimen/spacing_normal"
+				android:text="@string/vote_results"
+				/>
+
+		<ImageButton
+				android:id="@+id/btnSettings"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:layout_gravity="end|right"
+				android:background="?android:selectableItemBackgroundBorderless"
+				android:padding="@dimen/spacing_normal"
+				app:srcCompat="@drawable/ic_tune_yellow"
+				android:src="@drawable/ic_tune_yellow"
+				/>
+
+	</FrameLayout>
+
+	<TextView
+			style="@style/Text.SectionLabel"
+			android:id="@+id/btnVotes"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/toolbar_height"
+			android:layout_gravity="bottom|end"
+			android:textSize="@dimen/text_medium"
+			android:gravity="center_vertical"
+			android:textColor="@color/main_blue_dark"
+			android:fontFamily="@font/google_sans"
+			android:textStyle="bold"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingEnd="@dimen/spacing_normal"
+			android:drawableEnd="@drawable/ic_arrow_forward_blue"
+			android:drawablePadding="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_normal"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:clickable="true"
+			android:focusable="true"
+			android:text="@string/votes"
+			android:background="@drawable/ripple_yellow"
 			/>
 </FrameLayout>

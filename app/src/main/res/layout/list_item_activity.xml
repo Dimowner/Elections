@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				  xmlns:tools="http://schemas.android.com/tools"
+				  android:orientation="horizontal"
+				  android:layout_width="match_parent"
+				  android:layout_height="wrap_content"
+				  android:paddingStart="@dimen/spacing_normal"
+				  android:paddingEnd="@dimen/spacing_normal"
+				  android:paddingTop="@dimen/spacing_small"
+				  android:paddingBottom="@dimen/spacing_small"
+				  >
+
+	<TextView
+			android:id="@+id/txtActivity"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:fontFamily="@font/roboto_mono_bold"
+			android:textSize="@dimen/text_medium"
+			android:textColor="@color/main_blue_dark"
+			tools:text="Samsung Galaxy S7 (UA) віддав голос за Evguene Petrov"
+			/>
+
+	<TextView
+			android:id="@+id/txtActivityDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_normal"
+			android:textColor="@color/main_blue_dark"
+			android:paddingStart="@dimen/spacing_normal"
+			android:paddingEnd="@dimen/spacing_zero"
+			tools:text="22:15"
+			/>
+</LinearLayout>

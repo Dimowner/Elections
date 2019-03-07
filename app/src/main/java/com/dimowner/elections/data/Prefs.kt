@@ -25,4 +25,15 @@ interface Prefs {
 
 	fun setFirstRunExecuted()
 
+	fun setCountryCode(code: String)
+	fun getCountryCode(): String
+
+	fun setCountryName(name: String)
+	fun getCountryName(): String
+
+	fun setCity(city: String)
+	fun getCity(): String
+
+	fun isShowImagePreviewInstructions(): Boolean
+	fun setShowImagePreviewInstructions(b: Boolean)
 }

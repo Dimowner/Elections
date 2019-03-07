@@ -20,13 +20,14 @@
 	<color name="colorPrimaryDark">#00478D</color>
 	<color name="colorAccent">#ffd500</color>
 	<color name="colorAccentDark">#0070E0</color>
+	<!--<color name="colorAccentDark">#0063CE</color>-->
 
 	<color name="main_blue">#005bbb</color>
 	<color name="main_blue_dark">#00478D</color>
 	<color name="main_yellow">#ffd500</color>
-	<color name="yellow_dark">#DBB600</color>
+	<color name="main_yellow_dark">#DBB600</color>
 
-	<color name="primary_transparent">#8a1a7eef</color>
+	<color name="primary_transparent">#8a00478D</color>
 	<color name="text_primary_dark">#de000000</color> <!-- 87% -->
 	<color name="text_secondary_dark">#8a000000</color> <!-- 54% -->
 	<color name="text_tertiary_dark">#61000000</color> <!-- 38% -->
@@ -34,6 +35,8 @@
 	<color name="text_secondary_light">#b3ffffff</color> <!-- 70% -->
 	<color name="text_disabled_light">#4dffffff</color> <!-- 30% -->
 	<color name="highlight_light">#33ffffff</color> <!-- 20% white -->
+
+	<color name="image_preview_bg">#252525</color>
 
 	<!-- google's material design colours from
 	http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->

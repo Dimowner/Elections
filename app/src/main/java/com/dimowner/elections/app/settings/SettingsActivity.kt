@@ -32,7 +32,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.dimowner.elections.AppConstants
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.licences.LicenceActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import javax.inject.Inject
@@ -56,7 +56,7 @@ class SettingsActivity : AppCompatActivity(), SettingsContract.View {
 
 		btnNavUp.setOnClickListener { finish() }
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 
 		btnLicences.setOnClickListener { startActivity(LicenceActivity.getStartActivity(applicationContext)) }
 		btnRequest.setOnClickListener { requestFeature() }

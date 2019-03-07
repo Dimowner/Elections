@@ -19,17 +19,20 @@
 
 package com.dimowner.elections.app.votes
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
-import com.dimowner.elections.data.model.Vote
-import kotlinx.android.synthetic.main.fragment_list.*
+import com.dimowner.elections.EApplication
+import com.dimowner.elections.util.AndroidUtils
+import kotlinx.android.synthetic.main.fragment_votes_list.*
 import javax.inject.Inject
 
 class VotesListFragment: Fragment(), VotesListContract.View {
@@ -45,8 +48,17 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 
 	val adapter: VotesListAdapter by lazy { VotesListAdapter() }
 
+	var onMoveToResultsListener: View.OnClickListener? = null
+
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		val view = inflater.inflate(R.layout.fragment_list, container, false)
+		val view = inflater.inflate(R.layout.fragment_votes_list, container, false)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			view.findViewById<FrameLayout>(R.id.pnlToolbar).setPadding(0, AndroidUtils.getStatusBarHeight(context), 0, 0)
+			val navBarHeight = AndroidUtils.getNavigationBarHeight(context).toFloat()
+			if (navBarHeight > 0) {
+				view.findViewById<TextView>(R.id.btnVotes).translationY = -navBarHeight
+			}
+		}
 		return view
 	}
 
@@ -56,8 +68,9 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 		recyclerView.adapter = adapter
+		btnVotes.setOnClickListener { onMoveToResultsListener?.onClick(btnVotes) }
 
-		GWApplication.get(view.context).applicationComponent().inject(this)
+		EApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.loadVotes()
 	}
@@ -67,7 +80,7 @@ class VotesListFragment: Fragment(), VotesListContract.View {
 		presenter.unbindView()
 	}
 
-	override fun showCandidatesList(list: List<Vote>) {
+	override fun showCandidatesList(list: List<VoteListItem>) {
 		adapter.setData(list)
 	}
 

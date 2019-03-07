@@ -28,5 +28,7 @@ class AppConstants {
 
 		const val TIME_FORMAT_24H = 11
 		const val TIME_FORMAT_12H = 12
+
+		const val SHOW_INSTRUCTIONS_DELAY_MILLS = 800
 	}
 }

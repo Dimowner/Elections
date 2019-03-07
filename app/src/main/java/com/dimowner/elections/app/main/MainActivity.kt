@@ -21,17 +21,18 @@ package com.dimowner.elections.app.main
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dimowner.elections.R
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.candidates.CandidatesListFragment
-import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.app.votes.VotesListFragment
 import com.dimowner.elections.data.Prefs
-import com.dimowner.elections.app.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.ArrayList
@@ -40,7 +41,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
 	companion object {
-		fun getStartActivity(context: Context): Intent {
+		fun getStartIntent(context: Context): Intent {
 			return Intent(context, MainActivity::class.java)
 		}
 	}
@@ -77,16 +78,26 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 
-		if (prefs.isFirstRun()) {
-			startActivity(WelcomeActivity.getStartActivity(applicationContext))
-			finish()
-		} else {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			window.setFlags(
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+		}
+
+//		if (prefs.isFirstRun()) {
+//			startActivity(WelcomeActivity.getStartActivity(applicationContext))
+//			finish()
+//		} else {
 			val fragments = ArrayList<Fragment>()
 //			fragments.add(SettingsFragment.newInstance())
-			fragments.add(CandidatesListFragment.newInstance())
-			fragments.add(VotesListFragment.newInstance())
+			val candidatesFragments = CandidatesListFragment.newInstance()
+			val votesFragment = VotesListFragment.newInstance()
+			candidatesFragments.onMoveToVotesListener = View.OnClickListener { pager.setCurrentItem(1, true) }
+			votesFragment.onMoveToResultsListener = View.OnClickListener { pager.setCurrentItem(0, true) }
+			fragments.add(candidatesFragments)
+			fragments.add(votesFragment)
 			val adapter = CustomStatePagerAdapter(supportFragmentManager, fragments)
 			pager.adapter = adapter
 //			pager.currentItem = 1
@@ -94,10 +105,7 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 			pager.addOnPageChangeListener(this)
 
 //			bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-		}
-
-		btnSettings.setOnClickListener { startActivity(SettingsActivity.getStartActivity(applicationContext)) }
-		toolbar.setOnClickListener { startActivity(WelcomeActivity.getStartActivity(applicationContext)) }
+//		}
 	}
 
 	override fun onPageScrollStateChanged(state: Int) {}

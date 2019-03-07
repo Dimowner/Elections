@@ -15,7 +15,8 @@
   -->
 
 <resources>
-	<string name="app_name">Вибори 2019</string>
+	<string name="app_name">Вибори Президента 2019</string>
+	<string name="elections">Вибори 2019</string>
 
 	<string name="tittle_settings">Налаштування</string>
 	<string name="welcome">Вітаємо!</string>
@@ -25,13 +26,26 @@
 	<string name="only_here">Тільки тут!</string>
 	<string name="fair_elections">Самі чесні і справедливі вибори</string>
 	<string name="vote_results">Результати</string>
+	<string name="select_candidate">Виберіть кандидата</string>
+	<string name="votes">Голоси</string>
+	<string name="emulator">Емулятор!</string>
+	<string name="vote_from_emulator_not_allowed">Ваш пристрий визначено як емулятор. Голосувати з емулятора заборонено!</string>
+	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування кординат</string>
+	<string name="warning">Увага!</string>
+	<string name="pull_to_top_or_bottom_to_close">Потягніть зображення щоб закрити</string>
 
 	<string name="btn_ok">Добре</string>
+	<string name="btn_cancel">Відмінити</string>
+	<string name="btn_not_now">Не зараз</string>
 	<string name="btn_next">Далі</string>
 	<string name="btn_apply">Застосувати</string>
 	<string name="btn_start">Почати</string>
 	<string name="btn_settings">Налаштування</string>
 	<string name="btn_vote">Голосувати</string>
+	<string name="btn_vote2">Проголосувати</string>
+
+	<string name="today">Сьогодні</string>
+	<string name="yesterday">Вчора</string>
 
 	<string name="item_image">Зображення елемента</string>
 

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dimowner.elections.GWApplication
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.data.model.Candidate
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PollActivity: AppCompatActivity(), PollContract.View{
 
 	companion object {
-		fun getStartActivity(context: Context): Intent {
+		fun getStartIntent(context: Context): Intent {
 			return Intent(context, PollActivity::class.java)
 		}
 	}
@@ -50,9 +50,8 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 			btnVote.translationY = btnVote.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_normal)
 			btnVote.visibility = View.VISIBLE
 		}
-		btnVote.setOnClickListener { startActivity(MainActivity.getStartActivity(applicationContext)) }
 
-		GWApplication.get(applicationContext).applicationComponent().inject(this)
+		EApplication.get(applicationContext).applicationComponent().inject(this)
 		presenter.bindView(this)
 		presenter.loadCandidates()
 	}
@@ -64,6 +63,14 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 	fun hideVote() {
 		val offset = btnVote.height + applicationContext.resources.getDimension(R.dimen.spacing_normal)
 		AnimationUtil.verticalSpringAnimation(btnVote, offset.toInt())
+	}
+
+	override fun onStart() {
+		super.onStart()
+		btnVote.setOnClickListener {
+			startActivity(MainActivity.getStartIntent(applicationContext))
+			btnVote.setOnClickListener(null)
+		}
 	}
 
 	override fun onDestroy() {

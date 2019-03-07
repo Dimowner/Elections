@@ -19,17 +19,17 @@
 
 	<item
 			android:id="@+id/nav_settings"
-			android:icon="@drawable/ic_tune"
+			android:icon="@drawable/ic_tune_yellow"
 			android:title="@string/tittle_settings"/>
 
 	<item
 			android:id="@+id/nav_today"
-			android:icon="@drawable/ic_tune"
+			android:icon="@drawable/ic_tune_yellow"
 			android:title="@string/app_name"/>
 
 	<item
 			android:id="@+id/nav_two_weeks"
-			android:icon="@drawable/ic_tune"
+			android:icon="@drawable/ic_tune_yellow"
 			android:title="@string/app_name"/>
 
 </menu>
