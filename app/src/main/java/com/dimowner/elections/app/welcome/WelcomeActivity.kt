@@ -138,7 +138,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 						AndroidUtils.showDialog(this,
 								R.string.warning,
 								R.string.location_are_needed,
-								{ requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQ_CODE_LOCATION) },
+								{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
 								{ Timber.v("negative btn click") })
 					}
 				}
@@ -148,7 +148,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 
 	private fun checkLocationPermission(): Boolean {
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 				return false
 			}
 		}

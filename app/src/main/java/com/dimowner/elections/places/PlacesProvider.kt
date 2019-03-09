@@ -105,7 +105,7 @@ class PlacesProvider(private val context: Context) {
 	fun findCurrentLocation(): Maybe<Location> {
 		val rxLocation = RxLocation(context)
 		val locationRequest = LocationRequest.create()
-				.setPriority(LocationRequest.PRIORITY_LOW_POWER)
+				.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 				.setInterval(5000)
 		return rxLocation
 				.settings()

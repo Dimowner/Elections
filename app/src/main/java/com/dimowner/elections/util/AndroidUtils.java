@@ -251,6 +251,8 @@ public class AndroidUtils {
 				return R.drawable.lyashkenko192;
 			case "gricenenko192":
 				return R.drawable.gricenenko192;
+			case "boikenko192":
+				return R.drawable.boikenko192;
 			case "kivenko192":
 				return R.drawable.kivenko192;
 
@@ -271,6 +273,8 @@ public class AndroidUtils {
 				return R.drawable.lyashkenko368;
 			case "gricenenko192":
 				return R.drawable.gricenenko512;
+			case "boikenko192":
+				return R.drawable.boikenko512;
 			case "kivenko192":
 				return R.drawable.kivenko512;
 
