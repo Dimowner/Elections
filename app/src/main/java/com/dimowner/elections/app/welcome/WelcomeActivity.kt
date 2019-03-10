@@ -28,6 +28,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.FragmentManager
@@ -215,10 +216,23 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		}
 	}
 
-	override fun showProgress() {}
-	override fun hideProgress() {}
-	override fun showError(message: String) {}
-	override fun showError(resId: Int) {}
+	override fun showProgress() {
+		progress.visibility = View.VISIBLE
+	}
+
+	override fun hideProgress() {
+		progress.visibility = View.GONE
+	}
+
+	override fun showError(message: String) {
+//		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
+		Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+	}
+
+	override fun showError(resId: Int) {
+		Toast.makeText(applicationContext, resId, Toast.LENGTH_LONG).show()
+//		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
+	}
 }
 
 class OnboardingAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

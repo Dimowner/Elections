@@ -70,8 +70,15 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 				return UniversalViewHolder(textView)
 			}
 			ITEM_TYPE_FOOTER -> {
-				val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_footer, viewGroup, false)
-				return UniversalViewHolder(v)
+				val view = View(viewGroup.context)
+				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					AndroidUtils.getNavigationBarHeight(viewGroup.context) + viewGroup.context.resources.getDimension(R.dimen.footer_height).toInt()
+				} else {
+					viewGroup.context.resources.getDimension(R.dimen.footer_height).toInt()
+				}
+				val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
+				view.layoutParams = lp
+				return UniversalViewHolder(view)
 			}
 			else -> {
 				val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_activity, viewGroup, false)
@@ -84,7 +91,8 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		val pos = viewHolder.adapterPosition
 		if (viewHolder.itemViewType == ITEM_TYPE_NORMAL) {
 			val holder = viewHolder as ItemViewHolder
-			holder.name.text = data[pos].device + " (" + data[pos].country + ")\nЗа " + data[pos].candidateName
+//			holder.name.text = data[pos].device + " (" + data[pos].country + ")\nЗа " + data[pos].candidateName
+			holder.name.text = data[pos].candidateName + " +1\n" + data[pos].device + " (" + data[pos].country + ")"
 			holder.date.text = TimeUtils.formatTime(data[pos].time)
 		} else if (viewHolder.itemViewType == ITEM_TYPE_DATE) {
 			val holder = viewHolder as UniversalViewHolder

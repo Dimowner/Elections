@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.poll
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,19 +50,25 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		when (viewType) {
 			VIEW_TYPE_HEADER -> {
 				val view = View(parent.context)
-//				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//					AndroidUtils.getStatusBarHeight(viewGroup.context) + viewGroup.context.resources.getDimension(R.dimen.toolbar_height).toInt()
-//				} else {
-//					viewGroup.context.resources.getDimension(R.dimen.toolbar_height).toInt()
-//				}
-				val height: Int = parent.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					AndroidUtils.getStatusBarHeight(parent.context) + parent.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+				} else {
+					parent.context.resources.getDimension(R.dimen.toolbar_height).toInt()
+				}
 				val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
 				view.layoutParams = lp
 				return UniversalViewHolder(view)
 			}
 			VIEW_TYPE_FOOTER -> {
-				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_footer, parent, false)
-			 	return FooterViewHolder(v)
+				val view = View(parent.context)
+				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					AndroidUtils.getNavigationBarHeight(parent.context) + parent.context.resources.getDimension(R.dimen.footer_height).toInt()
+				} else {
+					parent.context.resources.getDimension(R.dimen.footer_height).toInt()
+				}
+				val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
+				view.layoutParams = lp
+				return UniversalViewHolder(view)
 			}
 			else -> {
 				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
@@ -157,7 +164,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		this.itemClickListener = itemClickListener
 	}
 
-	internal inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+	private inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 		var name: TextView = view.findViewById(R.id.list_item_name)
 		var description: TextView = view.findViewById(R.id.list_item_description)
 		var image: ImageView = view.findViewById(R.id.list_item_image)
@@ -165,9 +172,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		var itemPanel: LinearLayout = view.findViewById(R.id.item_panel)
 	}
 
-	internal inner class FooterViewHolder internal constructor(internal val view: View) : RecyclerView.ViewHolder(view)
-
-	inner class UniversalViewHolder(internal var view: View) : RecyclerView.ViewHolder(view)
+	private inner class UniversalViewHolder(var view: View) : RecyclerView.ViewHolder(view)
 
 	interface ItemClickListener {
 		fun onItemClick(view: View, position: Int, selected: Boolean)

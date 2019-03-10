@@ -64,6 +64,7 @@ open class WelcomePresenter(
 	}
 
 	override fun locate(context: Context) {
+		view?.showProgress()
 		compositeDisposable.add(
 				placesProvider.findCurrentLocation()
 						.observeOn(AndroidSchedulers.mainThread())
@@ -77,6 +78,7 @@ open class WelcomePresenter(
 							} else {
 								view?.showError("Failed to find location")
 							}
+							view?.hideProgress()
 						}, { Timber.e(it) }))
 	}
 }

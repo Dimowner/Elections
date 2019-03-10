@@ -2,8 +2,10 @@ package com.dimowner.elections.app.poll
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnLayout
@@ -12,6 +14,7 @@ import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.data.model.Candidate
+import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
 import javax.inject.Inject
@@ -27,11 +30,22 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	@Inject
 	lateinit var presenter: PollContract.UserActionsListener
 
+	private var navBarHeight: Int = 0
+
 	val adapter: PollsAdapter by lazy { PollsAdapter() }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_poll)
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			window.setFlags(
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+					WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+		}
+
+		toolbar.setPadding(0, AndroidUtils.getStatusBarHeight(applicationContext), 0, 0)
+		navBarHeight = AndroidUtils.getNavigationBarHeight(applicationContext)
 
 		recyclerView.setHasFixedSize(true)
 		recyclerView.layoutManager = LinearLayoutManager(applicationContext)
@@ -47,7 +61,7 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 		})
 
 		btnVote.doOnLayout {
-			btnVote.translationY = btnVote.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_normal)
+			btnVote.translationY = btnVote.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_double)
 			btnVote.visibility = View.VISIBLE
 		}
 
@@ -57,11 +71,15 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	}
 
 	fun showVote() {
-		AnimationUtil.verticalSpringAnimation(btnVote, 0)
+		if (navBarHeight > 0) {
+			AnimationUtil.verticalSpringAnimation(btnVote, -navBarHeight)
+		} else {
+			AnimationUtil.verticalSpringAnimation(btnVote, 0)
+		}
 	}
 
 	fun hideVote() {
-		val offset = btnVote.height + applicationContext.resources.getDimension(R.dimen.spacing_normal)
+		val offset = btnVote.height + applicationContext.resources.getDimension(R.dimen.spacing_double)
 		AnimationUtil.verticalSpringAnimation(btnVote, offset.toInt())
 	}
 
