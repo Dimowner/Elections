@@ -26,6 +26,8 @@ class AppConstants {
 		const val REQUESTS_RECEIVER = "dmitriy.ponomarenko.ua@gmail.com"
 		const val LOCAL_DATABASE_NAME = "elections_db"
 
+		const val LOADING_TIMEOUT: Long = 120 //seconds
+
 		const val TIME_FORMAT_24H = 11
 		const val TIME_FORMAT_12H = 12
 

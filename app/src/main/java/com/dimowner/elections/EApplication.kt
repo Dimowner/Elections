@@ -20,17 +20,37 @@
 package com.dimowner.elections
 
 import android.app.Application
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import com.dimowner.elections.dagger.application.AppComponent
 import com.dimowner.elections.dagger.application.AppModule
 import com.dimowner.elections.dagger.application.DaggerAppComponent
+import com.dimowner.elections.util.AndroidUtils
 import timber.log.Timber
 
+const val CONNECTIVITY_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
 /**
  * Created on 16.01.2018.
  * @author Dimowner
  */
 class EApplication : Application() {
+
+	private var networkStateChangeReceiver: NetworkStateChangeReceiver? = null
+
+
+	companion object {
+		fun get(context: Context): EApplication {
+			return context.applicationContext as EApplication
+		}
+
+		private var isConnectedToNetwork = false
+
+		fun isConnected(): Boolean {
+			return isConnectedToNetwork
+		}
+	}
 
 	private val appComponent: AppComponent by lazy {
 		DaggerAppComponent
@@ -53,22 +73,26 @@ class EApplication : Application() {
 				}
 			})
 		}
+
+		val intentFilter = IntentFilter()
+		intentFilter.addAction(CONNECTIVITY_ACTION)
+		networkStateChangeReceiver = NetworkStateChangeReceiver()
+		registerReceiver(networkStateChangeReceiver, intentFilter)
 	}
 
 //	operator fun get(context: Context): EApplication {
 //		return context.applicationContext as EApplication
 //	}
 
-	companion object {
-		fun get(context: Context): EApplication {
-			return context.applicationContext as EApplication
-		}
-	}
-
 //	private fun prepareAppComponent(): DaggerAppComponent.Builder {
 //		return DaggerAppComponent.builder()
 //				.appModule(AppModule(this))
 //	}
+
+	override fun onTerminate() {
+		super.onTerminate()
+		unregisterReceiver(networkStateChangeReceiver)
+	}
 
 	override fun onLowMemory() {
 		super.onLowMemory()
@@ -82,5 +106,21 @@ class EApplication : Application() {
 
 	fun applicationComponent(): AppComponent {
 		return appComponent
+	}
+
+
+	private inner class NetworkStateChangeReceiver : BroadcastReceiver() {
+		override fun onReceive(context: Context, intent: Intent) {
+			val actionOfIntent = intent.action
+			if (actionOfIntent == CONNECTIVITY_ACTION) {
+				if (AndroidUtils.isConnectedToNetwork(context)) {
+					Timber.d("network state changed - Connected")
+					isConnectedToNetwork = true
+				} else {
+					Timber.d("network state changed - Disconnected")
+					isConnectedToNetwork = false
+				}
+			}
+		}
 	}
 }

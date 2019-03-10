@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "candidates")
 data class Candidate(
+		@PrimaryKey(autoGenerate = false)
+		@SerializedName("id")
+		var id: Int = 0,
 		@SerializedName("firstName")
 		val firstName: String,
 		@SerializedName("midName")
@@ -24,21 +27,7 @@ data class Candidate(
 		val votesCount: Int
 )
 {
-	constructor() : this("Andriy", "Ivanovich", "Morozenko",
-			"https://www.thecocktaildb.com/images/media/drink/qyyvtu1468878544.jpg",
+	constructor() : this(0, "Andriy", "Ivanovich", "Morozenko",
+			"https://www.site.com/img.png",
 			"avatar_4", 4, "Power Force", 853)
-
-	@PrimaryKey(autoGenerate = true)
-	@SerializedName("id")
-	var id: Int = 0
 }
-
-//"id": 1,
-//"firstName": "Andriy",
-//"midName": "Ivanovich",
-//"surName": "Morozenko",
-//"iconUrl": "https://www.thecocktaildb.com/images/media/drink/qyyvtu1468878544.jpg",
-//"iconId": "avatar_4",
-//"number": 4,
-//"party": "Power Force",
-//"votesCount": 853

@@ -45,6 +45,7 @@ class RepositoryImpl(
 				}, Timber::e))
 		return localRepository.subscribeCandidates()
 				.filter { !it.isEmpty() }
+//				.timeout(AppConstants.LOADING_TIMEOUT, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
 	}
 
@@ -57,6 +58,7 @@ class RepositoryImpl(
 				}, Timber::e))
 		return localRepository.subscribeVotes()
 				.filter { !it.isEmpty() }
+//				.timeout(AppConstants.LOADING_TIMEOUT, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
 	}
 

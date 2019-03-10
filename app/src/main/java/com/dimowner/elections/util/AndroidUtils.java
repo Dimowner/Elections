@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.view.KeyCharacterMap;
@@ -79,6 +81,17 @@ public class AndroidUtils {
 	 */
 	public static float pxToDp(float px) {
 		return (px / Resources.getSystem().getDisplayMetrics().density);
+	}
+
+	/**
+	 * Check connectivity to network
+	 * @param context app context
+	 * @return true if connected, otherwise - false
+	 */
+	public static boolean isConnectedToNetwork(Context context) {
+		NetworkInfo networkInfo = ((ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+		return (networkInfo != null && networkInfo.isConnected());
 	}
 
 	// A method to find height of the status bar

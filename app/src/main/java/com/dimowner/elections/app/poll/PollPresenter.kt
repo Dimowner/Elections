@@ -57,7 +57,7 @@ class PollPresenter(
 				}, {
 					view?.hideProgress()
 					Timber.e(it)
-					view?.showError(it.message!!)
+					view?.showError(it.message ?: "Error!")
 				}))
 	}
 

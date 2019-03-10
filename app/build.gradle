@@ -26,6 +26,9 @@ ext.versions = [
 		//Dagger2
 		dagger2         : "2.11",
 
+		//Glide
+		glide				  : "4.7.1",
+
 		//Architecture components
 		archComp        : "1.1.1",
 
@@ -47,7 +50,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 14
+def versionPatch = 15
 
 android {
 	compileSdkVersion versions.targetSdkVersion
@@ -186,6 +189,10 @@ dependencies {
 	implementation "com.google.dagger:dagger:$versions.dagger2"
 	kapt "com.google.dagger:dagger-compiler:$versions.dagger2"
 	implementation 'com.google.dagger:dagger:2.16'
+
+	//Glide
+	implementation "com.github.bumptech.glide:glide:$versions.glide"
+	annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
 
 	//Room
 	implementation 'androidx.room:room-runtime:2.0.0'

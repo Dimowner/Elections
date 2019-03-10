@@ -27,6 +27,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dimowner.elections.R
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
@@ -74,7 +76,14 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			val holder = h as ItemViewHolder
 			holder.name.text = data[pos].firstName + " " + data[pos].surName
 			holder.description.text = data[pos].party
-			holder.image.setImageResource(AndroidUtils.candidateCodeToResource(data[pos].iconId))
+			if (data[pos].iconUrl.isNotBlank()) {
+				Glide.with(holder.image.context)
+						.load(data[pos].iconUrl)
+						.apply(RequestOptions.circleCropTransform())
+						.into(holder.image)
+			} else {
+				holder.image.setImageResource(AndroidUtils.candidateCodeToResource(data[pos].iconId))
+			}
 
 			if (pos == selectedItem) {
 				holder.itemPanel.setBackgroundResource(R.drawable.ripple_yellow)
