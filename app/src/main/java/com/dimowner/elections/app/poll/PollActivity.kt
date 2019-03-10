@@ -68,8 +68,11 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	override fun onStart() {
 		super.onStart()
 		btnVote.setOnClickListener {
-			presenter.vote(applicationContext, adapter.selectedItemId)
-			btnVote.setOnClickListener(null)
+			val item = adapter.getSelectedItem()
+			if (item != null) {
+				presenter.vote(applicationContext, item.id, item.surName + " " + item.firstName)
+				btnVote.setOnClickListener(null)
+			}
 		}
 	}
 

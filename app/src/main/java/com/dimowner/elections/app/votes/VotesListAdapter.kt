@@ -69,6 +69,10 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 				return UniversalViewHolder(textView)
 			}
+			ITEM_TYPE_FOOTER -> {
+				val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_footer, viewGroup, false)
+				return UniversalViewHolder(v)
+			}
 			else -> {
 				val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_activity, viewGroup, false)
 				return ItemViewHolder(v)
@@ -85,6 +89,8 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		} else if (viewHolder.itemViewType == ITEM_TYPE_DATE) {
 			val holder = viewHolder as UniversalViewHolder
 			(holder.view as TextView).text = TimeUtils.formatDateSmart(data[pos].time, holder.view.context)
+		} else {
+			//Do nothing
 		}
 	}
 
@@ -101,6 +107,7 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			this.data.addAll(list)
 			addDateHeaders()
 			this.data.add(0, VoteListItem.createHeaderItem())
+			this.data.add(VoteListItem.createFooterItem())
 			notifyDataSetChanged()
 		} else {
 			val diff = VotesDiffUtilCallback(data, list)
@@ -109,6 +116,7 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			this.data.addAll(list)
 			addDateHeaders()
 			this.data.add(0, VoteListItem.createHeaderItem())
+			this.data.add(VoteListItem.createFooterItem())
 			diffResult.dispatchUpdatesTo(this)
 		}
 	}
@@ -129,10 +137,10 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		}
 	}
 
-	internal inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+	private inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 		var name: TextView = view.findViewById(R.id.txtActivity)
 		var date: TextView = view.findViewById(R.id.txtActivityDate)
 	}
 
-	inner class UniversalViewHolder(internal var view: View) : RecyclerView.ViewHolder(view)
+	private inner class UniversalViewHolder(var view: View) : RecyclerView.ViewHolder(view)
 }

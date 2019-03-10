@@ -47,7 +47,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 12
+def versionPatch = 13
 
 android {
 	compileSdkVersion versions.targetSdkVersion
@@ -108,6 +108,7 @@ android {
 			minSdkVersion versions.minSdkVersion
 			targetSdkVersion versions.targetSdkVersion
 			signingConfig = signingConfigs.dev
+			buildConfigField("String", "SECRET_CODE", "\"$secretCode\"")
 		}
 		releaseConfig {
 			dimension "default"
@@ -115,6 +116,7 @@ android {
 			minSdkVersion versions.minSdkVersion
 			targetSdkVersion versions.targetSdkVersion
 			signingConfig = signingConfigs.release
+			buildConfigField("String", "SECRET_CODE", "\"$secretCode\"")
 		}
 	}
 

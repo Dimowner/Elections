@@ -61,10 +61,11 @@ class PollPresenter(
 				}))
 	}
 
-	override fun vote(context: Context, id: Int) {
+	override fun vote(context: Context, id: Int, name: String) {
 		val vote = Vote(
 				AndroidUtils.getDeviceIdentifier(context),
 				id,
+				name,
 				prefs.getCountryCode(),
 				prefs.getCountryName(),
 				AndroidUtils.getDisplayLanguage(context),

@@ -11,6 +11,8 @@ data class Vote(
 	val deviceId: String,
 	@SerializedName("candidateId")
 	val candidateId: Int,
+	@SerializedName("candidateName")
+	val candidateName: String,
 	@SerializedName("countryCode")
 	val countryCode: String,
 	@SerializedName("countryName")
@@ -27,7 +29,7 @@ data class Vote(
 	val android: Int
 )
 {
-	constructor() : this("SKJFKLSDF38K4", 1, "UA", "Ukraine", "UA", "Kyiv", 155119520,
+	constructor() : this("SKJFKLSDF38K4", 1, "Candidate Name", "UA", "Ukraine", "UA", "Kyiv", 155119520,
 			"Samsung Galaxy S7", 27)
 
 //	@PrimaryKey(autoGenerate = true)

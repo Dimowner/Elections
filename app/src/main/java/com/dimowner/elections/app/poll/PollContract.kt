@@ -32,6 +32,6 @@ interface PollContract {
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 		fun loadCandidates()
-		fun vote(context: Context, id: Int)
+		fun vote(context: Context, id: Int, name: String)
 	}
 }

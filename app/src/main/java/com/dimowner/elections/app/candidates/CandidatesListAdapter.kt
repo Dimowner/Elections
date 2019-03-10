@@ -58,7 +58,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			}
 			VIEW_TYPE_FOOTER -> {
 				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_footer, parent, false)
-				return FooterViewHolder(v)
+				return UniversalViewHolder(v)
 			}
 			else -> {
 				val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_poll, parent, false)
@@ -118,7 +118,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		this.itemClickListener = itemClickListener
 	}
 
-	internal inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+	private inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 		var name: TextView = view.findViewById(R.id.list_item_name)
 		var description: TextView = view.findViewById(R.id.list_item_description)
 		var image: ImageView = view.findViewById(R.id.list_item_image)
@@ -126,9 +126,7 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		var itemPanel: LinearLayout = view.findViewById(R.id.item_panel)
 	}
 
-	internal inner class FooterViewHolder internal constructor(internal val view: View) : RecyclerView.ViewHolder(view)
-
-	inner class UniversalViewHolder(internal var view: View) : RecyclerView.ViewHolder(view)
+	private inner class UniversalViewHolder internal constructor(internal var view: View) : RecyclerView.ViewHolder(view)
 
 	interface ItemClickListener {
 		fun onItemClick(view: View, position: Int)

@@ -3,6 +3,7 @@ package com.dimowner.elections.app.votes
 const val ITEM_TYPE_NORMAL = 1001
 const val ITEM_TYPE_HEADER = 1002
 const val ITEM_TYPE_DATE = 1003
+const val ITEM_TYPE_FOOTER = 1004
 
 data class VoteListItem(
 		val deviceId: String,
@@ -22,6 +23,10 @@ data class VoteListItem(
 
 		fun createDateItem(date: Long): VoteListItem {
 			return VoteListItem("DATE", ITEM_TYPE_DATE, "", "", "", date, "")
+		}
+
+		fun createFooterItem(): VoteListItem {
+			return VoteListItem("FOOTER", ITEM_TYPE_FOOTER, "", "", "", 0, "")
 		}
 	}
 }
