@@ -23,6 +23,7 @@ import com.dimowner.elections.data.local.LocalRepository
 import com.dimowner.elections.data.remote.FirebaseDatasource
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -55,6 +56,10 @@ class RepositoryImpl(
 				}, Timber::e))
 		return localRepository.subscribeVotes()
 				.subscribeOn(Schedulers.io())
+	}
+
+	override fun vote(vote: Vote): Completable {
+		return firebase.vote(vote)
 	}
 
 	override fun clear() {

@@ -67,7 +67,7 @@ class PrefsImpl constructor(context: Context) : Prefs {
 
 	override fun setCountryName(name: String) {
 		val editor = preferences.edit()
-		editor.putString(PREF_KEY_COUNTRY_CODE, name)
+		editor.putString(PREF_KEY_COUNTRY_NAME, name)
 		editor.apply()
 	}
 
@@ -81,7 +81,7 @@ class PrefsImpl constructor(context: Context) : Prefs {
 
 	override fun setCity(city: String) {
 		val editor = preferences.edit()
-		editor.putString(PREF_KEY_COUNTRY_CODE, city)
+		editor.putString(PREF_KEY_CITY, city)
 		editor.apply()
 	}
 

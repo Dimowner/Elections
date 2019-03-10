@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.poll
 
+import android.content.Context
 import com.dimowner.elections.app.Contract
 import com.dimowner.elections.data.model.Candidate
 
@@ -26,10 +27,11 @@ interface PollContract {
 
 	interface View : Contract.View {
 		fun showCandidatesList(list: List<Candidate>)
-		fun vote(id: Int)
+		fun startMainScreen()
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 		fun loadCandidates()
+		fun vote(context: Context, id: Int)
 	}
 }

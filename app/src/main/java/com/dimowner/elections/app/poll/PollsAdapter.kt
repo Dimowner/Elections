@@ -41,7 +41,8 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	private var itemClickListener: ItemClickListener? = null
 
-	private var selectedItem = -1
+	var selectedItem = -1
+	var selectedItemId = -1
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		when (viewType) {
@@ -89,6 +90,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			holder.itemPanel.setOnClickListener { v ->
 				run {
 					setActiveItem(pos)
+					setActiveItemId(data[pos].id)
 					itemClickListener?.onItemClick(v, pos, selectedItem != -1)
 				}
 			}
@@ -106,6 +108,14 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			this.selectedItem = activeItem
 			notifyItemChanged(prev+1)
 			notifyItemChanged(activeItem+1)
+		}
+	}
+
+	private fun setActiveItemId(id: Int) {
+		if (this.selectedItemId == id) {
+			this.selectedItemId = -1
+		} else {
+			this.selectedItemId = id
 		}
 	}
 

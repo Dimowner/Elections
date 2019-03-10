@@ -47,7 +47,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 11
+def versionPatch = 12
 
 android {
 	compileSdkVersion versions.targetSdkVersion
@@ -193,6 +193,7 @@ dependencies {
 	//Firebase
 	implementation "com.google.firebase:firebase-core:$versions.firebaseCore"
 	implementation "com.google.firebase:firebase-database:$versions.firebaseDatabase"
+	implementation "com.google.firebase:firebase-auth:$versions.firebaseDatabase"
 
 	//Timber
 	implementation "com.jakewharton.timber:timber:$versions.timber"

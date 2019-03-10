@@ -21,8 +21,6 @@ data class Vote(
 	val locality: String,
 	@SerializedName("time")
 	val time: Long,
-	@SerializedName("age")
-	val age: Int,
 	@SerializedName("device")
 	val device: String,
 	@SerializedName("android")
@@ -30,7 +28,7 @@ data class Vote(
 )
 {
 	constructor() : this("SKJFKLSDF38K4", 1, "UA", "Ukraine", "UA", "Kyiv", 155119520,
-			24, "Samsung Galaxy S7", 27)
+			"Samsung Galaxy S7", 27)
 
 //	@PrimaryKey(autoGenerate = true)
 //	@SerializedName("id")

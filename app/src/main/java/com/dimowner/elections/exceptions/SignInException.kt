@@ -17,20 +17,9 @@
  * the License.
  */
 
-package com.dimowner.elections.data
+package com.dimowner.elections.exceptions
 
-import com.dimowner.elections.data.model.Candidate
-import com.dimowner.elections.data.model.Vote
-import io.reactivex.Completable
-import io.reactivex.Flowable
-
-interface Repository {
-
-	fun subscribeCandidates(): Flowable<List<Candidate>>
-
-	fun subscribeVotes(): Flowable<List<Vote>>
-
-	fun vote(vote: Vote): Completable
-
-	fun clear()
+class SignInException: AppException() {
+	override val type: Int
+		get() = AppException.SIGN_IN_EXCEPTION
 }

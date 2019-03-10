@@ -17,20 +17,15 @@
  * the License.
  */
 
-package com.dimowner.elections.data
+package com.dimowner.elections.exceptions
 
-import com.dimowner.elections.data.model.Candidate
-import com.dimowner.elections.data.model.Vote
-import io.reactivex.Completable
-import io.reactivex.Flowable
+abstract class AppException : Exception() {
 
-interface Repository {
+	abstract val type: Int
 
-	fun subscribeCandidates(): Flowable<List<Candidate>>
+	companion object {
 
-	fun subscribeVotes(): Flowable<List<Vote>>
-
-	fun vote(vote: Vote): Completable
-
-	fun clear()
+		val NULL_AUTH_TOKEN = 1
+		val SIGN_IN_EXCEPTION = 2
+	}
 }

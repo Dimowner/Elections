@@ -16,7 +16,7 @@ import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
 import javax.inject.Inject
 
-class PollActivity: AppCompatActivity(), PollContract.View{
+class PollActivity: AppCompatActivity(), PollContract.View {
 
 	companion object {
 		fun getStartIntent(context: Context): Intent {
@@ -68,18 +68,18 @@ class PollActivity: AppCompatActivity(), PollContract.View{
 	override fun onStart() {
 		super.onStart()
 		btnVote.setOnClickListener {
-			startActivity(MainActivity.getStartIntent(applicationContext))
+			presenter.vote(applicationContext, adapter.selectedItemId)
 			btnVote.setOnClickListener(null)
 		}
+	}
+
+	override fun startMainScreen() {
+		startActivity(MainActivity.getStartIntent(applicationContext))
 	}
 
 	override fun onDestroy() {
 		super.onDestroy()
 		presenter.unbindView()
-	}
-
-	override fun vote(id: Int) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
 	override fun showCandidatesList(list: List<Candidate>) {

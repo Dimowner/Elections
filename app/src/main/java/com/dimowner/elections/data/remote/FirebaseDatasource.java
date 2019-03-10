@@ -16,8 +16,15 @@
 
 package com.dimowner.elections.data.remote;
 
+import com.dimowner.elections.BuildConfig;
 import com.dimowner.elections.data.model.Candidate;
 import com.dimowner.elections.data.model.Vote;
+import com.dimowner.elections.exceptions.NullAuthTokenException;
+import com.dimowner.elections.exceptions.SignInException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +38,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
@@ -38,11 +47,13 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.disposables.Disposables;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class FirebaseDatasource {
 
 	private static final String CANDIDATES_TABLE = "candidates";
+	private static final String USERS_TABLE = BuildConfig.SECRET_CODE;
 	private static final String VOTES_TABLE = "votes";
 	private static final String FIELD_VOTE_COUNTER = "voteCount";
 	private static final String FIELD_TIME = "time";
@@ -51,37 +62,64 @@ public class FirebaseDatasource {
 	private FirebaseDatabase database;
 	private DatabaseReference candidatesRef;
 	private DatabaseReference votesRef;
+	private DatabaseReference usersRef;
+	private FirebaseAuth auth;
 
 	public FirebaseDatasource() {
 		this.database = FirebaseDatabase.getInstance();
 		this.candidatesRef = database.getReference(CANDIDATES_TABLE);
 		this.votesRef = database.getReference(VOTES_TABLE);
+		this.usersRef = database.getReference(USERS_TABLE);
+		this.auth = FirebaseAuth.getInstance();
 	}
 
-	public boolean vote(int id) {
-//		if (!BuildConfig.DEBUG) {
-			Timber.d("vote id: " + id);
-			try {
-				final DatabaseReference ref = candidatesRef.child(String.valueOf(id)).child(FIELD_VOTE_COUNTER);
-				ref.addListenerForSingleValueEvent(new ValueEventListener() {
-					@Override
-					public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-						String d = dataSnapshot.getValue(String.class);
-						if (d != null) {
-//							ref.setValue(d + "n1");
+	private Single<String> getAuthToken() {
+		FirebaseUser user = auth.getCurrentUser();
+		if (user != null) {
+			return Single.create(emitter -> user
+					.getIdToken(false)
+					.addOnCompleteListener(task -> {
+						if (task.isSuccessful()) {
+							if (task.getResult() != null && task.getResult().getToken() != null) {
+								emitter.onSuccess(task.getResult().getToken());
+							} else {
+								emitter.onError(new NullAuthTokenException());
+							}
+							emitter.onSuccess(task.getResult().getToken());
+						} else {
+							emitter.onError(task.getException());
 						}
-					}
+					}));
+		} else {
+			return signInAnonymously();
+		}
+	}
 
-					@Override
-					public void onCancelled(@NonNull DatabaseError databaseError) {
-						Timber.e(databaseError.toString());
-					}
-				});
-			} catch (Exception e) {
-				Timber.e(e);
-			}
-//		}
-		return true;
+	private Single<String> signInAnonymously() {
+		return Single.<AuthResult>create(emitter -> callTask(auth.signInAnonymously(), emitter))
+				.flatMap(authResult -> {
+					String uid = authResult.getUser().getUid();
+					return Single.<String>create(emitter -> {
+							usersRef.child(uid).setValue(true)
+								.addOnSuccessListener(aVoid -> {
+									Timber.v("Succeed add USER ID = %s", uid);
+									emitter.onSuccess(uid);
+								})
+								.addOnFailureListener(command -> {
+									Timber.v("Failed add USER ID = %s", uid);
+									emitter.onError(new SignInException());
+								});
+					});
+				})
+				.subscribeOn(Schedulers.io());
+	}
+
+	public Completable vote(Vote vote) {
+		Timber.v("vote: %s", vote.toString());
+		return getAuthToken().flatMapCompletable(uid ->
+				Completable.create(emitter ->
+						callTask(votesRef.child(vote.getDeviceId()).setValue(vote), emitter))
+								.subscribeOn(Schedulers.io()));
 	}
 
 	public Single<List<Candidate>> getCandidates() {
@@ -106,21 +144,27 @@ public class FirebaseDatasource {
 
 	public Flowable<List<Vote>> getVotes() {
 		try {
-			return Flowable.create(new FlowableValueOnSubscribe(
-					votesRef.orderByChild(FIELD_TIME).limitToLast(MAX_COUNT)), BackpressureStrategy.LATEST)
-					.map(dataSnapshot -> {
-						List<Vote> list = new LinkedList<>();
-						for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-							Vote d = postSnapshot.getValue(Vote.class);
-							if (d != null) {
-								list.add(0, d);
-							}
-						}
-						return list;
-					});
+			return getAuthToken().toFlowable().flatMap(uid -> {
+					if (uid != null && !uid.isEmpty()) {
+						return Flowable.create(new FlowableValueOnSubscribe(
+								votesRef.orderByChild(FIELD_TIME).limitToLast(MAX_COUNT)), BackpressureStrategy.LATEST)
+								.map(dataSnapshot -> {
+									List<Vote> list = new LinkedList<>();
+									for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+										Vote d = postSnapshot.getValue(Vote.class);
+										if (d != null) {
+											list.add(0, d);
+										}
+									}
+									return list;
+								});
+					} else {
+						return Flowable.error(new NullAuthTokenException());
+					}
+				});
 		} catch (Exception e) {
 			Timber.e(e);
-			return Flowable.just(new ArrayList<>());
+			return Flowable.error(e);
 		}
 	}
 
@@ -194,5 +238,30 @@ public class FirebaseDatasource {
 				query.addValueEventListener(listener);
 			}
 		}
+	}
+
+	public static <Result> Task<Result> callTask(Task<Result> task, CompletableEmitter e) {
+		return task
+				.addOnSuccessListener(aVoid -> {
+					if (!e.isDisposed()) e.onComplete();
+				})
+				.addOnFailureListener(command -> {
+					if (!e.isDisposed()) e.onError(command);
+				});
+	}
+
+	public static <Result> Task<Result> callTask(Task<Result> task, SingleEmitter<Result> e) {
+		return task
+				.addOnSuccessListener(result -> {
+					if (!e.isDisposed()) e.onSuccess(result);
+				})
+				.addOnFailureListener(command -> {
+					if (!e.isDisposed()) e.onError(getExceptionFromTask(task));
+				});
+	}
+
+	public static Exception getExceptionFromTask(Task task) {
+		Exception exception = task.getException();
+		return exception == null ? new NullPointerException() : exception;
 	}
 }

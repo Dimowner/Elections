@@ -19,11 +19,16 @@
 
 package com.dimowner.elections.app.poll
 
+import android.content.Context
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
+import com.dimowner.elections.data.model.Vote
+import com.dimowner.elections.util.AndroidUtils
+import com.google.firebase.database.ServerValue
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+import java.util.*
 
 class PollPresenter(
 		private val repository: Repository,
@@ -55,4 +60,25 @@ class PollPresenter(
 					view?.showError(it.message!!)
 				}))
 	}
+
+	override fun vote(context: Context, id: Int) {
+		val vote = Vote(
+				AndroidUtils.getDeviceIdentifier(context),
+				id,
+				prefs.getCountryCode(),
+				prefs.getCountryName(),
+				AndroidUtils.getDisplayLanguage(context),
+				prefs.getCity(),
+				//ServerValue.TIMESTAMP,
+				Date().time, //TODO: use server time
+				AndroidUtils.getBrandModel(),
+				AndroidUtils.getAndroidVersion()
+				)
+		disposable.add(repository.vote(vote)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({
+					view?.startMainScreen()
+				}, {view?.showError(it.message ?: "Error!")}))
+	}
+
 }
