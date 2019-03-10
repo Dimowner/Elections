@@ -41,6 +41,12 @@
 			android:text="@string/select_candidate"
 			/>
 
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			/>
+
 	<ProgressBar
 			android:id="@+id/loadingProgress"
 			android:layout_gravity="center"
@@ -48,12 +54,6 @@
 			android:layout_height="wrap_content"
 			android:visibility="gone"
 			tools:visibility="visible"/>
-
-	<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/recyclerView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			/>
 
 	<Button
 			android:id="@+id/btnVote"

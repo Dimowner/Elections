@@ -17,6 +17,7 @@ import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class PollActivity: AppCompatActivity(), PollContract.View {
@@ -86,11 +87,27 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	override fun onStart() {
 		super.onStart()
 		btnVote.setOnClickListener {
-			val item = adapter.getSelectedItem()
-			if (item != null) {
-				presenter.vote(applicationContext, item.id, item.surName + " " + item.firstName)
-				btnVote.setOnClickListener(null)
-			}
+			showVoteConfirmationDialog()
+			btnVote.setOnClickListener(null)
+		}
+	}
+
+	private fun showVoteConfirmationDialog() {
+		val item = adapter.getSelectedItem()
+		if (item != null) {
+			val name = item.firstName + " " + item.surName
+			AndroidUtils.showDialog(this,
+					getString(R.string.vote),
+					getString(R.string.confirm_vote, name),
+					{//Positive btn
+						presenter.vote(applicationContext, item.id, name)
+					},
+					{//Negative btn
+						btnVote.setOnClickListener {
+							showVoteConfirmationDialog()
+							btnVote.setOnClickListener(null)
+						}
+					})
 		}
 	}
 

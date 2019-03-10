@@ -20,8 +20,8 @@ ext.versions = [
 		//Rx
 		rxJava          : "2.1.0",
 
-		//RetroFit
-		retroFit        : "2.3.0",
+//		//RetroFit
+//		retroFit        : "2.3.0",
 
 		//Dagger2
 		dagger2         : "2.11",
@@ -41,7 +41,7 @@ ext.versions = [
 		//Binary Preferences
 		binaryPrefs		 : "1.0.1",
 
-		logInterceptor  : "3.8.1",
+//		logInterceptor  : "3.8.1",
 
 		//Firebase
 		firebaseCore     : "16.0.7",
@@ -50,7 +50,7 @@ ext.versions = [
 
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 16
+def versionPatch = 18
 
 android {
 	compileSdkVersion versions.targetSdkVersion

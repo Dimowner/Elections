@@ -92,7 +92,8 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		if (viewHolder.itemViewType == ITEM_TYPE_NORMAL) {
 			val holder = viewHolder as ItemViewHolder
 //			holder.name.text = data[pos].device + " (" + data[pos].country + ")\nЗа " + data[pos].candidateName
-			holder.name.text = data[pos].candidateName + " +1\n" + data[pos].device + " (" + data[pos].country + ")"
+			holder.name.text = data[pos].candidateName + " +1"
+			holder.device.text = data[pos].device + " (" + data[pos].country + ")"
 			holder.date.text = TimeUtils.formatTime(data[pos].time)
 		} else if (viewHolder.itemViewType == ITEM_TYPE_DATE) {
 			val holder = viewHolder as UniversalViewHolder
@@ -146,7 +147,8 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	}
 
 	private inner class ItemViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-		var name: TextView = view.findViewById(R.id.txtActivity)
+		var name: TextView = view.findViewById(R.id.txtCandidate)
+		var device: TextView = view.findViewById(R.id.txtDevice)
 		var date: TextView = view.findViewById(R.id.txtActivityDate)
 	}
 

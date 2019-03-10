@@ -10,16 +10,31 @@
 				  android:paddingBottom="@dimen/spacing_small"
 				  >
 
-	<TextView
-			android:id="@+id/txtActivity"
+	<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
-			android:fontFamily="@font/roboto_mono_bold"
-			android:textSize="@dimen/text_medium"
-			android:textColor="@color/main_blue_dark"
-			tools:text="Samsung Galaxy S7 (UA) віддав голос за Evguene Petrov"
-			/>
+			android:orientation="vertical">
+		<TextView
+				android:id="@+id/txtCandidate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/roboto_mono_bold"
+				android:textSize="@dimen/text_xmedium"
+				android:textColor="@color/main_blue_dark"
+				tools:text="Evguene Petrov +1"
+				/>
+		<TextView
+				android:id="@+id/txtDevice"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/roboto_mono_regular"
+				android:textSize="@dimen/text_medium"
+				android:textColor="@color/main_blue_dark"
+				tools:text="Samsung Galaxy S7 (UA)"
+				/>
+	</LinearLayout>
+
 
 	<TextView
 			android:id="@+id/txtActivityDate"

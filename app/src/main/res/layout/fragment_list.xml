@@ -44,14 +44,14 @@
 	<FrameLayout
 			android:id="@+id/pnlToolbar"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="100dp">
 
 		<TextView
 				style="@style/Text.SectionLabel"
 				android:id="@+id/toolbar"
 				android:layout_width="wrap_content"
 				android:layout_height="@dimen/toolbar_height"
-				android:layout_gravity="center"
+				android:layout_gravity="center_horizontal|top"
 				android:gravity="center_vertical"
 				android:textColor="@color/main_yellow"
 				android:paddingStart="@dimen/spacing_normal"

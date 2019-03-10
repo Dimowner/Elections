@@ -62,6 +62,7 @@ class PollPresenter(
 	}
 
 	override fun vote(context: Context, id: Int, name: String) {
+		view?.showProgress()
 		val vote = Vote(
 				AndroidUtils.getDeviceIdentifier(context),
 				id,
@@ -79,7 +80,11 @@ class PollPresenter(
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({
 					view?.startMainScreen()
-				}, {view?.showError(it.message ?: "Error!")}))
+					view?.hideProgress()
+				}, {
+					view?.hideProgress()
+					view?.showError(it.message ?: "Error!")
+				}))
 	}
 
 }
