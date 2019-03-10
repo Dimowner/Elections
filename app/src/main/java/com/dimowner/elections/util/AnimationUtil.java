@@ -16,6 +16,8 @@
 
 package com.dimowner.elections.util;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
@@ -83,6 +85,17 @@ public class AnimationUtil {
 		animY.getSpring().setStiffness(SpringForce.STIFFNESS_LOW)
 				.setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
 		animY.start();
+	}
+
+	@TargetApi(21)
+	public static void viewElevationAnimation(final View view, float val, Animator.AnimatorListener listener) {
+		view.animate()
+				.translationZ(val)
+				.setDuration(250L)
+				.setInterpolator(AnimationUtils.loadInterpolator(view.getContext(),
+						android.R.interpolator.accelerate_decelerate))
+				.setListener(listener)
+				.start();
 	}
 
 	public static void viewRotationAnimation(View view, long duration) {

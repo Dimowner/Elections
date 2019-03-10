@@ -44,6 +44,7 @@ class RepositoryImpl(
 					localRepository.cacheCandidates(response)
 				}, Timber::e))
 		return localRepository.subscribeCandidates()
+				.filter { !it.isEmpty() }
 				.subscribeOn(Schedulers.io())
 	}
 
@@ -55,6 +56,7 @@ class RepositoryImpl(
 					localRepository.cacheVotes(response)
 				}, Timber::e))
 		return localRepository.subscribeVotes()
+				.filter { !it.isEmpty() }
 				.subscribeOn(Schedulers.io())
 	}
 

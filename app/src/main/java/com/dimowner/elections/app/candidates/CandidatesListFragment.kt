@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.candidates
 
+import android.animation.Animator
 import android.app.ActivityOptions
 import android.os.Build
 import android.os.Bundle
@@ -30,11 +31,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
+import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.fragment_list.*
 import javax.inject.Inject
 
@@ -48,6 +51,8 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 
 	@Inject
 	lateinit var presenter: CandidatesListContract.UserActionsListener
+
+	lateinit var layoutManager: LinearLayoutManager
 
 	var onMoveToVotesListener: View.OnClickListener? = null
 
@@ -69,8 +74,27 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		super.onViewCreated(view, savedInstanceState)
 
 		recyclerView.setHasFixedSize(true)
-		recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
+		layoutManager = LinearLayoutManager(activity?.applicationContext)
+		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = adapter
+		recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+			override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+				super.onScrolled(rv, dx, dy)
+				handleToolbarScroll(dy)
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					if (isListOnTop()) {
+						AnimationUtil.viewElevationAnimation(pnlToolbar, 0f, object : Animator.AnimatorListener {
+							override fun onAnimationStart(animation: Animator) {}
+							override fun onAnimationEnd(animation: Animator) {
+								pnlToolbar.setBackgroundResource(android.R.color.transparent)
+							}
+							override fun onAnimationCancel(animation: Animator) {}
+							override fun onAnimationRepeat(animation: Animator) {}
+						})
+					}
+				}
+			}
+		})
 		adapter.setItemClickListener(object : CandidatesListAdapter.ItemClickListener{
 			override fun onItemClick(view: View, position: Int) {
 				val code = adapter.getIconCodeForPosition(position)
@@ -108,10 +132,40 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		adapter.setData(list)
 	}
 
+	fun isListOnTop(): Boolean {
+		return layoutManager.findFirstCompletelyVisibleItemPosition() == 0
+	}
+
+	private fun handleToolbarScroll(dy: Int) {
+		var inset = pnlToolbar.translationY - dy
+		val height: Int
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			height = pnlToolbar.height + AndroidUtils.getStatusBarHeight(context)
+		} else {
+			height = pnlToolbar.height
+		}
+
+		if (inset < -height) {
+			inset = (-height).toFloat()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				pnlToolbar.translationZ = resources.getDimension(R.dimen.toolbar_elevation)
+				pnlToolbar.setBackgroundResource(R.color.main_blue_dark)
+			}
+		}
+
+		if (pnlToolbar.translationY <= 0 && inset > 0) {
+			pnlToolbar.translationY = 0f
+		} else {
+			pnlToolbar.translationY = inset
+		}
+	}
+
 	override fun showProgress() {
+		loadingProgress.visibility = View.VISIBLE
 	}
 
 	override fun hideProgress() {
+		loadingProgress.visibility = View.GONE
 	}
 
 	override fun showError(message: String) {
