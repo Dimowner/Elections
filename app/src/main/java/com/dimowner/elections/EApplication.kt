@@ -43,9 +43,14 @@ class EApplication : Application() {
 		}
 
 		private var isConnectedToNetwork = false
+		private lateinit var deviceId: String
 
 		fun isConnected(): Boolean {
 			return isConnectedToNetwork
+		}
+
+		fun getDeviceId(): String {
+			return deviceId
 		}
 	}
 
@@ -70,6 +75,8 @@ class EApplication : Application() {
 				}
 			})
 		}
+
+		deviceId = AndroidUtils.getDeviceIdentifier(this)
 
 		val intentFilter = IntentFilter()
 		intentFilter.addAction(CONNECTIVITY_ACTION)

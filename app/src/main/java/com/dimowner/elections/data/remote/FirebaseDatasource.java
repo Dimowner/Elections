@@ -17,6 +17,7 @@
 package com.dimowner.elections.data.remote;
 
 import com.dimowner.elections.BuildConfig;
+import com.dimowner.elections.EApplication;
 import com.dimowner.elections.data.model.Candidate;
 import com.dimowner.elections.data.model.Vote;
 import com.dimowner.elections.exceptions.NullAuthTokenException;
@@ -76,7 +77,7 @@ public class FirebaseDatasource {
 		this.auth = FirebaseAuth.getInstance();
 	}
 
-	private Single<String> getAuthToken() {
+	private Single<String> getAuthUid() {
 		FirebaseUser user = auth.getCurrentUser();
 		if (user != null) {
 			return Single.create(emitter -> user
@@ -84,11 +85,10 @@ public class FirebaseDatasource {
 					.addOnCompleteListener(task -> {
 						if (task.isSuccessful()) {
 							if (task.getResult() != null && task.getResult().getToken() != null) {
-								emitter.onSuccess(task.getResult().getToken());
+								emitter.onSuccess(user.getUid());
 							} else {
 								emitter.onError(new NullAuthTokenException());
 							}
-							emitter.onSuccess(task.getResult().getToken());
 						} else {
 							emitter.onError(task.getException());
 						}
@@ -105,11 +105,9 @@ public class FirebaseDatasource {
 					return Single.<String>create(emitter -> {
 							usersRef.child(uid).setValue(true)
 								.addOnSuccessListener(aVoid -> {
-									Timber.v("Succeed add USER ID = %s", uid);
 									emitter.onSuccess(uid);
 								})
 								.addOnFailureListener(command -> {
-									Timber.v("Failed add USER ID = %s", uid);
 									emitter.onError(new SignInException());
 								});
 					});
@@ -117,12 +115,36 @@ public class FirebaseDatasource {
 				.subscribeOn(Schedulers.io());
 	}
 
+	public Single<Boolean> checkDeviceVoted() {
+		return getAuthUid()
+				.flatMap(authResult -> {
+					return Single.<Boolean>create(emitter -> {
+						votesRef.child(EApplication.Companion.getDeviceId()).addListenerForSingleValueEvent(new ValueEventListener() {
+							@Override
+							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+								if (dataSnapshot.exists()) {
+									emitter.onSuccess(true);
+								} else {
+									emitter.onSuccess(false);
+								}
+							}
+
+							@Override
+							public void onCancelled(@NonNull DatabaseError databaseError) {
+								emitter.onError(new Exception(databaseError.getMessage()));
+							}
+						});
+					});
+				})
+				.subscribeOn(Schedulers.io());
+	}
+
 	public Completable vote(Vote vote) {
-		Timber.v("vote: %s", vote.toString());
-		return getAuthToken().flatMapCompletable(uid ->
+		Timber.d("vote: %s", vote.toString());
+		return getAuthUid().flatMapCompletable(uid ->
 				Completable.create(emitter -> callTask(votesRef.child(vote.getDeviceId())
 						.setValue(vote), emitter))
-						.mergeWith(Completable.create(emitter ->
+						.andThen(Completable.create(emitter ->
 								candidatesRef.child(String.valueOf(vote.getCandidateId()))
 										.runTransaction(new Transaction.Handler() {
 												@NonNull
@@ -177,7 +199,7 @@ public class FirebaseDatasource {
 
 	public Flowable<List<Vote>> getVotes() {
 		try {
-			return getAuthToken().toFlowable().flatMap(uid -> {
+			return getAuthUid().toFlowable().flatMap(uid -> {
 					if (uid != null && !uid.isEmpty()) {
 						return Flowable.create(new FlowableValueOnSubscribe(
 								votesRef.orderByChild(FIELD_TIME).limitToLast(MAX_COUNT)), BackpressureStrategy.LATEST)

@@ -32,6 +32,7 @@
 	<string name="confirm_vote">Підтвердити голос за %s</string>
 	<string name="emulator">Емулятор!</string>
 	<string name="vote_from_emulator_not_allowed">Ваш пристрий визначено як емулятор. Голосувати з емулятора заборонено!</string>
+	<string name="your_device_already_voted">Ваш телефон вже приймав участь в голосуванні</string>
 	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування кординат</string>
 	<string name="warning">Увага!</string>
 	<string name="error">Помилка!</string>

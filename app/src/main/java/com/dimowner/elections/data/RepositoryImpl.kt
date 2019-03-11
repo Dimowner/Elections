@@ -25,6 +25,7 @@ import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -60,6 +61,10 @@ class RepositoryImpl(
 				.filter { !it.isEmpty() }
 //				.timeout(AppConstants.LOADING_TIMEOUT, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
+	}
+
+	override fun checkDeviceVoted(): Single<Boolean> {
+		return firebase.checkDeviceVoted()
 	}
 
 	override fun vote(vote: Vote): Completable {

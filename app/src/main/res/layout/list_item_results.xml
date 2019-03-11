@@ -75,7 +75,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textStyle="bold"
-				android:textSize="@dimen/text_xmedium"
+				android:textSize="@dimen/text_large"
 				android:fontFamily="@font/google_sans"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingStart="@dimen/spacing_normal"

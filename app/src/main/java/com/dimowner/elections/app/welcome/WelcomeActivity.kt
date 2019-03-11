@@ -40,6 +40,7 @@ import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.app.poll.PollActivity
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_welcome.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -124,6 +125,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		isAnimated = false
 	}
 
+	@SuppressLint("CheckResult")
 	override fun onStart() {
 		super.onStart()
 		handler.postDelayed(advancePager, INITIAL_ADVANCE_DELAY)
@@ -132,18 +134,29 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 				showWarningEmulator()
 			} else {
 				if (EApplication.isConnected()) {
-					//TODO: Add check that remote database doesn't have this device serial number in database
-					if (checkLocationPermission()) {
-						presenter.locate(applicationContext)
-					} else {
-						if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-							AndroidUtils.showDialog(this,
-									R.string.warning,
-									R.string.location_are_needed,
-									{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
-									{ Timber.v("negative btn click") })
-						}
-					}
+					//TODO: Move logic into presenter
+					presenter.checkDeviceIsVoted()
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe({
+								if (it) {
+									showDeviceAlreadyVotedMessage()
+								} else {
+									if (checkLocationPermission()) {
+										presenter.locate(applicationContext)
+									} else {
+										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+											AndroidUtils.showDialog(this,
+													R.string.warning,
+													R.string.location_are_needed,
+													{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
+													{ Timber.v("negative btn click") })
+										}
+									}
+								}
+							}, {
+								showError(it.message ?: "Error!")
+							})
+
 				} else {
 					AndroidUtils.showDialog(this,
 							R.string.warning,
@@ -195,14 +208,28 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		finish()
 	}
 
+	override fun startResultsActivity() {
+		startActivity(MainActivity.getStartIntent(applicationContext))
+		finish()
+	}
+
+	override fun showDeviceAlreadyVotedMessage() {
+		AndroidUtils.showDialog(this,
+				R.string.warning,
+				R.string.your_device_already_voted,
+				{ Timber.v("Ok")
+					presenter.firstRunExecuted()
+					startResultsActivity()
+				}, null)
+	}
+
 	private fun showWarningEmulator() {
 		AndroidUtils.showDialog(this,
 				R.string.emulator,
 				R.string.vote_from_emulator_not_allowed,
 				{ Timber.v("Ok")
 					presenter.firstRunExecuted()
-					startActivity(MainActivity.getStartIntent(applicationContext))
-					finish()
+					startResultsActivity()
 				}, null)
 	}
 

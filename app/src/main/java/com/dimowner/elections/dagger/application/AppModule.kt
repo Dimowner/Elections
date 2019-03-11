@@ -63,8 +63,8 @@ class AppModule(
 	}
 
 	@Provides
-	internal fun provideWelcomePresenter(prefs: Prefs, context: Context, locationProvider: PlacesProvider): WelcomePresenter {
-		return WelcomePresenter(prefs, context, locationProvider)
+	internal fun provideWelcomePresenter(prefs: Prefs, context: Context, repository: Repository, locationProvider: PlacesProvider): WelcomePresenter {
+		return WelcomePresenter(prefs, context, repository, locationProvider)
 	}
 
 	@Provides

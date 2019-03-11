@@ -21,16 +21,20 @@ package com.dimowner.elections.app.welcome
 
 import android.content.Context
 import com.dimowner.elections.app.Contract
+import io.reactivex.Single
 
 interface WelcomeContract {
 
 	interface View : Contract.View {
 
 		fun startPollActivity()
+		fun startResultsActivity()
+		fun showDeviceAlreadyVotedMessage()
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 		fun firstRunExecuted()
+		fun checkDeviceIsVoted(): Single<Boolean>
 		fun locate(context: Context)
 	}
 }

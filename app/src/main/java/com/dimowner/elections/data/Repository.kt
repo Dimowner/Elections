@@ -23,12 +23,15 @@ import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface Repository {
 
 	fun subscribeCandidates(): Flowable<List<Candidate>>
 
 	fun subscribeVotes(): Flowable<List<Vote>>
+
+	fun checkDeviceVoted(): Single<Boolean>
 
 	fun vote(vote: Vote): Completable
 

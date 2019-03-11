@@ -22,8 +22,10 @@ package com.dimowner.elections.app.welcome
 import android.content.Context
 import android.os.Bundle
 import com.dimowner.elections.data.Prefs
+import com.dimowner.elections.data.Repository
 import com.dimowner.elections.places.PlacesProvider
 import com.google.android.gms.common.api.GoogleApiClient
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -31,6 +33,7 @@ import timber.log.Timber
 open class WelcomePresenter(
 		private val prefs: Prefs,
 		private val context: Context,
+		private val repository: Repository,
 		private val placesProvider: PlacesProvider) : WelcomeContract.UserActionsListener {
 
 	private var view: WelcomeContract.View? = null
@@ -40,17 +43,25 @@ open class WelcomePresenter(
 
 	override fun bindView(view: WelcomeContract.View) {
 		this.view = view
-		placesProvider.connect(
-				object : GoogleApiClient.ConnectionCallbacks {
-					override fun onConnected(bundle: Bundle?) {
-						Timber.v("onConnected")
-					}
+		if (!prefs.isFirstRun()) {
+			view.startResultsActivity()
+		} else {
+			placesProvider.connect(
+					object : GoogleApiClient.ConnectionCallbacks {
+						override fun onConnected(bundle: Bundle?) {
+							Timber.v("onConnected")
+						}
 
-					override fun onConnectionSuspended(i: Int) {
-						Timber.v("onConnectionSuspended")
+						override fun onConnectionSuspended(i: Int) {
+							Timber.v("onConnectionSuspended")
+						}
 					}
-				}
-		)
+			)
+		}
+	}
+
+	override fun checkDeviceIsVoted(): Single<Boolean> {
+		return repository.checkDeviceVoted().doOnSubscribe { compositeDisposable.add(it) }
 	}
 
 	override fun unbindView() {
