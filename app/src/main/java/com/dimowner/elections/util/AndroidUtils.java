@@ -164,7 +164,7 @@ public class AndroidUtils {
 
 	public static String getDeviceIdentifier(Context context) {
 		String serial = android.os.Build.SERIAL;
-		if (serial != null && !serial.isEmpty()) {
+		if (serial != null && !serial.isEmpty() && !serial.equalsIgnoreCase("unknown")) {
 			return serial;
 		} else {
 			String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);

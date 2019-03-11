@@ -7,7 +7,7 @@ import com.dimowner.elections.data.model.Candidate
  * Created on 02.03.2019.
  * @author Dimowner
  */
-class CandDiffUtilCallback(private val oldList: List<Candidate>, private val newList: List<Candidate>) : DiffUtil.Callback() {
+class PollDiffUtilCallback(private val oldList: List<Candidate>, private val newList: List<Candidate>) : DiffUtil.Callback() {
 
 	override fun getOldListSize(): Int {
 		return oldList.size

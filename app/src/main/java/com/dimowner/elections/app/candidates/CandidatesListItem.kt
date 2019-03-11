@@ -17,22 +17,33 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.poll
+package com.dimowner.elections.app.candidates
 
-import android.content.Context
-import com.dimowner.elections.app.Contract
-import com.dimowner.elections.data.model.Candidate
+const val ITEM_TYPE_NORMAL = 101
+const val ITEM_TYPE_HEADER = 102
+const val ITEM_TYPE_FOOTER = 103
 
-interface PollContract {
+data class CandidatesListItem(
+		var id: Int = 100,
+		val name: String,
+		val type: Int,
+		val iconUrl: String,
+		val iconId: String,
+		val party: String,
+		val votesCount: Int,
+		val votesCountUa: Int,
+		val votesCountPaid: Int,
+		val votesPercent: Int
+)
+{
+	companion object {
 
-	interface View : Contract.View {
-		fun showCandidatesList(list: List<Candidate>)
-		fun startMainScreen()
-		fun showNoConnectionMessage()
-	}
+		fun createHeaderItem(): CandidatesListItem {
+			return CandidatesListItem(101, "HEADER", ITEM_TYPE_HEADER, "", "", "", 0, 0, 0, 0)
+		}
 
-	interface UserActionsListener : Contract.UserActionsListener<View> {
-		fun loadCandidates()
-		fun vote(context: Context, id: Int, name: String)
+		fun createFooterItem(): CandidatesListItem {
+			return CandidatesListItem(102, "FOOTER", ITEM_TYPE_FOOTER, "", "", "", 0, 0, 0, 0)
+		}
 	}
 }

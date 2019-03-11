@@ -28,6 +28,8 @@ interface Repository {
 
 	fun subscribeCandidates(): Flowable<List<Candidate>>
 
+	fun subscribeResults(): Flowable<List<Candidate>>
+
 	fun subscribeVotes(): Flowable<List<Vote>>
 
 	fun vote(vote: Vote): Completable

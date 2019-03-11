@@ -110,7 +110,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 //				+ " device = " + android.os.Build.DEVICE + " brand = " + android.os.Build.BRAND)
 
 		btnStart.doOnLayout {
-			btnStart.translationY = btnStart.height.toFloat() + applicationContext.resources.getDimension(com.dimowner.elections.R.dimen.spacing_huge)
+			btnStart.translationY = btnStart.height.toFloat() + applicationContext.resources.getDimension(R.dimen.spacing_huge)
 			btnStart.visibility = View.VISIBLE
 			AnimationUtil.verticalSpringAnimation(btnStart, 0)
 		}
@@ -131,17 +131,25 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 			if (AndroidUtils.isEmulator()) {
 				showWarningEmulator()
 			} else {
-				//TODO: Add check that remote database doesn't have this device serial number in database
-				if (checkLocationPermission()) {
-					presenter.locate(applicationContext)
-				} else {
-					if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-						AndroidUtils.showDialog(this,
-								R.string.warning,
-								R.string.location_are_needed,
-								{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
-								{ Timber.v("negative btn click") })
+				if (EApplication.isConnected()) {
+					//TODO: Add check that remote database doesn't have this device serial number in database
+					if (checkLocationPermission()) {
+						presenter.locate(applicationContext)
+					} else {
+						if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+							AndroidUtils.showDialog(this,
+									R.string.warning,
+									R.string.location_are_needed,
+									{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
+									{ Timber.v("negative btn click") })
+						}
 					}
+				} else {
+					AndroidUtils.showDialog(this,
+							R.string.warning,
+							R.string.no_connection_to_internet,
+							{  },
+							{ Timber.v("negative btn click") })
 				}
 			}
 		}

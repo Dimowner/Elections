@@ -26,13 +26,15 @@ import androidx.room.Query
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 @Dao
 interface ElectionsDao {
 
 	@Query("SELECT * FROM candidates ORDER BY id ASC")
 	fun subscribeCandidates(): Flowable<List<Candidate>>
+
+	@Query("SELECT * FROM candidates ORDER BY votesCount DESC")
+	fun subscribeResults(): Flowable<List<Candidate>>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insertCandidate(item: Candidate)

@@ -1,7 +1,7 @@
 # Elections
 <p>President elections 2019 application</p>
 
-![Elections Logo](https://github.com/Dimowner/Elections/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_elections.png)
+![Elections Logo](https://github.com/Dimowner/Elections/blob/master/app/src/releaseConfig/res/mipmap-xxxhdpi/ic_elections2.png)
 
 ### License
 

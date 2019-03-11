@@ -38,7 +38,7 @@ import com.dimowner.elections.app.settings.SettingsActivity
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
-import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_results.*
 import javax.inject.Inject
 
 class CandidatesListFragment : Fragment(), CandidatesListContract.View {
@@ -59,7 +59,7 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 	val adapter: CandidatesListAdapter by lazy { CandidatesListAdapter() }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		val view = inflater.inflate(R.layout.fragment_list, container, false)
+		val view = inflater.inflate(R.layout.fragment_results, container, false)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			view.findViewById<FrameLayout>(R.id.pnlToolbar).setPadding(0, AndroidUtils.getStatusBarHeight(context), 0, 0)
 			val navBarHeight = AndroidUtils.getNavigationBarHeight(context).toFloat()
@@ -128,7 +128,7 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		presenter.unbindView()
 	}
 
-	override fun showCandidatesList(list: List<Candidate>) {
+	override fun showCandidatesList(list: List<CandidatesListItem>) {
 		adapter.setData(list)
 	}
 

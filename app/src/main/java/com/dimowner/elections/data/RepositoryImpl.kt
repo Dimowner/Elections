@@ -49,6 +49,19 @@ class RepositoryImpl(
 				.subscribeOn(Schedulers.io())
 	}
 
+	override fun subscribeResults(): Flowable<List<Candidate>> {
+		compositeDisposable.add(firebase.candidates
+				.subscribeOn(Schedulers.io())
+				.observeOn(Schedulers.io())
+				.subscribe({ response ->
+					localRepository.cacheCandidates(response)
+				}, Timber::e))
+		return localRepository.subscribeResults()
+				.filter { !it.isEmpty() }
+//				.timeout(AppConstants.LOADING_TIMEOUT, TimeUnit.SECONDS)
+				.subscribeOn(Schedulers.io())
+	}
+
 	override fun subscribeVotes(): Flowable<List<Vote>> {
 		compositeDisposable.add(firebase.votes
 				.subscribeOn(Schedulers.io())

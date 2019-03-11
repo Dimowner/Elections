@@ -97,6 +97,7 @@
 			android:clickable="true"
 			android:focusable="true"
 			android:text="@string/vote_results"
+			android:elevation="12dp"
 			android:background="@drawable/ripple_blue_dark"
 			/>
 </FrameLayout>

@@ -53,6 +53,13 @@
 		<item name="android:windowBackground">@drawable/branded_logo</item>
 	</style>
 
+	<style name="Widget.ToolbarProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+		<item name="android:layout_marginEnd">@dimen/spacing_normal</item>
+		<item name="android:layout_marginStart">@dimen/spacing_normal</item>
+		<item name="android:secondaryProgress">100</item>
+		<item name="android:progressDrawable">@drawable/progress_bar</item>
+	</style>
+
 	<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
 		<item name="android:textSize">20sp</item>
 		<item name="android:fontFamily">sans-serif-light</item>

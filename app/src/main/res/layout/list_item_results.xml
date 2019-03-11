@@ -26,6 +26,36 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="80dp"
+			android:progress="50"
+			android:layout_marginTop="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_small"
+			android:layout_marginStart="80dp"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			android:layout_gravity="bottom"
+			android:focusable="true"
+			android:clickable="true"
+			android:background="@drawable/ripple_blue_40"
+			android:elevation="@dimen/toolbar_elevation"
+			/>
+
+	<ProgressBar
+			style="@style/Widget.ToolbarProgress"
+			android:id="@+id/lit_item_percentage"
+			android:layout_width="match_parent"
+			android:layout_height="80dp"
+			android:progress="50"
+			android:layout_marginTop="@dimen/spacing_small"
+			android:layout_marginBottom="@dimen/spacing_small"
+			android:layout_marginStart="80dp"
+			android:layout_marginEnd="@dimen/spacing_normal"
+			app:layout_scrollFlags="scroll|enterAlways"
+			android:layout_gravity="bottom"
+			android:elevation="@dimen/toolbar_elevation"
+			/>
+
 	<LinearLayout
 			android:id="@+id/item_panel"
 			android:layout_width="match_parent"
@@ -34,13 +64,8 @@
 			android:layout_gravity="center_vertical"
 			android:layout_marginStart="32dp"
 			android:paddingStart="56dp"
-			android:clickable="true"
-			android:focusable="true"
-			android:layout_marginEnd="@dimen/spacing_normal"
-			android:paddingBottom="@dimen/spacing_small"
-			android:paddingTop="@dimen/spacing_small"
+			android:layout_marginEnd="50dp"
 			android:paddingEnd="@dimen/spacing_small"
-			android:background="@drawable/ripple_blue"
 			android:elevation="@dimen/toolbar_elevation"
 			>
 
@@ -50,14 +75,14 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textStyle="bold"
-				android:textSize="@dimen/text_large"
+				android:textSize="@dimen/text_xmedium"
 				android:fontFamily="@font/google_sans"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
 				android:paddingEnd="@dimen/spacing_normal"
 				android:maxLines="2"
-				tools:text="asfasfasfasf asfa sfasf asfa sfa fas fasf afs asf ads "
+				tools:text="asfasfasfasf a s f a s f a s f a s f a s f a"
 				/>
 
 		<TextView
@@ -89,5 +114,30 @@
 			android:elevation="8dp"
 			android:background="@drawable/circle_grey"
 			android:contentDescription="@string/item_image"/>
+
+	<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/spacing_normal"
+			android:padding="@dimen/spacing_small"
+			android:layout_gravity="center_vertical|end"
+			android:elevation="@dimen/toolbar_elevation"
+			android:orientation="vertical"
+			>
+		<TextView
+				style="@style/Text.NormalLabel"
+				android:id="@+id/list_item_value"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				tools:text="56%"
+				/>
+		<TextView
+				style="@style/Text.Subheader"
+				android:id="@+id/list_item_count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				tools:text="540"
+				/>
+	</LinearLayout>
 
 </FrameLayout>

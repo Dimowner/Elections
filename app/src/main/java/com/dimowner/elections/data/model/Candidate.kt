@@ -24,10 +24,14 @@ data class Candidate(
 		@SerializedName("party")
 		val party: String,
 		@SerializedName("votesCount")
-		val votesCount: Int
+		val votesCount: Int,
+		@SerializedName("votesCountUa")
+		val votesCountUa: Int,
+		@SerializedName("votesCountPaid")
+		val votesCountPaid: Int
 )
 {
 	constructor() : this(0, "Andriy", "Ivanovich", "Morozenko",
 			"https://www.site.com/img.png",
-			"avatar_4", 4, "Power Force", 853)
+			"avatar_4", 4, "Power Force", 853, 700, 153)
 }

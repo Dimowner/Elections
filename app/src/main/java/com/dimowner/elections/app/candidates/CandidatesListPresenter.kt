@@ -21,6 +21,7 @@ package com.dimowner.elections.app.candidates
 
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
+import com.dimowner.elections.toCandidatesListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -44,10 +45,19 @@ class CandidatesListPresenter(
 
 	override fun loadCandidates() {
 		view?.showProgress()
-		disposable.add(repository.subscribeCandidates()
+		disposable.add(repository.subscribeResults()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ d ->
-					view?.showCandidatesList(d)
+					val list: MutableList<CandidatesListItem> = ArrayList(d.size)
+					var p = 0
+					for (item in d) {
+						p += item.votesCount
+					}
+					for (item in d) {
+						val i = item.toCandidatesListItem(p/100)
+						list.add(i)
+					}
+					view?.showCandidatesList(list)
 					view?.hideProgress()
 				}, {
 					view?.hideProgress()

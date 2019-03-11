@@ -31,10 +31,7 @@ import com.dimowner.elections.util.AndroidUtils
 import timber.log.Timber
 
 const val CONNECTIVITY_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
-/**
- * Created on 16.01.2018.
- * @author Dimowner
- */
+
 class EApplication : Application() {
 
 	private var networkStateChangeReceiver: NetworkStateChangeReceiver? = null

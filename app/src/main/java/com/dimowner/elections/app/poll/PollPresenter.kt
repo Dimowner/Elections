@@ -20,6 +20,7 @@
 package com.dimowner.elections.app.poll
 
 import android.content.Context
+import com.dimowner.elections.EApplication
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
 import com.dimowner.elections.data.model.Vote
@@ -62,29 +63,33 @@ class PollPresenter(
 	}
 
 	override fun vote(context: Context, id: Int, name: String) {
-		view?.showProgress()
-		val vote = Vote(
-				AndroidUtils.getDeviceIdentifier(context),
-				id,
-				name,
-				prefs.getCountryCode(),
-				prefs.getCountryName(),
-				AndroidUtils.getDisplayLanguage(context),
-				prefs.getCity(),
-				//ServerValue.TIMESTAMP,
-				Date().time, //TODO: use server time
-				AndroidUtils.getBrandModel(),
-				AndroidUtils.getAndroidVersion()
-				)
-		disposable.add(repository.vote(vote)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({
-					view?.startMainScreen()
-					view?.hideProgress()
-				}, {
-					view?.hideProgress()
-					view?.showError(it.message ?: "Error!")
-				}))
+		if (EApplication.isConnected()) {
+			view?.showProgress()
+			val vote = Vote(
+					AndroidUtils.getDeviceIdentifier(context),
+					id,
+					name,
+					prefs.getCountryCode(),
+					prefs.getCountryName(),
+					AndroidUtils.getDisplayLanguage(context),
+					prefs.getCity(),
+					//ServerValue.TIMESTAMP,
+					Date().time, //TODO: use server time
+					AndroidUtils.getBrandModel(),
+					AndroidUtils.getAndroidVersion()
+			)
+			disposable.add(repository.vote(vote)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe({
+						view?.startMainScreen()
+						view?.hideProgress()
+					}, {
+						view?.hideProgress()
+						view?.showError(it.message ?: "Error!")
+					}))
+		} else {
+			view?.showNoConnectionMessage()
+		}
 	}
 
 }

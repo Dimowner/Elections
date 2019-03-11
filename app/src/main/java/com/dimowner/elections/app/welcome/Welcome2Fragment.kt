@@ -39,7 +39,7 @@ class Welcome2Fragment : Fragment() {
 			container: ViewGroup?,
 			savedInstanceState: Bundle?
 	): View? {
-		fragmentView = inflater.inflate(R.layout.fragment_welcome, container, false)
+		fragmentView = inflater.inflate(R.layout.fragment_welcome2, container, false)
 		fragmentView.findViewById<TextView>(R.id.txtTitle).apply {
 			this.setText(R.string.only_here)
 			this.visibility = View.VISIBLE

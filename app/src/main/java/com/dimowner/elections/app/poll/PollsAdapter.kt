@@ -152,7 +152,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 			this.data.addAll(list)
 			notifyDataSetChanged()
 		} else {
-			val diff = CandDiffUtilCallback(data, list)
+			val diff = PollDiffUtilCallback(data, list)
 			val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diff)
 			this.data.clear()
 			this.data.addAll(list)
@@ -168,7 +168,6 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		var name: TextView = view.findViewById(R.id.list_item_name)
 		var description: TextView = view.findViewById(R.id.list_item_description)
 		var image: ImageView = view.findViewById(R.id.list_item_image)
-		var txtVal: TextView = view.findViewById(R.id.list_item_value)
 		var itemPanel: LinearLayout = view.findViewById(R.id.item_panel)
 	}
 

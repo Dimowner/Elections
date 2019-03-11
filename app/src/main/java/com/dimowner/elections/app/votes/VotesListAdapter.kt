@@ -114,23 +114,23 @@ class VotesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	fun setData(list: List<VoteListItem>) {
 		if (data.isEmpty()) {
 			this.data.addAll(list)
-			addDateHeaders()
+			addDateHeaders(data)
 			this.data.add(0, VoteListItem.createHeaderItem())
 			this.data.add(VoteListItem.createFooterItem())
 			notifyDataSetChanged()
 		} else {
+			addDateHeaders(list as MutableList<VoteListItem>)
+			list.add(0, VoteListItem.createHeaderItem())
+			list.add(VoteListItem.createFooterItem())
 			val diff = VotesDiffUtilCallback(data, list)
 			val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diff)
 			this.data.clear()
 			this.data.addAll(list)
-			addDateHeaders()
-			this.data.add(0, VoteListItem.createHeaderItem())
-			this.data.add(VoteListItem.createFooterItem())
 			diffResult.dispatchUpdatesTo(this)
 		}
 	}
 
-	private fun addDateHeaders() {
+	private fun addDateHeaders(data: MutableList<VoteListItem>) {
 		if (data.size > 0) {
 			data.add(0, VoteListItem.createDateItem(data[0].time))
 			val d1 = Calendar.getInstance()

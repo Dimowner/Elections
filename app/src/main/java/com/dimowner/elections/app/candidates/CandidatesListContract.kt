@@ -20,14 +20,12 @@
 package com.dimowner.elections.app.candidates
 
 import com.dimowner.elections.app.Contract
-import com.dimowner.elections.data.model.Candidate
-
 
 interface CandidatesListContract {
 
 	interface View : Contract.View {
 
-		fun showCandidatesList(list: List<Candidate>)
+		fun showCandidatesList(list: List<CandidatesListItem>)
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {

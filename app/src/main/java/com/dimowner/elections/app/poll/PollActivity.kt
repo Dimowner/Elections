@@ -17,7 +17,6 @@ import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class PollActivity: AppCompatActivity(), PollContract.View {
@@ -87,8 +86,12 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	override fun onStart() {
 		super.onStart()
 		btnVote.setOnClickListener {
-			showVoteConfirmationDialog()
-			btnVote.setOnClickListener(null)
+			if (EApplication.isConnected()) {
+				showVoteConfirmationDialog()
+				btnVote.setOnClickListener(null)
+			} else {
+				showNoConnectionMessage()
+			}
 		}
 	}
 
@@ -104,11 +107,28 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 					},
 					{//Negative btn
 						btnVote.setOnClickListener {
-							showVoteConfirmationDialog()
-							btnVote.setOnClickListener(null)
+							if (EApplication.isConnected()) {
+								showVoteConfirmationDialog()
+								btnVote.setOnClickListener(null)
+							} else {
+								showNoConnectionMessage()
+							}
 						}
 					})
 		}
+	}
+
+	override fun showNoConnectionMessage() {
+		AndroidUtils.showDialog(this,
+				R.string.error,
+				R.string.no_connection_to_internet,
+				{
+					btnVote.setOnClickListener {
+						showVoteConfirmationDialog()
+						btnVote.setOnClickListener(null)
+					}
+				},//Positive btn
+				null)
 	}
 
 	override fun startMainScreen() {
