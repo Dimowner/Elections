@@ -104,7 +104,6 @@ class CandidatesListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	fun setData(list: List<CandidatesListItem>) {
 		if (data.isEmpty()) {
-			this.data.clear()
 			this.data.addAll(list)
 			this.data.add(0, CandidatesListItem.createHeaderItem())
 			this.data.add(CandidatesListItem.createFooterItem())

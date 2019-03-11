@@ -24,6 +24,7 @@ import com.dimowner.elections.EApplication
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
 import com.dimowner.elections.data.model.Vote
+import com.dimowner.elections.toPollListItem
 import com.dimowner.elections.util.AndroidUtils
 import com.google.firebase.database.ServerValue
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,7 +54,11 @@ class PollPresenter(
 		disposable.add(repository.subscribeCandidates()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ d ->
-					view?.showCandidatesList(d)
+					val list: MutableList<PollListItem> = ArrayList(d.size)
+					for (item in d) {
+						list.add(item.toPollListItem())
+					}
+					view?.showCandidatesList(list)
 					view?.hideProgress()
 				}, {
 					view?.hideProgress()

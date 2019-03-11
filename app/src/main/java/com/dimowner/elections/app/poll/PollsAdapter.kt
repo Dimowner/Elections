@@ -31,16 +31,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dimowner.elections.R
-import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
-
-private const val VIEW_TYPE_NORMAL = 1
-private const val VIEW_TYPE_HEADER = 2
-private const val VIEW_TYPE_FOOTER = 3
 
 class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-	private var data: MutableList<Candidate> = ArrayList()
+	private var data: MutableList<PollListItem> = ArrayList()
 
 	private var itemClickListener: ItemClickListener? = null
 
@@ -48,7 +43,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		when (viewType) {
-			VIEW_TYPE_HEADER -> {
+			ITEM_TYPE_HEADER -> {
 				val view = View(parent.context)
 				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 					AndroidUtils.getStatusBarHeight(parent.context) + parent.context.resources.getDimension(R.dimen.toolbar_height).toInt()
@@ -59,7 +54,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 				view.layoutParams = lp
 				return UniversalViewHolder(view)
 			}
-			VIEW_TYPE_FOOTER -> {
+			ITEM_TYPE_FOOTER -> {
 				val view = View(parent.context)
 				val height: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 					AndroidUtils.getNavigationBarHeight(parent.context) + parent.context.resources.getDimension(R.dimen.footer_height).toInt()
@@ -78,10 +73,10 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	}
 
 	override fun onBindViewHolder(h: RecyclerView.ViewHolder, position: Int) {
-		if (h.itemViewType == VIEW_TYPE_NORMAL) {
-			val pos = h.adapterPosition-1
+		if (h.itemViewType == ITEM_TYPE_NORMAL) {
+			val pos = h.adapterPosition
 			val holder = h as ItemViewHolder
-			holder.name.text = data[pos].firstName + " " + data[pos].surName
+			holder.name.text = data[pos].name
 			holder.description.text = data[pos].party
 			if (data[pos].iconUrl.isNotBlank()) {
 				Glide.with(holder.image.context)
@@ -116,16 +111,16 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private fun setActiveItem(activeItem: Int) {
 		if (this.selectedItem == activeItem) {
 			this.selectedItem = -1
-			notifyItemChanged(activeItem+1)
+			notifyItemChanged(activeItem)
 		} else {
 			val prev = this.selectedItem
 			this.selectedItem = activeItem
-			notifyItemChanged(prev+1)
-			notifyItemChanged(activeItem+1)
+			notifyItemChanged(prev)
+			notifyItemChanged(activeItem)
 		}
 	}
 
-	public fun getSelectedItem(): Candidate? {
+	fun getSelectedItem(): PollListItem? {
 		if (selectedItem >= 0 && selectedItem < data.size) {
 			return data[selectedItem]
 		} else {
@@ -134,24 +129,23 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	}
 
 	override fun getItemViewType(position: Int): Int {
-		return if (position == 0) {
-			VIEW_TYPE_HEADER
-		} else if (position >= data.size+1) {
-			VIEW_TYPE_FOOTER
-		} else {
-			VIEW_TYPE_NORMAL
-		}
+		return data[position].type
 	}
 
 	override fun getItemCount(): Int {
-		return data.size + 2
+		return data.size
 	}
 
-	fun setData(list: List<Candidate>) {
+	fun setData(list: List<PollListItem>) {
 		if (data.isEmpty()) {
 			this.data.addAll(list)
+			this.data.add(0, PollListItem.createHeaderItem())
+			this.data.add(PollListItem.createFooterItem())
 			notifyDataSetChanged()
 		} else {
+			(list as MutableList).add(0, PollListItem.createHeaderItem())
+			list.add(PollListItem.createFooterItem())
+
 			val diff = PollDiffUtilCallback(data, list)
 			val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diff)
 			this.data.clear()

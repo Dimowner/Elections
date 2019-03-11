@@ -1,3 +1,4 @@
+package com.dimowner.elections.app.poll
 /*
  *  Copyright 2019 Dmitriy Ponomarenko
  *
@@ -17,21 +18,27 @@
  *  the License.
  */
 
-package com.dimowner.elections.app.poll
+const val ITEM_TYPE_NORMAL = 11
+const val ITEM_TYPE_HEADER = 12
+const val ITEM_TYPE_FOOTER = 13
 
-import android.content.Context
-import com.dimowner.elections.app.Contract
+data class PollListItem(
+		var id: Int = -1,
+		val name: String,
+		val type: Int,
+		val iconUrl: String,
+		val iconId: String,
+		val party: String
+)
+{
+	companion object {
 
-interface PollContract {
+		fun createHeaderItem(): PollListItem {
+			return PollListItem(-2, "HEADER", ITEM_TYPE_HEADER, "", "", "")
+		}
 
-	interface View : Contract.View {
-		fun showCandidatesList(list: List<PollListItem>)
-		fun startMainScreen()
-		fun showNoConnectionMessage()
-	}
-
-	interface UserActionsListener : Contract.UserActionsListener<View> {
-		fun loadCandidates()
-		fun vote(context: Context, id: Int, name: String)
+		fun createFooterItem(): PollListItem {
+			return PollListItem(-3, "FOOTER", ITEM_TYPE_FOOTER, "", "", "")
+		}
 	}
 }

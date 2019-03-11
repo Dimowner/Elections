@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
 import com.dimowner.elections.app.main.MainActivity
-import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.activity_poll.*
@@ -98,12 +97,11 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	private fun showVoteConfirmationDialog() {
 		val item = adapter.getSelectedItem()
 		if (item != null) {
-			val name = item.firstName + " " + item.surName
 			AndroidUtils.showDialog(this,
 					getString(R.string.vote),
-					getString(R.string.confirm_vote, name),
+					getString(R.string.confirm_vote, item.name),
 					{//Positive btn
-						presenter.vote(applicationContext, item.id, name)
+						presenter.vote(applicationContext, item.id, item.name)
 					},
 					{//Negative btn
 						btnVote.setOnClickListener {
@@ -140,7 +138,7 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 		presenter.unbindView()
 	}
 
-	override fun showCandidatesList(list: List<Candidate>) {
+	override fun showCandidatesList(list: List<PollListItem>) {
 		adapter.setData(list)
 	}
 

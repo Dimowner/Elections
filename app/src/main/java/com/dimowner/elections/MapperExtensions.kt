@@ -1,6 +1,7 @@
 package com.dimowner.elections
 
 import com.dimowner.elections.app.candidates.CandidatesListItem
+import com.dimowner.elections.app.poll.PollListItem
 import com.dimowner.elections.app.votes.VoteListItem
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
@@ -29,5 +30,16 @@ fun Candidate.toCandidatesListItem(votesPerPercent: Int): CandidatesListItem {
 			this.votesCountUa,
 			this.votesCountPaid,
 			this.votesCount/votesPerPercent
+	)
+}
+
+fun Candidate.toPollListItem(): PollListItem {
+	return PollListItem(
+			this.id,
+			this.firstName + " " + this.surName,
+			com.dimowner.elections.app.poll.ITEM_TYPE_NORMAL,
+			this.iconUrl,
+			this.iconId,
+			this.party
 	)
 }

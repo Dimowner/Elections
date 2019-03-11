@@ -30,10 +30,6 @@ class LocalRepositoryImpl(private val appDatabase: AppDatabase) : LocalRepositor
 		return appDatabase.electionsDao().subscribeCandidates()
 	}
 
-	override fun subscribeResults(): Flowable<List<Candidate>> {
-		return appDatabase.electionsDao().subscribeResults()
-	}
-
 	override fun cacheCandidates(entity: List<Candidate>) {
 		if (entity.isNotEmpty()) {
 			appDatabase.electionsDao().deleteCandidates()

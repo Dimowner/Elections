@@ -45,7 +45,7 @@ class CandidatesListPresenter(
 
 	override fun loadCandidates() {
 		view?.showProgress()
-		disposable.add(repository.subscribeResults()
+		disposable.add(repository.subscribeCandidates()
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ d ->
 					val list: MutableList<CandidatesListItem> = ArrayList(d.size)

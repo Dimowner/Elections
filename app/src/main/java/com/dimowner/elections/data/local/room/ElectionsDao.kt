@@ -30,11 +30,8 @@ import io.reactivex.Flowable
 @Dao
 interface ElectionsDao {
 
-	@Query("SELECT * FROM candidates ORDER BY id ASC")
+	@Query("SELECT * FROM candidates ORDER BY votesCount DESC, id ASC")
 	fun subscribeCandidates(): Flowable<List<Candidate>>
-
-	@Query("SELECT * FROM candidates ORDER BY votesCount DESC")
-	fun subscribeResults(): Flowable<List<Candidate>>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insertCandidate(item: Candidate)
