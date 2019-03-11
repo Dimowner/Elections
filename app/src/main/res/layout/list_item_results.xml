@@ -28,13 +28,13 @@
 
 	<View
 			android:layout_width="match_parent"
-			android:layout_height="80dp"
+			android:layout_height="72dp"
 			android:progress="50"
 			android:layout_marginTop="@dimen/spacing_small"
 			android:layout_marginBottom="@dimen/spacing_small"
 			android:layout_marginStart="80dp"
 			android:layout_marginEnd="@dimen/spacing_normal"
-			android:layout_gravity="bottom"
+			android:layout_gravity="center_vertical"
 			android:focusable="true"
 			android:clickable="true"
 			android:background="@drawable/ripple_blue_40"
@@ -45,14 +45,14 @@
 			style="@style/Widget.ToolbarProgress"
 			android:id="@+id/lit_item_percentage"
 			android:layout_width="match_parent"
-			android:layout_height="80dp"
+			android:layout_height="72dp"
 			android:progress="50"
 			android:layout_marginTop="@dimen/spacing_small"
 			android:layout_marginBottom="@dimen/spacing_small"
 			android:layout_marginStart="80dp"
 			android:layout_marginEnd="@dimen/spacing_normal"
 			app:layout_scrollFlags="scroll|enterAlways"
-			android:layout_gravity="bottom"
+			android:layout_gravity="center_vertical"
 			android:elevation="@dimen/toolbar_elevation"
 			/>
 
@@ -64,8 +64,8 @@
 			android:layout_gravity="center_vertical"
 			android:layout_marginStart="32dp"
 			android:paddingStart="56dp"
+			android:paddingEnd="@dimen/spacing_zero"
 			android:layout_marginEnd="50dp"
-			android:paddingEnd="@dimen/spacing_small"
 			android:elevation="@dimen/toolbar_elevation"
 			>
 
@@ -80,7 +80,7 @@
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
-				android:paddingEnd="@dimen/spacing_normal"
+				android:paddingEnd="@dimen/spacing_zero"
 				android:maxLines="2"
 				tools:text="asfasfasfasf a s f a s f a s f a s f a s f a"
 				/>
@@ -95,7 +95,7 @@
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingStart="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
-				android:paddingEnd="@dimen/spacing_normal"
+				android:paddingEnd="@dimen/spacing_zero"
 				android:maxLines="1"/>
 	</LinearLayout>
 

@@ -24,11 +24,11 @@ data class Candidate(
 		@SerializedName("party")
 		val party: String,
 		@SerializedName("votesCount")
-		val votesCount: Int,
+		var votesCount: Int,
 		@SerializedName("votesCountUa")
-		val votesCountUa: Int,
+		var votesCountUa: Int,
 		@SerializedName("votesCountPaid")
-		val votesCountPaid: Int
+		var votesCountPaid: Int
 )
 {
 	constructor() : this(0, "Andriy", "Ivanovich", "Morozenko",

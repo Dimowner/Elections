@@ -29,7 +29,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
@@ -117,9 +120,39 @@ public class FirebaseDatasource {
 	public Completable vote(Vote vote) {
 		Timber.v("vote: %s", vote.toString());
 		return getAuthToken().flatMapCompletable(uid ->
-				Completable.create(emitter ->
-						callTask(votesRef.child(vote.getDeviceId()).setValue(vote), emitter))
-								.subscribeOn(Schedulers.io()));
+				Completable.create(emitter -> callTask(votesRef.child(vote.getDeviceId())
+						.setValue(vote), emitter))
+						.mergeWith(Completable.create(emitter ->
+								candidatesRef.child(String.valueOf(vote.getCandidateId()))
+										.runTransaction(new Transaction.Handler() {
+												@NonNull
+												@Override
+												public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+													Candidate c = mutableData.getValue(Candidate.class);
+													if (c == null) {
+														return Transaction.success(mutableData);
+													}
+													c.setVotesCount(c.getVotesCount() + 1);
+													if (vote.getCountryCode().trim().equalsIgnoreCase("UA")) {
+														c.setVotesCountUa(c.getVotesCountUa() + 1);
+													}
+													// Set value and report transaction success
+													mutableData.setValue(c);
+													return Transaction.success(mutableData);
+												}
+
+												@Override
+												public void onComplete(@Nullable DatabaseError databaseError,
+																			  boolean succeed, @Nullable DataSnapshot dataSnapshot) {
+													if (succeed) {
+														emitter.onComplete();
+													} else {
+														if (databaseError != null) {
+															emitter.onError(new Exception(databaseError.getMessage()));
+														}
+													}
+												}
+											}))).subscribeOn(Schedulers.io()));
 	}
 
 	public Single<List<Candidate>> getCandidates() {
