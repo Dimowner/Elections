@@ -295,9 +295,13 @@ public class AndroidUtils {
 				return R.drawable.boikenko192;
 			case "kivenko192":
 				return R.drawable.kivenko192;
+			case "vilkulenko192":
+				return R.drawable.vilkulenko192;
+			case "other192":
+				return R.drawable.other192;
 
 			default:
-				return R.drawable.trident_new2;
+				return R.drawable.other192;
 		}
 	}
 
@@ -310,16 +314,20 @@ public class AndroidUtils {
 			case "zelenenko192":
 				return R.drawable.zelenenko512;
 			case "lyashkenko192":
-				return R.drawable.lyashkenko368;
+				return R.drawable.lyashkenko512;
 			case "gricenenko192":
 				return R.drawable.gricenenko512;
 			case "boikenko192":
 				return R.drawable.boikenko512;
 			case "kivenko192":
 				return R.drawable.kivenko512;
+			case "vilkulenko192":
+				return R.drawable.vilkulenko512;
+			case "other192":
+				return R.drawable.other512;
 
 			default:
-				return R.drawable.trident_new2;
+				return R.drawable.other512;
 		}
 	}
 }
