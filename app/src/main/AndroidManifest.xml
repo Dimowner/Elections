@@ -83,6 +83,10 @@
 				android:screenOrientation="portrait"
 				android:theme="@style/AppTheme.Light"/>
 
+		<meta-data
+				android:name="io.fabric.ApiKey"
+				android:value="put-your-api-key-here" />
+
 	</application>
 
 </manifest>

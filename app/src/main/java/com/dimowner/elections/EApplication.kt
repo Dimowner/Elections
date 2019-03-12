@@ -28,6 +28,8 @@ import com.dimowner.elections.dagger.application.AppComponent
 import com.dimowner.elections.dagger.application.AppModule
 import com.dimowner.elections.dagger.application.DaggerAppComponent
 import com.dimowner.elections.util.AndroidUtils
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 
 const val CONNECTIVITY_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
@@ -74,6 +76,8 @@ class EApplication : Application() {
 					return super.createStackElementTag(element) + ":" + element.lineNumber
 				}
 			})
+		} else {
+			Fabric.with(this, Crashlytics())
 		}
 
 		deviceId = AndroidUtils.getDeviceIdentifier(this)
