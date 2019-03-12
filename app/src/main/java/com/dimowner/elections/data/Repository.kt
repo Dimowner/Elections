@@ -21,6 +21,7 @@ package com.dimowner.elections.data
 
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
+import com.dimowner.elections.data.model.VoteRequest
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -33,7 +34,7 @@ interface Repository {
 
 	fun checkDeviceVoted(): Single<Boolean>
 
-	fun vote(vote: Vote): Completable
+	fun vote(vote: VoteRequest): Completable
 
 	fun clear()
 }

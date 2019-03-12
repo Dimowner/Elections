@@ -20,6 +20,7 @@ import com.dimowner.elections.BuildConfig;
 import com.dimowner.elections.EApplication;
 import com.dimowner.elections.data.model.Candidate;
 import com.dimowner.elections.data.model.Vote;
+import com.dimowner.elections.data.model.VoteRequest;
 import com.dimowner.elections.exceptions.NullAuthTokenException;
 import com.dimowner.elections.exceptions.SignInException;
 import com.google.android.gms.tasks.Task;
@@ -139,7 +140,7 @@ public class FirebaseDatasource {
 				.subscribeOn(Schedulers.io());
 	}
 
-	public Completable vote(Vote vote) {
+	public Completable vote(VoteRequest vote) {
 		Timber.d("vote: %s", vote.toString());
 		return getAuthUid().flatMapCompletable(uid ->
 				Completable.create(emitter -> callTask(votesRef.child(vote.getDeviceId())

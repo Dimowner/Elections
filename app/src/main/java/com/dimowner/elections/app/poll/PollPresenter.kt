@@ -23,7 +23,7 @@ import android.content.Context
 import com.dimowner.elections.EApplication
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
-import com.dimowner.elections.data.model.Vote
+import com.dimowner.elections.data.model.VoteRequest
 import com.dimowner.elections.toPollListItem
 import com.dimowner.elections.util.AndroidUtils
 import com.google.firebase.database.ServerValue
@@ -70,7 +70,7 @@ class PollPresenter(
 	override fun vote(context: Context, id: Int, name: String) {
 		if (EApplication.isConnected()) {
 			view?.showProgress()
-			val vote = Vote(
+			val vote = VoteRequest(
 					AndroidUtils.getDeviceIdentifier(context),
 					id,
 					name,
@@ -78,8 +78,7 @@ class PollPresenter(
 					prefs.getCountryName(),
 					AndroidUtils.getDisplayLanguage(context),
 					prefs.getCity(),
-					//ServerValue.TIMESTAMP,
-					Date().time, //TODO: use server time
+					ServerValue.TIMESTAMP,
 					AndroidUtils.getBrandModel(),
 					AndroidUtils.getAndroidVersion()
 			)

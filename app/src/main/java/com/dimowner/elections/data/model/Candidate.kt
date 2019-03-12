@@ -31,7 +31,5 @@ data class Candidate(
 		var votesCountPaid: Int
 )
 {
-	constructor() : this(0, "Andriy", "Ivanovich", "Morozenko",
-			"https://www.site.com/img.png",
-			"avatar_4", 4, "Power Force", 853, 700, 153)
+	constructor() : this(-1, "", "", "", "", "", 0, "", 0, 0, 0)
 }

@@ -23,6 +23,7 @@ import com.dimowner.elections.data.local.LocalRepository
 import com.dimowner.elections.data.remote.FirebaseDatasource
 import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.data.model.Vote
+import com.dimowner.elections.data.model.VoteRequest
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -67,7 +68,7 @@ class RepositoryImpl(
 		return firebase.checkDeviceVoted()
 	}
 
-	override fun vote(vote: Vote): Completable {
+	override fun vote(vote: VoteRequest): Completable {
 		return firebase.vote(vote)
 	}
 
