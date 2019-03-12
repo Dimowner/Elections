@@ -33,13 +33,18 @@
 	<string name="emulator">Емулятор!</string>
 	<string name="vote_from_emulator_not_allowed">Ваш пристрий визначено як емулятор. Голосувати з емулятора заборонено!</string>
 	<string name="your_device_already_voted">Ваш телефон вже приймав участь в голосуванні</string>
-	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування кординат</string>
+	<string name="location_are_needed">Щоб визначити країну в якій ви знаходитесь нам потрібно отримати дозвіл на зчитування координат</string>
 	<string name="warning">Увага!</string>
+	<string name="are_you_from_ukraine">Ви з України?</string>
+	<string name="answer_honestly">Будь-ласка, відповідайте чесно! \nВи зможете проголосувати незалежно від відповіді.</string>
+	<string name="error_location">Не вдалося визначити ваше місцезнаходження</string>
 	<string name="error">Помилка!</string>
 	<string name="pull_to_top_or_bottom_to_close">Потягніть зображення щоб закрити</string>
 	<string name="no_connection_to_internet">Відсутнє з\'єднання з інтернетом.\nДля продовження роботи увімкніть інтернет.</string>
 
 	<string name="btn_ok">Добре</string>
+	<string name="btn_yes">Так</string>
+	<string name="btn_no">Ні</string>
 	<string name="btn_cancel">Відмінити</string>
 	<string name="btn_not_now">Не зараз</string>
 	<string name="btn_next">Далі</string>

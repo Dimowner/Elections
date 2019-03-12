@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dimowner.elections.R;
@@ -187,24 +188,42 @@ public class AndroidUtils {
 	}
 
 	public static void showDialog(Activity activity, String title, String content,
-											View.OnClickListener positveBtn, View.OnClickListener negativeBtn){
+											View.OnClickListener positiveBtnListener, View.OnClickListener negativeBtnListener){
+		showDialog(activity, -1, -1, title, content, positiveBtnListener, negativeBtnListener);
+	}
+
+	public static void showDialog(Activity activity, int resTitle, int resContent,
+											View.OnClickListener positiveBtnListener, View.OnClickListener negativeBtnListener){
+		showDialog(activity, -1, -1, resTitle, resContent, positiveBtnListener, negativeBtnListener);
+	}
+
+	public static void showDialog(Activity activity, int positiveBtnTextRes, int negativeBtnTextRes, int resTitle, int resContent,
+											View.OnClickListener positiveBtnListener, View.OnClickListener negativeBtnListener){
 		final Dialog dialog = new Dialog(activity);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setCancelable(false);
 		View view = activity.getLayoutInflater().inflate(R.layout.dialog_layout, null, false);
-		((TextView)view.findViewById(R.id.dialog_title)).setText(title);
-		((TextView)view.findViewById(R.id.dialog_content)).setText(content);
-		if (negativeBtn != null) {
-			view.findViewById(R.id.dialog_negative_btn).setOnClickListener(v -> {
-				negativeBtn.onClick(v);
+		((TextView)view.findViewById(R.id.dialog_title)).setText(resTitle);
+		((TextView)view.findViewById(R.id.dialog_content)).setText(resContent);
+		if (negativeBtnListener != null) {
+			Button negativeBtn = view.findViewById(R.id.dialog_negative_btn);
+			if (negativeBtnTextRes >=0) {
+				negativeBtn.setText(negativeBtnTextRes);
+			}
+			negativeBtn.setOnClickListener(v -> {
+				negativeBtnListener.onClick(v);
 				dialog.dismiss();
 			});
 		} else {
 			view.findViewById(R.id.dialog_negative_btn).setVisibility(View.GONE);
 		}
-		if (positveBtn != null) {
-			view.findViewById(R.id.dialog_positive_btn).setOnClickListener(v -> {
-				positveBtn.onClick(v);
+		if (positiveBtnListener != null) {
+			Button positiveBtn = view.findViewById(R.id.dialog_positive_btn);
+			if (positiveBtnTextRes >=0) {
+				positiveBtn.setText(positiveBtnTextRes);
+			}
+			positiveBtn.setOnClickListener(v -> {
+				positiveBtnListener.onClick(v);
 				dialog.dismiss();
 			});
 		} else {
@@ -214,25 +233,33 @@ public class AndroidUtils {
 		dialog.show();
 	}
 
-	public static void showDialog(Activity activity, int resTitle, int resContent,
-											View.OnClickListener positveBtn, View.OnClickListener negativeBtn){
+	public static void showDialog(Activity activity, int positiveBtnTextRes, int negativeBtnTextRes, String title, String content,
+											View.OnClickListener positiveBtnListener, View.OnClickListener negativeBtnListener){
 		final Dialog dialog = new Dialog(activity);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setCancelable(false);
 		View view = activity.getLayoutInflater().inflate(R.layout.dialog_layout, null, false);
-		((TextView)view.findViewById(R.id.dialog_title)).setText(resTitle);
-		((TextView)view.findViewById(R.id.dialog_content)).setText(resContent);
-		if (negativeBtn != null) {
-			view.findViewById(R.id.dialog_negative_btn).setOnClickListener(v -> {
-				negativeBtn.onClick(v);
+		((TextView)view.findViewById(R.id.dialog_title)).setText(title);
+		((TextView)view.findViewById(R.id.dialog_content)).setText(content);
+		if (negativeBtnListener != null) {
+			Button negativeBtn = view.findViewById(R.id.dialog_negative_btn);
+			if (negativeBtnTextRes >=0) {
+				negativeBtn.setText(negativeBtnTextRes);
+			}
+			negativeBtn.setOnClickListener(v -> {
+				negativeBtnListener.onClick(v);
 				dialog.dismiss();
 			});
 		} else {
 			view.findViewById(R.id.dialog_negative_btn).setVisibility(View.GONE);
 		}
-		if (positveBtn != null) {
-			view.findViewById(R.id.dialog_positive_btn).setOnClickListener(v -> {
-				positveBtn.onClick(v);
+		if (positiveBtnListener != null) {
+			Button positiveBtn = view.findViewById(R.id.dialog_positive_btn);
+			if (positiveBtnTextRes >=0) {
+				positiveBtn.setText(positiveBtnTextRes);
+			}
+			positiveBtn.setOnClickListener(v -> {
+				positiveBtnListener.onClick(v);
 				dialog.dismiss();
 			});
 		} else {

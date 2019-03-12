@@ -22,8 +22,10 @@ package com.dimowner.elections.data
 interface Prefs {
 
 	fun isFirstRun(): Boolean
-
 	fun setFirstRunExecuted()
+
+	fun isDeviceVoted(): Int
+	fun setDeviceVoted(voted: Int)
 
 	fun setCountryCode(code: String)
 	fun getCountryCode(): String

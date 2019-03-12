@@ -22,6 +22,7 @@ package com.dimowner.elections.app.welcome
 import android.content.Context
 import android.os.Bundle
 import com.dimowner.elections.data.Prefs
+import com.dimowner.elections.data.PrefsImpl
 import com.dimowner.elections.data.Repository
 import com.dimowner.elections.places.PlacesProvider
 import com.google.android.gms.common.api.GoogleApiClient
@@ -61,7 +62,22 @@ open class WelcomePresenter(
 	}
 
 	override fun checkDeviceIsVoted(): Single<Boolean> {
-		return repository.checkDeviceVoted().doOnSubscribe { compositeDisposable.add(it) }
+		return if (prefs.isDeviceVoted() == PrefsImpl.DEVICE_VOTED_YES) {
+			Single.just(true)
+		} else if (prefs.isDeviceVoted() == PrefsImpl.DEVICE_VOTED_NO) {
+			Single.just(false)
+		} else {
+			repository.checkDeviceVoted()
+					.doOnSubscribe { compositeDisposable.add(it) }
+					.map {
+						if (it) {
+							prefs.setDeviceVoted(PrefsImpl.DEVICE_VOTED_YES)
+						} else {
+							prefs.setDeviceVoted(PrefsImpl.DEVICE_VOTED_NO)
+						}
+						it
+					}
+		}
 	}
 
 	override fun unbindView() {
@@ -74,7 +90,7 @@ open class WelcomePresenter(
 		prefs.setFirstRunExecuted()
 	}
 
-	override fun locate(context: Context) {
+	override fun locate() {
 		view?.showProgress()
 		compositeDisposable.add(
 				placesProvider.findCurrentLocation()
@@ -87,9 +103,27 @@ open class WelcomePresenter(
 								prefs.setCity(location.city)
 								view?.startPollActivity()
 							} else {
-								view?.showError("Failed to find location")
+								view?.showError("Помилка при спробі визначити місцезнаходження")
+								view?.showFailedLocationDialog()
 							}
 							view?.hideProgress()
-						}, { Timber.e(it) }))
+						}, { Timber.e(it)
+							view?.hideProgress()
+							view?.showError("Помилка при спробі визначити місцезнаходження")
+							view?.showFailedLocationDialog()
+						}))
+	}
+
+	override fun setLocationUkraine(isUkraine: Boolean) {
+		if (isUkraine) {
+			prefs.setCountryCode("UA")
+			prefs.setCountryName("Ukraine")
+			prefs.setCity("Unknown")
+		} else {
+			prefs.setCountryCode("Unknown")
+			prefs.setCountryName("Unknown")
+			prefs.setCity("Unknown")
+		}
+		view?.startPollActivity()
 	}
 }

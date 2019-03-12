@@ -109,7 +109,7 @@ class PlacesProvider(private val context: Context) {
 				.setInterval(5000)
 		return rxLocation
 				.settings()
-				.checkAndHandleResolution(locationRequest, TIME_OUT_LOCATION, TimeUnit.SECONDS)
+				.checkAndHandleResolution(locationRequest, TIME_OUT_LOCATION, TimeUnit.MILLISECONDS)
 				.subscribeOn(Schedulers.io())
 				.flatMapMaybe { aBoolean ->
 					if (aBoolean) {

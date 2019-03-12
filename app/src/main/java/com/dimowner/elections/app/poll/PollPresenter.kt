@@ -86,6 +86,7 @@ class PollPresenter(
 			disposable.add(repository.vote(vote)
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe({
+						prefs.setFirstRunExecuted()
 						view?.startMainScreen()
 						view?.hideProgress()
 					}, {

@@ -66,7 +66,14 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 
 		EApplication.get(applicationContext).applicationComponent().inject(this)
 		presenter.bindView(this)
-		presenter.loadCandidates()
+		if (EApplication.isConnected()) {
+			presenter.loadCandidates()
+		} else {
+			AndroidUtils.showDialog(this,
+					R.string.warning,
+					R.string.no_connection_to_internet,
+					{  }, null)
+		}
 	}
 
 	fun showVote() {
@@ -98,6 +105,8 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 		val item = adapter.getSelectedItem()
 		if (item != null) {
 			AndroidUtils.showDialog(this,
+					R.string.btn_yes,
+					R.string.btn_cancel,
 					getString(R.string.vote),
 					getString(R.string.confirm_vote, item.name),
 					{//Positive btn
@@ -131,6 +140,7 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 
 	override fun startMainScreen() {
 		startActivity(MainActivity.getStartIntent(applicationContext))
+		finish()
 	}
 
 	override fun onDestroy() {

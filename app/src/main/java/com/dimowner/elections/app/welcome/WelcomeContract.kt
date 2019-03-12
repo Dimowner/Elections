@@ -19,7 +19,6 @@
 
 package com.dimowner.elections.app.welcome
 
-import android.content.Context
 import com.dimowner.elections.app.Contract
 import io.reactivex.Single
 
@@ -30,11 +29,14 @@ interface WelcomeContract {
 		fun startPollActivity()
 		fun startResultsActivity()
 		fun showDeviceAlreadyVotedMessage()
+		fun showFailedLocationDialog()
+		fun startManualLocationInput()
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {
 		fun firstRunExecuted()
 		fun checkDeviceIsVoted(): Single<Boolean>
-		fun locate(context: Context)
+		fun locate()
+		fun setLocationUkraine(isUkraine: Boolean)
 	}
 }

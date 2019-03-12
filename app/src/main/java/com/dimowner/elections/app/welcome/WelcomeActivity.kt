@@ -135,14 +135,16 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 			} else {
 				if (EApplication.isConnected()) {
 					//TODO: Move logic into presenter
+					showProgress()
 					presenter.checkDeviceIsVoted()
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe({
+								hideProgress()
 								if (it) {
 									showDeviceAlreadyVotedMessage()
 								} else {
 									if (checkLocationPermission()) {
-										presenter.locate(applicationContext)
+										presenter.locate()
 									} else {
 										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 											AndroidUtils.showDialog(this,
@@ -154,6 +156,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 									}
 								}
 							}, {
+								hideProgress()
 								showError(it.message ?: "Error!")
 							})
 
@@ -161,8 +164,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 					AndroidUtils.showDialog(this,
 							R.string.warning,
 							R.string.no_connection_to_internet,
-							{  },
-							{ Timber.v("negative btn click") })
+							{  }, null)
 				}
 			}
 		}
@@ -183,7 +185,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		if (requestCode == REQ_CODE_LOCATION
 				&& grantResults.isNotEmpty()
 				&& grantResults[0] == PackageManager.PERMISSION_GRANTED) run {
-			presenter.locate(applicationContext)
+			presenter.locate()
 		}
 	}
 
@@ -213,6 +215,30 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 		finish()
 	}
 
+	override fun startManualLocationInput() {
+		AndroidUtils.showDialog(this,
+				R.string.btn_yes,
+				R.string.btn_no,
+				R.string.are_you_from_ukraine,
+				R.string.answer_honestly,
+				{
+					presenter.setLocationUkraine(true)
+				},{
+					presenter.setLocationUkraine(false)
+				})
+	}
+
+	override fun showFailedLocationDialog() {
+		AndroidUtils.showDialog(this,
+				R.string.btn_next,
+				R.string.btn_not_now,
+				R.string.error,
+				R.string.error_location,
+				{
+					startManualLocationInput()
+				},{})
+	}
+
 	override fun showDeviceAlreadyVotedMessage() {
 		AndroidUtils.showDialog(this,
 				R.string.warning,
@@ -220,7 +246,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 				{ Timber.v("Ok")
 					presenter.firstRunExecuted()
 					startResultsActivity()
-				}, null)
+				}, {})
 	}
 
 	private fun showWarningEmulator() {
@@ -230,7 +256,7 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 				{ Timber.v("Ok")
 					presenter.firstRunExecuted()
 					startResultsActivity()
-				}, null)
+				}, {})
 	}
 
 	override fun onDestroy() {

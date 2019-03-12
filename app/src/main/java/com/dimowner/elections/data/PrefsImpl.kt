@@ -32,7 +32,12 @@ class PrefsImpl constructor(context: Context) : Prefs {
 		const val PREF_KEY_COUNTRY_CODE = "pref_county_code"
 		const val PREF_KEY_COUNTRY_NAME = "pref_county_name"
 		const val PREF_KEY_CITY = "pref_city"
+		const val PREF_KEY_DEVICE_VOTED = "pref_device_voted"
 		const val PREF_KEY_IS_SHOW_IMAGE_PREVIEW_INSTRUCTIONS = "is_show_image_preview_instructions"
+
+		const val DEVICE_VOTED_YES: Int = 200
+		const val DEVICE_VOTED_NO: Int = 400
+		const val DEVICE_VOTED_UNKNOWN: Int = 403
 	}
 
 	private var preferences: SharedPreferences by Delegates.notNull()
@@ -48,6 +53,21 @@ class PrefsImpl constructor(context: Context) : Prefs {
 	override fun setFirstRunExecuted() {
 		val editor = preferences.edit()
 		editor.putBoolean(PREF_KEY_IS_FIRST_RUN, false)
+		editor.apply()
+	}
+
+	override fun isDeviceVoted(): Int {
+		if (!preferences.contains(PREF_KEY_DEVICE_VOTED)) {
+			return DEVICE_VOTED_UNKNOWN
+		} else if (preferences.contains(PREF_KEY_DEVICE_VOTED)) {
+			return preferences.getInt(PREF_KEY_DEVICE_VOTED, DEVICE_VOTED_NO)
+		}
+		return DEVICE_VOTED_UNKNOWN
+	}
+
+	override fun setDeviceVoted(voted: Int) {
+		val editor = preferences.edit()
+		editor.putInt(PREF_KEY_DEVICE_VOTED, voted)
 		editor.apply()
 	}
 
