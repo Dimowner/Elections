@@ -166,19 +166,19 @@ public class AndroidUtils {
 	public static String getDeviceIdentifier(Context context) {
 		String serial = android.os.Build.SERIAL;
 		if (serial != null && !serial.isEmpty() && !serial.equalsIgnoreCase("unknown")) {
-			return serial;
+			return serial.toLowerCase();
 		} else {
 			String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 			if (androidId != null && !androidId.isEmpty()) {
-				return androidId;
+				return androidId.toLowerCase();
 			} else {
 				String macWlan = NetworkUtils.getMACAddress("wlan0");
 				if (macWlan != null && !macWlan.isEmpty()) {
-					return macWlan;
+					return macWlan.toLowerCase();
 				} else {
 					String macEth = NetworkUtils.getMACAddress("eth0");
 					if (macEth != null && !macEth.isEmpty()) {
-						return macEth;
+						return macEth.toLowerCase();
 					} else {
 						return "";
 					}
