@@ -28,7 +28,7 @@ public class TimeUtils {
 	private static SimpleDateFormat timeFormatEU = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 
 	/** Time format: 22.11.2018 */
-	private static SimpleDateFormat dateFormatEU = new SimpleDateFormat("dd.mm.yyyy", Locale.FRANCE);
+	private static SimpleDateFormat dateFormatEU = new SimpleDateFormat("dd.MM.yyyy", Locale.FRANCE);
 
 
 	public static final int INTERVAL_SECOND = 1000; //mills
@@ -95,7 +95,8 @@ public class TimeUtils {
 				if (isSameDay(today, date)) {
 					return ctx.getResources().getString(R.string.yesterday);
 				} else {
-					return dateFormat24H.format(new Date(time));
+//					return dateFormat24H.format(new Date(time));
+					return dateFormatEU.format(new Date(time));
 				}
 			}
 		} else {
