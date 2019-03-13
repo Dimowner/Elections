@@ -1,5 +1,6 @@
 package com.dimowner.elections.app.poll
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,6 +13,7 @@ import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dimowner.elections.EApplication
 import com.dimowner.elections.R
+import com.dimowner.elections.app.candidates.ImagePreviewActivity
 import com.dimowner.elections.app.main.MainActivity
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
@@ -55,6 +57,12 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 					showVote()
 				} else {
 					hideVote()
+				}
+			}
+			override fun onItemImageClick(view: View, position: Int) {
+				val code = adapter.getIconCodeForPosition(position)
+				if (code.isNotBlank()) {
+					startImagePreviewActivity(AndroidUtils.candidateCodeToResourceBig(code))
 				}
 			}
 		})
@@ -141,6 +149,15 @@ class PollActivity: AppCompatActivity(), PollContract.View {
 	override fun startMainScreen() {
 		startActivity(MainActivity.getStartIntent(applicationContext))
 		finish()
+	}
+
+	private fun startImagePreviewActivity(resId: Int) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			startActivity(ImagePreviewActivity.getStartIntent(applicationContext, resId),
+					ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+		} else {
+			startActivity(ImagePreviewActivity.getStartIntent(applicationContext, resId))
+		}
 	}
 
 	override fun onDestroy() {

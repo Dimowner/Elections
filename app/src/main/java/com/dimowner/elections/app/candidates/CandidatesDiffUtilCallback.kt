@@ -48,6 +48,7 @@ class CandidatesDiffUtilCallback(private val oldList: List<CandidatesListItem>, 
 				&& oldProduct.party == newProduct.party
 				&& oldProduct.votesCountUa == newProduct.votesCountUa
 				&& oldProduct.votesCountPaid == newProduct.votesCountPaid
-				&& oldProduct.votesCount == newProduct.votesCount)
+				&& oldProduct.votesCount == newProduct.votesCount
+				&& oldProduct.votesPercent == newProduct.votesPercent)
 	}
 }

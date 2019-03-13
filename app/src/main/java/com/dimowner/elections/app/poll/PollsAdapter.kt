@@ -103,6 +103,7 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 					itemClickListener?.onItemClick(v, pos, selectedItem != -1)
 				}
 			}
+			holder.image.setOnClickListener { itemClickListener?.onItemImageClick(it, pos) }
 		} else {
 			//Do nothing
 		}
@@ -154,6 +155,13 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 		}
 	}
 
+	fun getIconCodeForPosition(pos: Int): String {
+		if (data.size > pos) {
+			return data[pos].iconId
+		}
+		return ""
+	}
+
 	fun setItemClickListener(itemClickListener: ItemClickListener) {
 		this.itemClickListener = itemClickListener
 	}
@@ -169,5 +177,6 @@ class PollsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	interface ItemClickListener {
 		fun onItemClick(view: View, position: Int, selected: Boolean)
+		fun onItemImageClick(view: View, position: Int)
 	}
 }

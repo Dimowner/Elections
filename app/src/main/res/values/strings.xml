@@ -21,6 +21,8 @@
 	<string name="tittle_settings">Налаштування</string>
 	<string name="welcome">Вітаємо!</string>
 	<string name="open_source_licences">Бібліотеки з відкритим кодом</string>
+	<string name="share_app">Поділитися додатком</string>
+	<string name="share_details">Я проголосував в додатку Вибори Президента 2019</string>
 
 	<string name="make_your_choice">Зроби свій вибір прямо зараз!</string>
 	<string name="only_here">Тільки тут!</string>

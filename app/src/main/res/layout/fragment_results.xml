@@ -73,6 +73,18 @@
 				android:src="@drawable/ic_tune_yellow"
 				/>
 
+		<ImageButton
+				android:id="@+id/btnShare"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@null"
+				android:layout_gravity="start|left"
+				android:background="?android:selectableItemBackgroundBorderless"
+				android:padding="@dimen/spacing_normal"
+				app:srcCompat="@drawable/ic_share"
+				android:src="@drawable/ic_share"
+				/>
+
 	</FrameLayout>
 
 	<TextView

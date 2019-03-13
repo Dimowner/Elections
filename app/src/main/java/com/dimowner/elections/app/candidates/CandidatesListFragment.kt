@@ -35,11 +35,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dimowner.elections.R
 import com.dimowner.elections.EApplication
 import com.dimowner.elections.app.settings.SettingsActivity
-import com.dimowner.elections.data.model.Candidate
 import com.dimowner.elections.util.AndroidUtils
 import com.dimowner.elections.util.AnimationUtil
 import kotlinx.android.synthetic.main.fragment_results.*
+import timber.log.Timber
 import javax.inject.Inject
+import android.content.Intent
 
 class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 
@@ -108,6 +109,7 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 			if (activity != null) startActivity(SettingsActivity.getStartActivity(activity!!))
 		}
 		btnVotes.setOnClickListener { onMoveToVotesListener?.onClick(btnVotes) }
+		btnShare.setOnClickListener { shareApp() }
 
 		EApplication.get(view.context).applicationComponent().inject(this)
 		presenter.bindView(this)
@@ -177,4 +179,20 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		Toast.makeText(activity?.applicationContext, resId, Toast.LENGTH_LONG).show()
 //		Snackbar.make(container, resId, Snackbar.LENGTH_LONG).show()
 	}
+
+	private fun shareApp() {
+		try {
+			val shareIntent = Intent(Intent.ACTION_SEND)
+			shareIntent.type = "text/plain"
+			shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+			var shareMessage = "\n" + getString(R.string.share_details) + "\n"
+			shareMessage += "https://play.google.com/store/apps/details?id=com.dimowner.elections.prod\n"
+			shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+			startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app)))
+		} catch (e: Exception) {
+			//e.toString();
+			Timber.e(e)
+		}
+	}
+
 }
