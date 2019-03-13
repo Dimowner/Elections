@@ -54,7 +54,7 @@ class CandidatesListPresenter(
 						p += item.votesCount
 					}
 					for (item in d) {
-						val i = item.toCandidatesListItem(p/100)
+						val i = item.toCandidatesListItem(p/100f)
 						list.add(i)
 					}
 					view?.showCandidatesList(list)

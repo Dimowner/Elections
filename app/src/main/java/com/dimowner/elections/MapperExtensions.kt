@@ -18,7 +18,7 @@ fun Vote.toVoteListItem(): VoteListItem {
 	)
 }
 
-fun Candidate.toCandidatesListItem(votesPerPercent: Int): CandidatesListItem {
+fun Candidate.toCandidatesListItem(votesPerPercent: Float): CandidatesListItem {
 	return CandidatesListItem(
 			this.id,
 			this.firstName + " " + this.surName,
@@ -29,7 +29,7 @@ fun Candidate.toCandidatesListItem(votesPerPercent: Int): CandidatesListItem {
 			this.votesCount,
 			this.votesCountUa,
 			this.votesCountPaid,
-			this.votesCount/votesPerPercent
+			if (votesPerPercent > 0) (this.votesCount/votesPerPercent).toInt() else 0
 	)
 }
 
