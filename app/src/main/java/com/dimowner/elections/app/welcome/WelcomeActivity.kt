@@ -143,17 +143,18 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 								if (it) {
 									showDeviceAlreadyVotedMessage()
 								} else {
-									if (checkLocationPermission()) {
-										presenter.locate()
-									} else {
-										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-											AndroidUtils.showDialog(this,
-													R.string.warning,
-													R.string.location_are_needed,
-													{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
-													{ Timber.v("negative btn click") })
-										}
-									}
+									startManualLocationInput()
+//									if (checkLocationPermission()) {
+//										presenter.locate()
+//									} else {
+//										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//											AndroidUtils.showDialog(this,
+//													R.string.warning,
+//													R.string.location_are_needed,
+//													{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
+//													{ Timber.v("negative btn click") })
+//										}
+//									}
 								}
 							}, {
 								hideProgress()
