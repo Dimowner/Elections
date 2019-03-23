@@ -42,7 +42,7 @@ interface ElectionsDao {
 	@Query("DELETE FROM candidates")
 	fun deleteCandidates()
 
-	@Query("SELECT * FROM votes")
+	@Query("SELECT * FROM votes ORDER BY time DESC")
 	fun subscribeVotes(): Flowable<List<Vote>>
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
