@@ -62,7 +62,7 @@ public class FirebaseDatasource {
 	private static final String VOTES_TABLE = "votes";
 	private static final String FIELD_VOTE_COUNTER = "voteCount";
 	private static final String FIELD_TIME = "time";
-	private static final int MAX_COUNT = 100;
+	private static final int MAX_COUNT = 300;
 
 	private FirebaseDatabase database;
 	private DatabaseReference candidatesRef;
