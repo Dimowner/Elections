@@ -21,6 +21,7 @@ package com.dimowner.elections.app.poll
 
 import android.content.Context
 import com.dimowner.elections.EApplication
+import com.dimowner.elections.data.Callback
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
 import com.dimowner.elections.data.model.VoteRequest
@@ -51,7 +52,11 @@ class PollPresenter(
 
 	override fun loadCandidates() {
 		view?.showProgress()
-		disposable.add(repository.subscribeCandidates()
+		disposable.add(repository.subscribeCandidates(object : Callback {
+			override fun onRemote() {
+				view?.hideProgress()
+			}
+		})
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ d ->
 					val list: MutableList<PollListItem> = ArrayList(d.size)
@@ -59,9 +64,9 @@ class PollPresenter(
 						list.add(item.toPollListItem())
 					}
 					view?.showCandidatesList(list)
-					view?.hideProgress()
+//					view?.hideProgress()
 				}, {
-					view?.hideProgress()
+//					view?.hideProgress()
 					Timber.e(it)
 					view?.showError(it.message ?: "Error!")
 				}))

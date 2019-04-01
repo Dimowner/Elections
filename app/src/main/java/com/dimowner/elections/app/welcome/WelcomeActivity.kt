@@ -134,32 +134,33 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 				showWarningEmulator()
 			} else {
 				if (EApplication.isConnected()) {
-					//TODO: Move logic into presenter
-					showProgress()
-					presenter.checkDeviceIsVoted()
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe({
-								hideProgress()
-								if (it) {
-									showDeviceAlreadyVotedMessage()
-								} else {
-									startManualLocationInput()
-//									if (checkLocationPermission()) {
-//										presenter.locate()
-//									} else {
-//										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//											AndroidUtils.showDialog(this,
-//													R.string.warning,
-//													R.string.location_are_needed,
-//													{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
-//													{ Timber.v("negative btn click") })
-//										}
-//									}
-								}
-							}, {
-								hideProgress()
-								showError(it.message ?: "Error!")
-							})
+					showWarningVotingIsFinished()
+
+//					showProgress()
+//					presenter.checkDeviceIsVoted()
+//							.observeOn(AndroidSchedulers.mainThread())
+//							.subscribe({
+//								hideProgress()
+//								if (it) {
+//									showDeviceAlreadyVotedMessage()
+//								} else {
+//									startManualLocationInput()
+////									if (checkLocationPermission()) {
+////										presenter.locate()
+////									} else {
+////										if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+////											AndroidUtils.showDialog(this,
+////													R.string.warning,
+////													R.string.location_are_needed,
+////													{ requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQ_CODE_LOCATION) },
+////													{ Timber.v("negative btn click") })
+////										}
+////									}
+//								}
+//							}, {
+//								hideProgress()
+//								showError(it.message ?: "Error!")
+//							})
 
 				} else {
 					AndroidUtils.showDialog(this,
@@ -248,6 +249,18 @@ class WelcomeActivity : AppCompatActivity(), WelcomeContract.View, ViewPager.OnP
 					presenter.firstRunExecuted()
 					startResultsActivity()
 				}, {})
+	}
+
+	private fun showWarningVotingIsFinished() {
+		AndroidUtils.showDialog(this,
+				R.string.btn_results,
+				R.string.btn_not_now,
+				R.string.warning,
+				R.string.voting_is_finished,
+				{
+					presenter.firstRunExecuted()
+					startResultsActivity()
+				},{})
 	}
 
 	private fun showWarningEmulator() {

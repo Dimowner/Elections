@@ -28,13 +28,17 @@ import io.reactivex.Single
 
 interface Repository {
 
-	fun subscribeCandidates(): Flowable<List<Candidate>>
+	fun subscribeCandidates(callback: Callback): Flowable<List<Candidate>>
 
-	fun subscribeVotes(): Flowable<List<Vote>>
+	fun subscribeVotes(callback: Callback): Flowable<List<Vote>>
 
 	fun checkDeviceVoted(): Single<Boolean>
 
 	fun vote(vote: VoteRequest): Completable
 
 	fun clear()
+}
+
+interface Callback {
+	fun onRemote()
 }

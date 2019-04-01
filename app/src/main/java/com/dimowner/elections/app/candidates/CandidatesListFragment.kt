@@ -170,6 +170,14 @@ class CandidatesListFragment : Fragment(), CandidatesListContract.View {
 		loadingProgress.visibility = View.GONE
 	}
 
+	override fun hideSmallProgress() {
+		loadingProgressSmall.visibility = View.GONE
+	}
+
+	override fun showSmallProgress() {
+		loadingProgressSmall.visibility = View.VISIBLE
+	}
+
 	override fun showError(message: String) {
 //		Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
 		Toast.makeText(activity?.applicationContext, message, Toast.LENGTH_LONG).show()

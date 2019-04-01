@@ -38,8 +38,9 @@ class RepositoryImpl(
 
 	val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-	override fun subscribeCandidates(): Flowable<List<Candidate>> {
+	override fun subscribeCandidates(callback: Callback): Flowable<List<Candidate>> {
 		compositeDisposable.add(firebase.candidates
+				.doOnSuccess {callback.onRemote()}
 				.subscribeOn(Schedulers.io())
 				.observeOn(Schedulers.io())
 				.subscribe({ response ->
@@ -51,8 +52,9 @@ class RepositoryImpl(
 				.subscribeOn(Schedulers.io())
 	}
 
-	override fun subscribeVotes(): Flowable<List<Vote>> {
+	override fun subscribeVotes(callback: Callback): Flowable<List<Vote>> {
 		compositeDisposable.add(firebase.votes
+				.doOnNext {callback.onRemote()}
 				.subscribeOn(Schedulers.io())
 				.observeOn(Schedulers.io())
 				.subscribe({ response ->

@@ -26,15 +26,6 @@
 		android:layout_height="match_parent"
 		>
 
-	<ProgressBar
-			android:id="@+id/loadingProgress"
-			android:layout_gravity="center"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:visibility="gone"
-			tools:visibility="visible"
-			/>
-
 	<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
@@ -59,6 +50,15 @@
 				android:paddingEnd="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
 				android:text="@string/vote_results"
+				/>
+
+		<ProgressBar
+				android:id="@+id/loadingProgressSmall"
+				android:layout_gravity="end|right|center_vertical"
+				android:layout_width="@dimen/spacing_big"
+				android:layout_height="@dimen/spacing_big"
+				android:layout_marginEnd="64dp"
+				tools:visibility="visible"
 				/>
 
 		<ImageButton
@@ -86,6 +86,15 @@
 				/>
 
 	</FrameLayout>
+
+	<ProgressBar
+			android:id="@+id/loadingProgress"
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			tools:visibility="visible"
+			/>
 
 	<TextView
 			style="@style/Text.SectionLabel"

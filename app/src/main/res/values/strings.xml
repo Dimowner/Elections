@@ -43,6 +43,7 @@
 	<string name="error">Помилка!</string>
 	<string name="pull_to_top_or_bottom_to_close">Потягніть зображення щоб закрити</string>
 	<string name="no_connection_to_internet">Відсутнє з\'єднання з інтернетом.\nДля продовження роботи підключіться до інтернету.</string>
+	<string name="voting_is_finished">Голосування завершено</string>
 
 	<string name="btn_ok">Добре</string>
 	<string name="btn_yes">Так</string>
@@ -55,6 +56,7 @@
 	<string name="btn_settings">Налаштування</string>
 	<string name="btn_vote">Голосувати</string>
 	<string name="btn_vote2">Проголосувати</string>
+	<string name="btn_results">Результати</string>
 
 	<string name="today">Сьогодні</string>
 	<string name="yesterday">Вчора</string>

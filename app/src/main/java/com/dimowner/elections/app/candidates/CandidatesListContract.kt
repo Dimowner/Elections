@@ -26,6 +26,9 @@ interface CandidatesListContract {
 	interface View : Contract.View {
 
 		fun showCandidatesList(list: List<CandidatesListItem>)
+
+		fun showSmallProgress()
+		fun hideSmallProgress()
 	}
 
 	interface UserActionsListener : Contract.UserActionsListener<View> {

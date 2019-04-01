@@ -75,6 +75,15 @@
 				<!--android:src="@drawable/ic_tune"-->
 				<!--/>-->
 
+		<ProgressBar
+				android:id="@+id/loadingProgressSmall"
+				android:layout_gravity="end|right|center_vertical"
+				android:layout_width="@dimen/spacing_big"
+				android:layout_height="@dimen/spacing_big"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				android:indeterminateTint="@color/main_blue"
+				tools:visibility="visible"
+				/>
 	</FrameLayout>
 
 	<TextView

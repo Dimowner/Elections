@@ -19,6 +19,7 @@
 
 package com.dimowner.elections.app.votes
 
+import com.dimowner.elections.data.Callback
 import com.dimowner.elections.data.Prefs
 import com.dimowner.elections.data.Repository
 import com.dimowner.elections.toVoteListItem
@@ -45,7 +46,12 @@ class VotesListPresenter(
 
 	override fun loadVotes() {
 		view?.showProgress()
-		disposable.add(repository.subscribeVotes()
+		view?.showSmallProgress()
+		disposable.add(repository.subscribeVotes(object : Callback {
+			override fun onRemote() {
+				view?.hideSmallProgress()
+			}
+		})
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({ d ->
 					val list: MutableList<VoteListItem> = ArrayList(d.size)
