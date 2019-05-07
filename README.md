@@ -3,6 +3,8 @@
 
 ![Elections Logo](https://github.com/Dimowner/Elections/blob/master/app/src/releaseConfig/res/mipmap-xxxhdpi/ic_elections2.png)
 
+<a href='https://play.google.com/store/apps/details?id=com.dimowner.elections.prod' target='_blank'><img height='80' style='border:0px;height:80px;' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' border='0' alt='GooglePlay Link' /></a>
+
 ### License
 
 ```
